@@ -11,6 +11,7 @@
 #define BOOST_DETAIL_WINAPI_TIME_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/predef.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -32,13 +33,13 @@ namespace winapi {
     #ifdef BOOST_HAS_GETSYSTEMTIMEASFILETIME  // Windows CE does not define GetSystemTimeAsFileTime
     using ::GetSystemTimeAsFileTime;
     #endif
-    #ifndef BOOST_WINAPI_FAMILY
+    #ifndef BOOST_WINDOWS_RUNTIME
     using ::FileTimeToLocalFileTime;
     #endif
     using ::GetSystemTime;
     using ::SystemTimeToFileTime;
     
-    #ifndef BOOST_WINAPI_FAMILY
+    #ifndef BOOST_WINDOWS_RUNTIME
     using ::GetTickCount;
     #endif
     #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
@@ -76,7 +77,7 @@ extern "C" {
     __declspec(dllimport) int WINAPI
         SystemTimeToFileTime(const SYSTEMTIME_* lpSystemTime,
                 FILETIME_* lpFileTime);
-    #ifndef BOOST_WINAPI_FAMILY
+    #ifndef BOOST_WINDOWS_RUNTIME
     __declspec(dllimport) DWORD_ WINAPI
         GetTickCount();
     #endif
