@@ -1,7 +1,7 @@
 //  time.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
-//  Copyright (c) Microsoft Corporation
+//  Copyright (c) Microsoft Corporation 2014
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -33,13 +33,13 @@ namespace winapi {
     #ifdef BOOST_HAS_GETSYSTEMTIMEASFILETIME  // Windows CE does not define GetSystemTimeAsFileTime
     using ::GetSystemTimeAsFileTime;
     #endif
-    #ifndef BOOST_WINDOWS_RUNTIME
+    #if BOOST_PLAT_WINDOWS_DESKTOP
     using ::FileTimeToLocalFileTime;
     #endif
     using ::GetSystemTime;
     using ::SystemTimeToFileTime;
     
-    #ifndef BOOST_WINDOWS_RUNTIME
+    #if BOOST_PLAT_WINDOWS_DESKTOP
     using ::GetTickCount;
     #endif
     #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
@@ -77,7 +77,7 @@ extern "C" {
     __declspec(dllimport) int WINAPI
         SystemTimeToFileTime(const SYSTEMTIME_* lpSystemTime,
                 FILETIME_* lpFileTime);
-    #ifndef BOOST_WINDOWS_RUNTIME
+    #if BOOST_PLAT_WINDOWS_DESKTOP
     __declspec(dllimport) DWORD_ WINAPI
         GetTickCount();
     #endif
