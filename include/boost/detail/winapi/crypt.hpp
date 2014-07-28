@@ -24,9 +24,10 @@ namespace winapi
 #if defined( BOOST_USE_WINDOWS_H )
     typedef HCRYPTPROV HCRYPTPROV_;
 
-    using CryptAcquireContextA;
-    using CryptGenRandom;
-    using CryptReleaseContext;
+    using ::CryptEnumProvidersA;
+    using ::CryptAcquireContextA;
+    using ::CryptGenRandom;
+    using ::CryptReleaseContext;
 
     const DWORD_ PROV_RSA_FULL_         = PROV_RSA_FULL;
 
@@ -38,6 +39,16 @@ namespace winapi
 #else
 extern "C" {
     typedef ULONG_PTR_ HCRYPTPROV_;
+
+    __declspec(dllimport) BOOL_ __stdcall
+        CryptEnumProvidersA(
+            DWORD_ dwIndex,
+            DWORD_ *pdwReserved,
+            DWORD_ dwFlags,
+            DWORD_ *pdwProvType,
+            LPSTR_ szProvName,
+            DWORD_ *pcbProvName
+    );
 
     __declspec(dllimport) BOOL_ __stdcall
         CryptAcquireContextA(
