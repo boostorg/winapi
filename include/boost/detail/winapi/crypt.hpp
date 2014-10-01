@@ -53,8 +53,8 @@ extern "C" {
     __declspec(dllimport) BOOL_ __stdcall
         CryptAcquireContextA(
             HCRYPTPROV_ *phProv,
-            LPCTSTR_ pszContainer,
-            LPCTSTR_ pszProvider,
+            LPCSTR_ pszContainer,
+            LPCSTR_ pszProvider,
             DWORD_ dwProvType,
             DWORD_ dwFlags
     );
