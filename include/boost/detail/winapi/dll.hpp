@@ -1,6 +1,7 @@
 //  dll.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
+//  Copyright 2015 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -16,28 +17,8 @@
 #pragma once
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
-#if defined( BOOST_USE_WINDOWS_H )
-    typedef ::FARPROC FARPROC_;
-    typedef ::NEARPROC NEARPROC_;
-    typedef ::PROC PROC_;
-
-# ifdef BOOST_NO_ANSI_APIS
-    using ::LoadLibraryW;
-    using ::GetModuleHandleW;
-# else
-    using ::LoadLibraryA;
-    using ::GetModuleHandleA;
-# endif
-    using ::FreeLibrary;
-    using ::GetProcAddress;
-#else
-extern "C" {
+#if !defined( BOOST_USE_WINDOWS_H )
+namespace boost { namespace detail { namespace winapi {
 # ifdef _WIN64
     typedef INT_PTR_ (WINAPI *FARPROC_)();
     typedef INT_PTR_ (WINAPI *NEARPROC_)();
@@ -47,37 +28,117 @@ extern "C" {
     typedef int (WINAPI *NEARPROC_)();
     typedef int (WINAPI *PROC_)();
 # endif // _WIN64
+}}}
 
-# ifdef BOOST_NO_ANSI_APIS
-    __declspec(dllimport) HMODULE_ WINAPI
-        LoadLibraryW(
-            LPCWSTR_ lpFileName
-    );
-    __declspec(dllimport) HMODULE_ WINAPI
-        GetModuleHandleW(
-            LPCWSTR_ lpFileName
-    );
-# else
-    __declspec(dllimport) HMODULE_ WINAPI
-        LoadLibraryA(
-            LPCSTR_ lpFileName
-    );
-    __declspec(dllimport) HMODULE_ WINAPI
-        GetModuleHandleA(
-            LPCSTR_ lpFileName
-    );
-# endif
+extern "C" {
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
+    LoadLibraryA(
+        boost::detail::winapi::LPCSTR_ lpFileName
+);
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
+    GetModuleHandleA(
+        boost::detail::winapi::LPCSTR_ lpFileName
+);
+#endif
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
+    LoadLibraryW(
+        boost::detail::winapi::LPCWSTR_ lpFileName
+);
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
+    GetModuleHandleW(
+        boost::detail::winapi::LPCWSTR_ lpFileName
+);
 
-    __declspec(dllimport) BOOL_ WINAPI
-        FreeLibrary(
-            HMODULE_ hModule
-    );
-    __declspec(dllimport) FARPROC_ WINAPI
-        GetProcAddress(
-            HMODULE_ hModule,
-            LPCSTR_ lpProcName
-    );
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+    FreeLibrary(
+        boost::detail::winapi::HMODULE_ hModule
+);
+BOOST_SYMBOL_IMPORT boost::detail::winapi::FARPROC_ WINAPI
+    GetProcAddress(
+        boost::detail::winapi::HMODULE_ hModule,
+        boost::detail::winapi::LPCSTR_ lpProcName
+);
 }
+#endif
+
+namespace boost
+{
+namespace detail
+{
+namespace winapi
+{
+#if defined( BOOST_USE_WINDOWS_H )
+
+typedef ::FARPROC FARPROC_;
+typedef ::NEARPROC NEARPROC_;
+typedef ::PROC PROC_;
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::LoadLibraryA;
+using ::GetModuleHandleA;
+#endif
+using ::LoadLibraryW;
+using ::GetModuleHandleW;
+using ::FreeLibrary;
+using ::GetProcAddress;
+
+#else
+
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_FORCEINLINE HMODULE_ LoadLibraryA(LPCSTR_ lpFileName)
+{
+    return ::LoadLibraryA(lpFileName);
+}
+
+BOOST_FORCEINLINE HMODULE_ GetModuleHandleA(LPCSTR_ lpFileName)
+{
+    return ::GetModuleHandleA(lpFileName);
+}
+#endif
+
+BOOST_FORCEINLINE HMODULE_ LoadLibraryW(LPCWSTR_ lpFileName)
+{
+    return ::LoadLibraryW(lpFileName);
+}
+
+BOOST_FORCEINLINE HMODULE_ GetModuleHandleW(LPCWSTR_ lpFileName)
+{
+    return ::GetModuleHandleW(lpFileName);
+}
+
+BOOST_FORCEINLINE BOOL_ FreeLibrary(HMODULE_ hModule)
+{
+    return ::FreeLibrary(hModule);
+}
+
+BOOST_FORCEINLINE FARPROC_ GetProcAddress(HMODULE_ hModule, LPCSTR_ lpProcName)
+{
+    return ::GetProcAddress(hModule, lpProcName);
+}
+
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_FORCEINLINE HMODULE_ load_library(LPCSTR_ lpFileName)
+{
+    return ::LoadLibraryA(lpFileName);
+}
+
+BOOST_FORCEINLINE HMODULE_ get_module_handle(LPCSTR_ lpFileName)
+{
+    return ::GetModuleHandleA(lpFileName);
+}
+#endif
+
+BOOST_FORCEINLINE HMODULE_ load_library(LPCWSTR_ lpFileName)
+{
+    return ::LoadLibraryW(lpFileName);
+}
+
+BOOST_FORCEINLINE HMODULE_ get_module_handle(LPCWSTR_ lpFileName)
+{
+    return ::GetModuleHandleW(lpFileName);
+}
+
 #endif
 }
 }

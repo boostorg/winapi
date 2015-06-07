@@ -42,6 +42,12 @@
 #pragma once
 #endif
 
+#if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+struct _LARGE_INTEGER;
+}
+#endif
+
 namespace boost {
 namespace detail {
 namespace winapi {
@@ -73,7 +79,6 @@ namespace winapi {
     typedef ::LPWSTR LPWSTR_;
     typedef ::LPCWSTR LPCWSTR_;
 #else
-extern "C" {
     typedef int BOOL_;
     typedef unsigned char BYTE_;
     typedef BYTE_ BOOLEAN_;
@@ -125,7 +130,6 @@ extern "C" {
     typedef wchar_t WCHAR_;
     typedef WCHAR_ *LPWSTR_;
     typedef const WCHAR_ *LPCWSTR_;
-}
 #endif
 }
 }
