@@ -12,7 +12,7 @@
 
 #include <stdarg.h>
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/GetCurrentThread.hpp>
+#include <boost/detail/winapi/GetLastError.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -29,8 +29,7 @@ FormatMessageA(
     boost::detail::winapi::DWORD_ dwLanguageId,
     boost::detail::winapi::LPSTR_ lpBuffer,
     boost::detail::winapi::DWORD_ nSize,
-    va_list *Arguments
-);
+    va_list *Arguments);
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
@@ -41,8 +40,7 @@ FormatMessageW(
     boost::detail::winapi::DWORD_ dwLanguageId,
     boost::detail::winapi::LPWSTR_ lpBuffer,
     boost::detail::winapi::DWORD_ nSize,
-    va_list *Arguments
-);
+    va_list *Arguments);
 }
 #endif
 
@@ -85,8 +83,7 @@ BOOST_FORCEINLINE DWORD_ FormatMessageA(
     DWORD_ dwLanguageId,
     LPSTR_ lpBuffer,
     DWORD_ nSize,
-    va_list *Arguments
-)
+    va_list *Arguments)
 {
     return ::FormatMessageA(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
 }
@@ -99,8 +96,7 @@ BOOST_FORCEINLINE DWORD_ FormatMessageW(
     DWORD_ dwLanguageId,
     LPWSTR_ lpBuffer,
     DWORD_ nSize,
-    va_list *Arguments
-)
+    va_list *Arguments)
 {
     return ::FormatMessageW(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
 }
@@ -132,8 +128,7 @@ BOOST_FORCEINLINE DWORD_ format_message(
     DWORD_ dwLanguageId,
     LPSTR_ lpBuffer,
     DWORD_ nSize,
-    va_list *Arguments
-)
+    va_list *Arguments)
 {
     return ::FormatMessageA(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
 }
@@ -146,8 +141,7 @@ BOOST_FORCEINLINE DWORD_ format_message(
     DWORD_ dwLanguageId,
     LPWSTR_ lpBuffer,
     DWORD_ nSize,
-    va_list *Arguments
-)
+    va_list *Arguments)
 {
     return ::FormatMessageW(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
 }
@@ -155,4 +149,5 @@ BOOST_FORCEINLINE DWORD_ format_message(
 }
 }
 }
+
 #endif // BOOST_DETAIL_WINAPI_ERROR_HANDLING_HPP

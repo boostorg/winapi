@@ -11,63 +11,47 @@
 #define BOOST_DETAIL_WINAPI_DLL_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/security.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+
 namespace boost { namespace detail { namespace winapi {
-# ifdef _WIN64
-    typedef INT_PTR_ (WINAPI *FARPROC_)();
-    typedef INT_PTR_ (WINAPI *NEARPROC_)();
-    typedef INT_PTR_ (WINAPI *PROC_)();
-# else
-    typedef int (WINAPI *FARPROC_)();
-    typedef int (WINAPI *NEARPROC_)();
-    typedef int (WINAPI *PROC_)();
-# endif // _WIN64
+#ifdef _WIN64
+typedef INT_PTR_ (WINAPI *FARPROC_)();
+typedef INT_PTR_ (WINAPI *NEARPROC_)();
+typedef INT_PTR_ (WINAPI *PROC_)();
+#else
+typedef int (WINAPI *FARPROC_)();
+typedef int (WINAPI *NEARPROC_)();
+typedef int (WINAPI *PROC_)();
+#endif // _WIN64
 }}}
 
-extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
-    LoadLibraryA(
-        boost::detail::winapi::LPCSTR_ lpFileName
-);
+    LoadLibraryA(boost::detail::winapi::LPCSTR_ lpFileName);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
-    GetModuleHandleA(
-        boost::detail::winapi::LPCSTR_ lpFileName
-);
+    GetModuleHandleA(boost::detail::winapi::LPCSTR_ lpFileName);
 #endif
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
-    LoadLibraryW(
-        boost::detail::winapi::LPCWSTR_ lpFileName
-);
+    LoadLibraryW(boost::detail::winapi::LPCWSTR_ lpFileName);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HMODULE_ WINAPI
-    GetModuleHandleW(
-        boost::detail::winapi::LPCWSTR_ lpFileName
-);
+    GetModuleHandleW(boost::detail::winapi::LPCWSTR_ lpFileName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    FreeLibrary(
-        boost::detail::winapi::HMODULE_ hModule
-);
+    FreeLibrary(boost::detail::winapi::HMODULE_ hModule);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::FARPROC_ WINAPI
-    GetProcAddress(
-        boost::detail::winapi::HMODULE_ hModule,
-        boost::detail::winapi::LPCSTR_ lpProcName
-);
+    GetProcAddress(boost::detail::winapi::HMODULE_ hModule, boost::detail::winapi::LPCSTR_ lpProcName);
 }
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+namespace boost {
+namespace detail {
+namespace winapi {
 #if defined( BOOST_USE_WINDOWS_H )
 
 typedef ::FARPROC FARPROC_;

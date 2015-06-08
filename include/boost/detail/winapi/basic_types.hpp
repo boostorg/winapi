@@ -59,7 +59,10 @@ namespace winapi {
     typedef ::WORD WORD_;
     typedef ::DWORD DWORD_;
     typedef ::HANDLE HANDLE_;
+    typedef ::PHANDLE PHANDLE_;
     typedef ::HMODULE HMODULE_;
+    typedef ::INT INT_;
+    typedef ::UINT UINT_;
     typedef ::LONG LONG_;
     typedef ::ULONG ULONG_;
     typedef ::LONGLONG LONGLONG_;
@@ -70,6 +73,7 @@ namespace winapi {
     typedef ::ULONG_PTR ULONG_PTR_;
     typedef ::LARGE_INTEGER LARGE_INTEGER_;
     typedef ::PLARGE_INTEGER PLARGE_INTEGER_;
+    typedef ::VOID VOID_;
     typedef ::PVOID PVOID_;
     typedef ::LPVOID LPVOID_;
     typedef ::CHAR CHAR_;
@@ -86,8 +90,11 @@ namespace winapi {
     typedef unsigned short WORD_;
     typedef unsigned long DWORD_;
     typedef void* HANDLE_;
+    typedef void** PHANDLE_;
     typedef void* HMODULE_;
 
+    typedef int INT_;
+    typedef unsigned int UINT_;
     typedef long LONG_;
     typedef unsigned long ULONG_;
 
@@ -119,6 +126,7 @@ namespace winapi {
     } LARGE_INTEGER_;
     typedef LARGE_INTEGER_ *PLARGE_INTEGER_;
 
+    typedef void VOID_;
     typedef void *PVOID_;
     typedef void *LPVOID_;
     typedef const void *LPCVOID_;

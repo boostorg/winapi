@@ -23,36 +23,32 @@ typedef ULONG_PTR_ HCRYPTPROV_;
 
 extern "C" {
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    CryptEnumProvidersA(
-        boost::detail::winapi::DWORD_ dwIndex,
-        boost::detail::winapi::DWORD_ *pdwReserved,
-        boost::detail::winapi::DWORD_ dwFlags,
-        boost::detail::winapi::DWORD_ *pdwProvType,
-        boost::detail::winapi::LPSTR_ szProvName,
-        boost::detail::winapi::DWORD_ *pcbProvName
-);
+CryptEnumProvidersA(
+    boost::detail::winapi::DWORD_ dwIndex,
+    boost::detail::winapi::DWORD_ *pdwReserved,
+    boost::detail::winapi::DWORD_ dwFlags,
+    boost::detail::winapi::DWORD_ *pdwProvType,
+    boost::detail::winapi::LPSTR_ szProvName,
+    boost::detail::winapi::DWORD_ *pcbProvName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    CryptAcquireContextA(
-        boost::detail::winapi::HCRYPTPROV_ *phProv,
-        boost::detail::winapi::LPCSTR_ pszContainer,
-        boost::detail::winapi::LPCSTR_ pszProvider,
-        boost::detail::winapi::DWORD_ dwProvType,
-        boost::detail::winapi::DWORD_ dwFlags
-);
+CryptAcquireContextA(
+    boost::detail::winapi::HCRYPTPROV_ *phProv,
+    boost::detail::winapi::LPCSTR_ pszContainer,
+    boost::detail::winapi::LPCSTR_ pszProvider,
+    boost::detail::winapi::DWORD_ dwProvType,
+    boost::detail::winapi::DWORD_ dwFlags);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    CryptGenRandom(
-        boost::detail::winapi::HCRYPTPROV_ hProv,
-        boost::detail::winapi::DWORD_ dwLen,
-        boost::detail::winapi::BYTE_ *pbBuffer
-);
+CryptGenRandom(
+    boost::detail::winapi::HCRYPTPROV_ hProv,
+    boost::detail::winapi::DWORD_ dwLen,
+    boost::detail::winapi::BYTE_ *pbBuffer);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    CryptReleaseContext(
-        boost::detail::winapi::HCRYPTPROV_ hProv,
-        boost::detail::winapi::DWORD_ dwFlags
-);
+CryptReleaseContext(
+    boost::detail::winapi::HCRYPTPROV_ hProv,
+    boost::detail::winapi::DWORD_ dwFlags);
 }
 #endif
 
@@ -87,8 +83,7 @@ BOOST_FORCEINLINE BOOL_ CryptEnumProvidersA(
     DWORD_ dwFlags,
     DWORD_ *pdwProvType,
     LPSTR_ szProvName,
-    DWORD_ *pcbProvName
-)
+    DWORD_ *pcbProvName)
 {
     return ::CryptEnumProvidersA(dwIndex, pdwReserved, dwFlags, pdwProvType, szProvName, pcbProvName);
 }
@@ -98,8 +93,7 @@ BOOST_FORCEINLINE BOOL_ CryptAcquireContextA(
     LPCSTR_ pszContainer,
     LPCSTR_ pszProvider,
     DWORD_ dwProvType,
-    DWORD_ dwFlags
-)
+    DWORD_ dwFlags)
 {
     return ::CryptAcquireContextA(phProv, pszContainer, pszProvider, dwProvType, dwFlags);
 }
