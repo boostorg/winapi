@@ -34,45 +34,16 @@ namespace boost {
 namespace detail {
 namespace winapi {
 #if defined( BOOST_USE_WINDOWS_H )
-
-using ::CloseHandle;
-using ::DuplicateHandle;
-
 const DWORD_ duplicate_close_source = DUPLICATE_CLOSE_SOURCE;
 const DWORD_ duplicate_same_access = DUPLICATE_SAME_ACCESS;
 const HANDLE_ invalid_handle_value = INVALID_HANDLE_VALUE;
-
 #else
-
-BOOST_FORCEINLINE BOOL_ CloseHandle(HANDLE_ handle)
-{
-    return ::CloseHandle(handle);
-}
-
-BOOST_FORCEINLINE BOOL_ DuplicateHandle(
-    HANDLE_ hSourceProcessHandle,
-    HANDLE_ hSourceHandle,
-    HANDLE_ hTargetProcessHandle,
-    HANDLE_* lpTargetHandle,
-    DWORD_ dwDesiredAccess,
-    BOOL_ bInheritHandle,
-    DWORD_ dwOptions)
-{
-    return ::DuplicateHandle(
-        hSourceProcessHandle,
-        hSourceHandle,
-        hTargetProcessHandle,
-        lpTargetHandle,
-        dwDesiredAccess,
-        bInheritHandle,
-        dwOptions);
-}
-
 const DWORD_ duplicate_close_source = 1;
 const DWORD_ duplicate_same_access = 2;
 const HANDLE_ invalid_handle_value = (HANDLE_)(-1);
-
 #endif
+using ::CloseHandle;
+using ::DuplicateHandle;
 }
 }
 }

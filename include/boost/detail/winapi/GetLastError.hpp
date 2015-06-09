@@ -18,7 +18,7 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI GetLastError();
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI GetLastError(boost::detail::winapi::VOID_);
 }
 #endif
 

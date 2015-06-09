@@ -22,6 +22,7 @@ typedef ULONG_PTR_ HCRYPTPROV_;
 }}}
 
 extern "C" {
+#if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 CryptEnumProvidersA(
     boost::detail::winapi::DWORD_ dwIndex,
@@ -36,6 +37,24 @@ CryptAcquireContextA(
     boost::detail::winapi::HCRYPTPROV_ *phProv,
     boost::detail::winapi::LPCSTR_ pszContainer,
     boost::detail::winapi::LPCSTR_ pszProvider,
+    boost::detail::winapi::DWORD_ dwProvType,
+    boost::detail::winapi::DWORD_ dwFlags);
+#endif
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+CryptEnumProvidersW(
+    boost::detail::winapi::DWORD_ dwIndex,
+    boost::detail::winapi::DWORD_ *pdwReserved,
+    boost::detail::winapi::DWORD_ dwFlags,
+    boost::detail::winapi::DWORD_ *pdwProvType,
+    boost::detail::winapi::LPWSTR_ szProvName,
+    boost::detail::winapi::DWORD_ *pcbProvName);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+CryptAcquireContextW(
+    boost::detail::winapi::HCRYPTPROV_ *phProv,
+    boost::detail::winapi::LPCWSTR_ szContainer,
+    boost::detail::winapi::LPCWSTR_ szProvider,
     boost::detail::winapi::DWORD_ dwProvType,
     boost::detail::winapi::DWORD_ dwFlags);
 
@@ -60,12 +79,7 @@ namespace winapi
 {
 #if defined( BOOST_USE_WINDOWS_H )
 
-typedef HCRYPTPROV HCRYPTPROV_;
-
-using ::CryptEnumProvidersA;
-using ::CryptAcquireContextA;
-using ::CryptGenRandom;
-using ::CryptReleaseContext;
+typedef ::HCRYPTPROV HCRYPTPROV_;
 
 const DWORD_ PROV_RSA_FULL_         = PROV_RSA_FULL;
 
@@ -77,7 +91,27 @@ const DWORD_ CRYPT_SILENT_          = CRYPT_SILENT;
 
 #else
 
-BOOST_FORCEINLINE BOOL_ CryptEnumProvidersA(
+const DWORD_ PROV_RSA_FULL_         = 1;
+
+const DWORD_ CRYPT_VERIFYCONTEXT_   = 0xF0000000;
+const DWORD_ CRYPT_NEWKEYSET_       = 8;
+const DWORD_ CRYPT_DELETEKEYSET_    = 16;
+const DWORD_ CRYPT_MACHINE_KEYSET_  = 32;
+const DWORD_ CRYPT_SILENT_          = 64;
+
+#endif
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::CryptEnumProvidersA;
+using ::CryptAcquireContextA;
+#endif
+using ::CryptEnumProvidersW;
+using ::CryptAcquireContextW;
+using ::CryptGenRandom;
+using ::CryptReleaseContext;
+
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_FORCEINLINE BOOL_ crypt_enum_providers(
     DWORD_ dwIndex,
     DWORD_ *pdwReserved,
     DWORD_ dwFlags,
@@ -88,7 +122,7 @@ BOOST_FORCEINLINE BOOL_ CryptEnumProvidersA(
     return ::CryptEnumProvidersA(dwIndex, pdwReserved, dwFlags, pdwProvType, szProvName, pcbProvName);
 }
 
-BOOST_FORCEINLINE BOOL_ CryptAcquireContextA(
+BOOST_FORCEINLINE BOOL_ crypt_acquire_context(
     HCRYPTPROV_ *phProv,
     LPCSTR_ pszContainer,
     LPCSTR_ pszProvider,
@@ -97,26 +131,29 @@ BOOST_FORCEINLINE BOOL_ CryptAcquireContextA(
 {
     return ::CryptAcquireContextA(phProv, pszContainer, pszProvider, dwProvType, dwFlags);
 }
-
-BOOST_FORCEINLINE BOOL_ CryptGenRandom(HCRYPTPROV_ hProv, DWORD_ dwLen, BYTE_ *pbBuffer)
-{
-    return ::CryptGenRandom(hProv, dwLen, pbBuffer);
-}
-
-BOOST_FORCEINLINE BOOL_ CryptReleaseContext(HCRYPTPROV_ hProv, DWORD_ dwFlags)
-{
-    return ::CryptReleaseContext(hProv, dwFlags);
-}
-
-const DWORD_ PROV_RSA_FULL_         = 1;
-
-const DWORD_ CRYPT_VERIFYCONTEXT_   = 0xF0000000;
-const DWORD_ CRYPT_NEWKEYSET_       = 8;
-const DWORD_ CRYPT_DELETEKEYSET_    = 16;
-const DWORD_ CRYPT_MACHINE_KEYSET_  = 32;
-const DWORD_ CRYPT_SILENT_          = 64;
-
 #endif
+
+BOOST_FORCEINLINE BOOL_ crypt_enum_providers(
+    DWORD_ dwIndex,
+    DWORD_ *pdwReserved,
+    DWORD_ dwFlags,
+    DWORD_ *pdwProvType,
+    LPWSTR_ szProvName,
+    DWORD_ *pcbProvName)
+{
+    return ::CryptEnumProvidersW(dwIndex, pdwReserved, dwFlags, pdwProvType, szProvName, pcbProvName);
+}
+
+BOOST_FORCEINLINE BOOL_ crypt_acquire_context(
+    HCRYPTPROV_ *phProv,
+    LPCWSTR_ szContainer,
+    LPCWSTR_ szProvider,
+    DWORD_ dwProvType,
+    DWORD_ dwFlags)
+{
+    return ::CryptAcquireContextW(phProv, szContainer, szProvider, dwProvType, dwFlags);
+}
+
 }
 }
 }

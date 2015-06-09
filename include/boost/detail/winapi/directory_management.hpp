@@ -36,22 +36,15 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 }    
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+namespace boost {
+namespace detail {
+namespace winapi {
 #if defined( BOOST_USE_WINDOWS_H )
 
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::CreateDirectoryA;
-using ::GetTempPathA;
-using ::RemoveDirectoryA;
 #endif
 using ::CreateDirectoryW;
-using ::GetTempPathW;
-using ::RemoveDirectoryW;
 
 #else
 
@@ -60,34 +53,26 @@ BOOST_FORCEINLINE BOOL_ CreateDirectoryA(LPCSTR_ pPathName, PSECURITY_ATTRIBUTES
 {
     return ::CreateDirectoryA(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
-BOOST_FORCEINLINE DWORD_ GetTempPathA(DWORD_ length, LPSTR_ buffer)
-{
-    return ::GetTempPathA(length, buffer);
-}
-BOOST_FORCEINLINE BOOL_ RemoveDirectoryA(LPCSTR_ pPathName)
-{
-    return ::RemoveDirectoryA(pPathName);
-}
 #endif
 
 BOOST_FORCEINLINE BOOL_ CreateDirectoryW(LPCWSTR_ pPathName, PSECURITY_ATTRIBUTES_ pSecurityAttributes)
 {
     return ::CreateDirectoryW(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
-BOOST_FORCEINLINE DWORD_ GetTempPathW(DWORD_ length, LPWSTR_ buffer)
-{
-    return ::GetTempPathW(length, buffer);
-}
-BOOST_FORCEINLINE BOOL_ RemoveDirectoryW(LPCWSTR_ pPathName)
-{
-    return ::RemoveDirectoryW(pPathName);
-}
+
 #endif
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::GetTempPathA;
+using ::RemoveDirectoryA;
+#endif
+using ::GetTempPathW;
+using ::RemoveDirectoryW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE BOOL_ create_directory(LPCSTR_ pPathName, PSECURITY_ATTRIBUTES_ pSecurityAttributes)
 {
-    return ::CreateDirectoryA(pPathName, pSecurityAttributes);
+    return ::CreateDirectoryA(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
 BOOST_FORCEINLINE DWORD_ get_temp_path(DWORD_ length, LPSTR_ buffer)
 {
@@ -101,7 +86,7 @@ BOOST_FORCEINLINE BOOL_ remove_directory(LPCSTR_ pPathName)
 
 BOOST_FORCEINLINE BOOL_ create_directory(LPCWSTR_ pPathName, PSECURITY_ATTRIBUTES_ pSecurityAttributes)
 {
-    return ::CreateDirectoryW(pPathName, pSecurityAttributes);
+    return ::CreateDirectoryW(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
 BOOST_FORCEINLINE DWORD_ get_temp_path(DWORD_ length, LPWSTR_ buffer)
 {

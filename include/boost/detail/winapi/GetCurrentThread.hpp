@@ -16,24 +16,17 @@
 #pragma once
 #endif
 
-#if !defined( UNDER_CE ) && !defined( BOOST_USE_WINDOWS_H )
+// Windows CE define GetCurrentThread as an inline function in kfuncs.h
+#if !defined( BOOST_USE_WINDOWS_H ) && !defined( UNDER_CE )
 extern "C" {
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI GetCurrentThread();
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI GetCurrentThread(boost::detail::winapi::VOID_);
 }
 #endif
 
 namespace boost {
 namespace detail {
 namespace winapi {
-#if defined( UNDER_CE )
-// Windows CE define GetCurrentThread as an inline function in kfuncs.h
-BOOST_FORCEINLINE HANDLE_ GetCurrentThread() 
-{
-    return ::GetCurrentThread();
-}
-#else
 using ::GetCurrentThread;
-#endif
 }
 }
 }

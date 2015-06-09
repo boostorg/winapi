@@ -50,11 +50,6 @@ namespace winapi {
 
 #if defined( BOOST_USE_WINDOWS_H )
 
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::FormatMessageA;
-#endif
-using ::FormatMessageW;
-
 const DWORD_ FORMAT_MESSAGE_ALLOCATE_BUFFER_= FORMAT_MESSAGE_ALLOCATE_BUFFER;
 const DWORD_ FORMAT_MESSAGE_IGNORE_INSERTS_=  FORMAT_MESSAGE_IGNORE_INSERTS;
 const DWORD_ FORMAT_MESSAGE_FROM_STRING_=     FORMAT_MESSAGE_FROM_STRING;
@@ -75,32 +70,6 @@ BOOST_FORCEINLINE WORD_ MAKELANGID_(WORD_ p, WORD_ s)
 
 #else
 
-#if !defined( BOOST_NO_ANSI_APIS )
-BOOST_FORCEINLINE DWORD_ FormatMessageA(
-    DWORD_ dwFlags,
-    LPCVOID_ lpSource,
-    DWORD_ dwMessageId,
-    DWORD_ dwLanguageId,
-    LPSTR_ lpBuffer,
-    DWORD_ nSize,
-    va_list *Arguments)
-{
-    return ::FormatMessageA(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
-}
-#endif
-
-BOOST_FORCEINLINE DWORD_ FormatMessageW(
-    DWORD_ dwFlags,
-    LPCVOID_ lpSource,
-    DWORD_ dwMessageId,
-    DWORD_ dwLanguageId,
-    LPWSTR_ lpBuffer,
-    DWORD_ nSize,
-    va_list *Arguments)
-{
-    return ::FormatMessageW(dwFlags, lpSource, dwMessageId, dwLanguageId, lpBuffer, nSize, Arguments);
-}
-
 const DWORD_ FORMAT_MESSAGE_ALLOCATE_BUFFER_= 0x00000100;
 const DWORD_ FORMAT_MESSAGE_IGNORE_INSERTS_=  0x00000200;
 const DWORD_ FORMAT_MESSAGE_FROM_STRING_=     0x00000400;
@@ -118,7 +87,13 @@ BOOST_FORCEINLINE WORD_ MAKELANGID_(WORD_ p, WORD_ s)
 {
     return ((((WORD_)(s)) << 10) | (WORD_)(p));
 }
+
 #endif
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::FormatMessageA;
+#endif
+using ::FormatMessageW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE DWORD_ format_message(

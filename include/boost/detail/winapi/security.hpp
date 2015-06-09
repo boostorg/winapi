@@ -23,26 +23,21 @@ struct _SECURITY_ATTRIBUTES;
 struct _SECURITY_DESCRIPTOR;
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    InitializeSecurityDescriptor(
-        ::_SECURITY_DESCRIPTOR* pSecurityDescriptor,
-        boost::detail::winapi::DWORD_ dwRevision
-);
+InitializeSecurityDescriptor(
+    ::_SECURITY_DESCRIPTOR* pSecurityDescriptor,
+    boost::detail::winapi::DWORD_ dwRevision);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    SetSecurityDescriptorDacl(
-        ::_SECURITY_DESCRIPTOR* pSecurityDescriptor,
-        boost::detail::winapi::BOOL_ bDaclPresent,
-        ::_ACL* pDacl,
-        boost::detail::winapi::BOOL_ bDaclDefaulted
-);
+SetSecurityDescriptorDacl(
+    ::_SECURITY_DESCRIPTOR* pSecurityDescriptor,
+    boost::detail::winapi::BOOL_ bDaclPresent,
+    ::_ACL* pDacl,
+    boost::detail::winapi::BOOL_ bDaclDefaulted);
 }
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+namespace boost {
+namespace detail {
+namespace winapi {
 #if defined( BOOST_USE_WINDOWS_H )
 typedef ::SECURITY_ATTRIBUTES SECURITY_ATTRIBUTES_;
 typedef ::PSECURITY_ATTRIBUTES PSECURITY_ATTRIBUTES_;

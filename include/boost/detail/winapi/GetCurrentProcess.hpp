@@ -16,9 +16,10 @@
 #pragma once
 #endif
 
-#if !defined( BOOST_USE_WINDOWS_H )
+// Windows CE define GetCurrentProcess as an inline function in kfuncs.h
+#if !defined( BOOST_USE_WINDOWS_H ) && !defined( UNDER_CE )
 extern "C" {
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI GetCurrentProcess();
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI GetCurrentProcess(boost::detail::winapi::VOID_);
 }
 #endif
 
