@@ -1,6 +1,7 @@
 //  synchronizaion.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
+//  Copyright 2015 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -10,103 +11,110 @@
 #define BOOST_DETAIL_WINAPI_SYNCHRONIZATION_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/detail/winapi/critical_section.hpp>
+#include <boost/detail/winapi/event.hpp>
+#include <boost/detail/winapi/mutex.hpp>
+#include <boost/detail/winapi/semaphore.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+#if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+}
+#endif
+
+namespace boost {
+namespace detail {
+namespace winapi {
+
 #if defined( BOOST_USE_WINDOWS_H )
-    typedef ::CRITICAL_SECTION CRITICAL_SECTION_;
-    typedef ::PAPCFUNC PAPCFUNC_;
+typedef ::CRITICAL_SECTION CRITICAL_SECTION_;
+typedef ::PAPCFUNC PAPCFUNC_;
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-    typedef ::INIT_ONCE INIT_ONCE_;
-    typedef ::PINIT_ONCE PINIT_ONCE_;
-    typedef ::LPINIT_ONCE LPINIT_ONCE_;
-    #define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT INIT_ONCE_STATIC_INIT
-    typedef ::PINIT_ONCE_FN PINIT_ONCE_FN_;
+typedef ::INIT_ONCE INIT_ONCE_;
+typedef ::PINIT_ONCE PINIT_ONCE_;
+typedef ::LPINIT_ONCE LPINIT_ONCE_;
+#define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT INIT_ONCE_STATIC_INIT
+typedef ::PINIT_ONCE_FN PINIT_ONCE_FN_;
 
-    typedef ::SRWLOCK SRWLOCK_;
-    typedef ::PSRWLOCK PSRWLOCK_;
-    #define BOOST_DETAIL_WINAPI_SRWLOCK_INIT SRWLOCK_INIT
+typedef ::SRWLOCK SRWLOCK_;
+typedef ::PSRWLOCK PSRWLOCK_;
+#define BOOST_DETAIL_WINAPI_SRWLOCK_INIT SRWLOCK_INIT
 
-    typedef ::CONDITION_VARIABLE CONDITION_VARIABLE_;
-    typedef ::PCONDITION_VARIABLE PCONDITION_VARIABLE_;
-    #define BOOST_DETAIL_WINAPI_CONDITION_VARIABLE_INIT CONDITION_VARIABLE_INIT
+typedef ::CONDITION_VARIABLE CONDITION_VARIABLE_;
+typedef ::PCONDITION_VARIABLE PCONDITION_VARIABLE_;
+#define BOOST_DETAIL_WINAPI_CONDITION_VARIABLE_INIT CONDITION_VARIABLE_INIT
 #endif
 
-    using ::InitializeCriticalSection;
+using ::InitializeCriticalSection;
 #if BOOST_USE_WINAPI_VERSION >= 0x0403
-    using ::InitializeCriticalSectionAndSpinCount;
+using ::InitializeCriticalSectionAndSpinCount;
 #endif
-    using ::EnterCriticalSection;
-    using ::TryEnterCriticalSection;
-    using ::LeaveCriticalSection;
-    using ::DeleteCriticalSection;
+using ::EnterCriticalSection;
+using ::TryEnterCriticalSection;
+using ::LeaveCriticalSection;
+using ::DeleteCriticalSection;
 
-# ifdef BOOST_NO_ANSI_APIS
-    using ::CreateMutexW;
-    using ::OpenMutexW;
-    using ::CreateEventW;
-    using ::OpenEventW;
-    using ::CreateSemaphoreW;
-    using ::OpenSemaphoreW;
-# else
-    using ::CreateMutexA;
-    using ::OpenMutexA;
-    using ::CreateEventA;
-    using ::OpenEventA;
-    using ::CreateSemaphoreA;
-    using ::OpenSemaphoreA;
-# endif
-    using ::ReleaseMutex;
-    using ::ReleaseSemaphore;
-    using ::SetEvent;
-    using ::ResetEvent;
-    using ::WaitForMultipleObjects;
-    using ::WaitForSingleObject;
-    using ::QueueUserAPC;
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::CreateMutexA;
+using ::OpenMutexA;
+using ::CreateEventA;
+using ::OpenEventA;
+using ::CreateSemaphoreA;
+using ::OpenSemaphoreA;
+#endif
+using ::CreateMutexW;
+using ::OpenMutexW;
+using ::CreateEventW;
+using ::OpenEventW;
+using ::CreateSemaphoreW;
+using ::OpenSemaphoreW;
+
+using ::ReleaseMutex;
+using ::ReleaseSemaphore;
+using ::SetEvent;
+using ::ResetEvent;
+using ::WaitForMultipleObjects;
+using ::WaitForSingleObject;
+using ::QueueUserAPC;
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-    using ::InitOnceInitialize;
-    using ::InitOnceExecuteOnce;
-    using ::InitOnceBeginInitialize;
-    using ::InitOnceComplete;
+using ::InitOnceInitialize;
+using ::InitOnceExecuteOnce;
+using ::InitOnceBeginInitialize;
+using ::InitOnceComplete;
 
-    using ::InitializeSRWLock;
-    using ::AcquireSRWLockExclusive;
-    using ::TryAcquireSRWLockExclusive;
-    using ::ReleaseSRWLockExclusive;
-    using ::AcquireSRWLockShared;
-    using ::TryAcquireSRWLockShared;
-    using ::ReleaseSRWLockShared;
+using ::InitializeSRWLock;
+using ::AcquireSRWLockExclusive;
+using ::TryAcquireSRWLockExclusive;
+using ::ReleaseSRWLockExclusive;
+using ::AcquireSRWLockShared;
+using ::TryAcquireSRWLockShared;
+using ::ReleaseSRWLockShared;
 
-    using ::InitializeConditionVariable;
-    using ::WakeConditionVariable;
-    using ::WakeAllConditionVariable;
-    using ::SleepConditionVariableCS;
-    using ::SleepConditionVariableSRW;
+using ::InitializeConditionVariable;
+using ::WakeConditionVariable;
+using ::WakeAllConditionVariable;
+using ::SleepConditionVariableCS;
+using ::SleepConditionVariableSRW;
 #endif
 
-    const DWORD_ infinite       = INFINITE;
-    const DWORD_ wait_abandoned = WAIT_ABANDONED;
-    const DWORD_ wait_object_0  = WAIT_OBJECT_0;
-    const DWORD_ wait_timeout   = WAIT_TIMEOUT;
-    const DWORD_ wait_failed    = WAIT_FAILED;
+const DWORD_ infinite       = INFINITE;
+const DWORD_ wait_abandoned = WAIT_ABANDONED;
+const DWORD_ wait_object_0  = WAIT_OBJECT_0;
+const DWORD_ wait_timeout   = WAIT_TIMEOUT;
+const DWORD_ wait_failed    = WAIT_FAILED;
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-    const DWORD_ init_once_async = INIT_ONCE_ASYNC;
-    const DWORD_ init_once_check_only = INIT_ONCE_CHECK_ONLY;
-    const DWORD_ init_once_init_failed = INIT_ONCE_INIT_FAILED;
-    const DWORD_ init_once_ctx_reserved_bits = INIT_ONCE_CTX_RESERVED_BITS;
+const DWORD_ init_once_async = INIT_ONCE_ASYNC;
+const DWORD_ init_once_check_only = INIT_ONCE_CHECK_ONLY;
+const DWORD_ init_once_init_failed = INIT_ONCE_INIT_FAILED;
+const DWORD_ init_once_ctx_reserved_bits = INIT_ONCE_CTX_RESERVED_BITS;
 
-    const ULONG_ condition_variable_lockmode_shared = CONDITION_VARIABLE_LOCKMODE_SHARED;
+const ULONG_ condition_variable_lockmode_shared = CONDITION_VARIABLE_LOCKMODE_SHARED;
 #endif
 
 #else // defined( BOOST_USE_WINDOWS_H )
@@ -134,7 +142,7 @@ extern "C" {
         PVOID_ Ptr;
     }
     *PINIT_ONCE_, *LPINIT_ONCE_;
-    #define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT {0}
+#define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT {0}
     typedef BOOL_ (WINAPI *PINIT_ONCE_FN_)(PINIT_ONCE_ InitOnce, PVOID_ Parameter, PVOID_ *Context);
 
     typedef struct SRWLOCK_

@@ -73,13 +73,8 @@ namespace winapi {
 
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::CreateFileMappingA;
-using ::OpenFileMappingA;
 #endif
 using ::CreateFileMappingW;
-using ::OpenFileMappingW;
-using ::MapViewOfFileEx;
-using ::FlushViewOfFile;
-using ::UnmapViewOfFile;
 
 #else
 
@@ -100,11 +95,6 @@ BOOST_FORCEINLINE HANDLE_ CreateFileMappingA(
         dwMaximumSizeLow,
         lpName);
 }
-
-BOOST_FORCEINLINE HANDLE_ OpenFileMappingA(DWORD_ dwDesiredAccess, BOOL_ bInheritHandle, LPCSTR_ lpName)
-{
-    return ::OpenFileMappingA(dwDesiredAccess, bInheritHandle, lpName);
-}
 #endif
 
 BOOST_FORCEINLINE HANDLE_ CreateFileMappingW(
@@ -124,39 +114,15 @@ BOOST_FORCEINLINE HANDLE_ CreateFileMappingW(
         lpName);
 }
 
-BOOST_FORCEINLINE HANDLE_ OpenFileMappingW(DWORD_ dwDesiredAccess, BOOL_ bInheritHandle, LPCWSTR_ lpName)
-{
-    return ::OpenFileMappingW(dwDesiredAccess, bInheritHandle, lpName);
-}
-
-BOOST_FORCEINLINE LPVOID_ MapViewOfFileEx(
-    HANDLE_ hFileMappingObject,
-    DWORD_ dwDesiredAccess,
-    DWORD_ dwFileOffsetHigh,
-    DWORD_ dwFileOffsetLow,
-    SIZE_T_ dwNumberOfBytesToMap,
-    LPVOID_ lpBaseAddress)
-{
-    return ::MapViewOfFileEx(
-        hFileMappingObject,
-        dwDesiredAccess,
-        dwFileOffsetHigh,
-        dwFileOffsetLow,
-        dwNumberOfBytesToMap,
-        lpBaseAddress);
-}
-
-BOOST_FORCEINLINE BOOL_ FlushViewOfFile(LPCVOID_ lpBaseAddress, SIZE_T_ dwNumberOfBytesToFlush)
-{
-    return ::FlushViewOfFile(lpBaseAddress, dwNumberOfBytesToFlush);
-}
-
-BOOST_FORCEINLINE BOOL_ UnmapViewOfFile(LPCVOID_ lpBaseAddress)
-{
-    return ::UnmapViewOfFile(lpBaseAddress);
-}
-
 #endif
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::OpenFileMappingA;
+#endif
+using ::OpenFileMappingW;
+using ::MapViewOfFileEx;
+using ::FlushViewOfFile;
+using ::UnmapViewOfFile;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_file_mapping(

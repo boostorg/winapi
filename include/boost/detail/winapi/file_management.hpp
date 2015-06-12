@@ -71,16 +71,11 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
     FindClose(boost::detail::winapi::HANDLE_ hFindFile);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    GetFileSizeEx(
-        boost::detail::winapi::HANDLE_ hFile,
-        ::_LARGE_INTEGER* lpFileSize);
+    GetFileSizeEx(boost::detail::winapi::HANDLE_ hFile, ::_LARGE_INTEGER* lpFileSize);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    SetFileValidData(
-        boost::detail::winapi::HANDLE_ hFile,
-        boost::detail::winapi::LONGLONG_ ValidDataLength);
+    SetFileValidData(boost::detail::winapi::HANDLE_ hFile, boost::detail::winapi::LONGLONG_ ValidDataLength);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    SetEndOfFile(
-        boost::detail::winapi::HANDLE_ hFile);
+    SetEndOfFile(boost::detail::winapi::HANDLE_ hFile);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
     LockFile(
         boost::detail::winapi::HANDLE_ hFile,
@@ -120,39 +115,28 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 }
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+namespace boost {
+namespace detail {
+namespace winapi {
 #if defined( BOOST_USE_WINDOWS_H )
+
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::CreateFileA;
-using ::DeleteFileA;
 typedef ::WIN32_FIND_DATAA WIN32_FIND_DATAA_;
 typedef ::PWIN32_FIND_DATAA PWIN32_FIND_DATAA_;
 typedef ::LPWIN32_FIND_DATAA LPWIN32_FIND_DATAA_;
 using ::FindFirstFileA;
 using ::FindNextFileA;
-using ::MoveFileExA;
 #endif
 
 using ::CreateFileW;
-using ::DeleteFileW;
 typedef ::WIN32_FIND_DATAW WIN32_FIND_DATAW_;
 typedef ::PWIN32_FIND_DATAW PWIN32_FIND_DATAW_;
 typedef ::LPWIN32_FIND_DATAW LPWIN32_FIND_DATAW_;
 using ::FindFirstFileW;
 using ::FindNextFileW;
-using ::MoveFileExW;
 
-using ::FindClose;
 using ::GetFileSizeEx;
-using ::SetFileValidData;
-using ::SetEndOfFile;
-using ::LockFile;
-using ::UnlockFile;
 using ::LockFileEx;
 using ::UnlockFileEx;
 using ::WriteFile;
@@ -192,11 +176,6 @@ BOOST_FORCEINLINE HANDLE_ CreateFileA(
         hTemplateFile);
 }
 
-BOOST_FORCEINLINE BOOL_ DeleteFileA(LPCSTR_ lpFileName)
-{
-    return ::DeleteFileA(lpFileName);
-}
-
 typedef struct _WIN32_FIND_DATAA {
     DWORD_ dwFileAttributes;
     FILETIME_ ftCreationTime;
@@ -224,11 +203,6 @@ BOOST_FORCEINLINE BOOL_ FindNextFileA(HANDLE_ hFindFile, WIN32_FIND_DATAA_* lpFi
 {
     return ::FindNextFileA(hFindFile, reinterpret_cast< ::_WIN32_FIND_DATAA* >(lpFindFileData));
 }
-
-BOOST_FORCEINLINE BOOL_ MoveFileExA(LPCSTR_ lpExistingFileName, LPCSTR_ lpNewFileName, DWORD_ dwFlags)
-{
-    return ::MoveFileExA(lpExistingFileName, lpNewFileName, dwFlags);
-}
 #endif
 
 BOOST_FORCEINLINE HANDLE_ CreateFileW(
@@ -248,11 +222,6 @@ BOOST_FORCEINLINE HANDLE_ CreateFileW(
         dwCreationDisposition,
         dwFlagsAndAttributes,
         hTemplateFile);
-}
-
-BOOST_FORCEINLINE BOOL_ DeleteFileW(LPCWSTR_ lpFileName)
-{
-    return ::DeleteFileW(lpFileName);
 }
 
 typedef struct _WIN32_FIND_DATAW {
@@ -283,49 +252,9 @@ BOOST_FORCEINLINE BOOL_ FindNextFileW(HANDLE_ hFindFile, WIN32_FIND_DATAW_* lpFi
     return ::FindNextFileW(hFindFile, reinterpret_cast< ::_WIN32_FIND_DATAW* >(lpFindFileData));
 }
 
-BOOST_FORCEINLINE BOOL_ MoveFileExW(LPCWSTR_ lpExistingFileName, LPCWSTR_ lpNewFileName, DWORD_ dwFlags)
-{
-    return ::MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags);
-}
-
-BOOST_FORCEINLINE BOOL_ FindClose(HANDLE_ hFindFile)
-{
-    return ::FindClose(hFindFile);
-}
-
 BOOST_FORCEINLINE BOOL_ GetFileSizeEx(HANDLE_ hFile, LARGE_INTEGER_* lpFileSize)
 {
     return ::GetFileSizeEx(hFile, reinterpret_cast< ::_LARGE_INTEGER* >(lpFileSize));
-}
-
-BOOST_FORCEINLINE BOOL_ SetFileValidData(HANDLE_ hFile, LONGLONG_ ValidDataLength)
-{
-    return ::SetFileValidData(hFile, ValidDataLength);
-}
-
-BOOST_FORCEINLINE BOOL_ SetEndOfFile(HANDLE_ hFile)
-{
-    return ::SetEndOfFile(hFile);
-}
-
-BOOST_FORCEINLINE BOOL_ LockFile(
-    HANDLE_ hFile,
-    DWORD_ dwFileOffsetLow,
-    DWORD_ dwFileOffsetHigh,
-    DWORD_ nNumberOfBytesToLockLow,
-    DWORD_ nNumberOfBytesToLockHigh)
-{
-    return ::LockFile(hFile, dwFileOffsetLow, dwFileOffsetHigh, nNumberOfBytesToLockLow, nNumberOfBytesToLockHigh);
-}
-
-BOOST_FORCEINLINE BOOL_ UnlockFile(
-    HANDLE_ hFile,
-    DWORD_ dwFileOffsetLow,
-    DWORD_ dwFileOffsetHigh,
-    DWORD_ nNumberOfBytesToUnlockLow,
-    DWORD_ nNumberOfBytesToUnlockHigh)
-{
-    return ::UnlockFile(hFile, dwFileOffsetLow, dwFileOffsetHigh, nNumberOfBytesToUnlockLow, nNumberOfBytesToUnlockHigh);
 }
 
 BOOST_FORCEINLINE BOOL_ LockFileEx(
@@ -360,6 +289,21 @@ BOOST_FORCEINLINE BOOL_ WriteFile(
 };
 
 #endif
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::DeleteFileA;
+using ::MoveFileExA;
+#endif
+
+using ::DeleteFileW;
+using ::MoveFileExW;
+
+using ::FindClose;
+using ::SetFileValidData;
+using ::SetEndOfFile;
+using ::LockFile;
+using ::UnlockFile;
+
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_file(

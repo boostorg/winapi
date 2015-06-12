@@ -52,11 +52,12 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::FARPROC_ WINAPI
 namespace boost {
 namespace detail {
 namespace winapi {
-#if defined( BOOST_USE_WINDOWS_H )
 
+#if defined( BOOST_USE_WINDOWS_H )
 typedef ::FARPROC FARPROC_;
 typedef ::NEARPROC NEARPROC_;
 typedef ::PROC PROC_;
+#endif
 
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::LoadLibraryA;
@@ -66,40 +67,6 @@ using ::LoadLibraryW;
 using ::GetModuleHandleW;
 using ::FreeLibrary;
 using ::GetProcAddress;
-
-#else
-
-#if !defined( BOOST_NO_ANSI_APIS )
-BOOST_FORCEINLINE HMODULE_ LoadLibraryA(LPCSTR_ lpFileName)
-{
-    return ::LoadLibraryA(lpFileName);
-}
-
-BOOST_FORCEINLINE HMODULE_ GetModuleHandleA(LPCSTR_ lpFileName)
-{
-    return ::GetModuleHandleA(lpFileName);
-}
-#endif
-
-BOOST_FORCEINLINE HMODULE_ LoadLibraryW(LPCWSTR_ lpFileName)
-{
-    return ::LoadLibraryW(lpFileName);
-}
-
-BOOST_FORCEINLINE HMODULE_ GetModuleHandleW(LPCWSTR_ lpFileName)
-{
-    return ::GetModuleHandleW(lpFileName);
-}
-
-BOOST_FORCEINLINE BOOL_ FreeLibrary(HMODULE_ hModule)
-{
-    return ::FreeLibrary(hModule);
-}
-
-BOOST_FORCEINLINE FARPROC_ GetProcAddress(HMODULE_ hModule, LPCSTR_ lpProcName)
-{
-    return ::GetProcAddress(hModule, lpProcName);
-}
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HMODULE_ load_library(LPCSTR_ lpFileName)
@@ -123,7 +90,6 @@ BOOST_FORCEINLINE HMODULE_ get_module_handle(LPCWSTR_ lpFileName)
     return ::GetModuleHandleW(lpFileName);
 }
 
-#endif
 }
 }
 }
