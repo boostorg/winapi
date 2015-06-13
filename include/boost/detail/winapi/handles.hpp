@@ -33,17 +33,24 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI DuplicateHandle(
 namespace boost {
 namespace detail {
 namespace winapi {
-#if defined( BOOST_USE_WINDOWS_H )
-const DWORD_ duplicate_close_source = DUPLICATE_CLOSE_SOURCE;
-const DWORD_ duplicate_same_access = DUPLICATE_SAME_ACCESS;
-const HANDLE_ invalid_handle_value = INVALID_HANDLE_VALUE;
-#else
-const DWORD_ duplicate_close_source = 1;
-const DWORD_ duplicate_same_access = 2;
-const HANDLE_ invalid_handle_value = (HANDLE_)(-1);
-#endif
+
 using ::CloseHandle;
 using ::DuplicateHandle;
+
+#if defined( BOOST_USE_WINDOWS_H )
+const DWORD_ DUPLICATE_CLOSE_SOURCE_ = DUPLICATE_CLOSE_SOURCE;
+const DWORD_ DUPLICATE_SAME_ACCESS_ = DUPLICATE_SAME_ACCESS;
+const HANDLE_ INVALID_HANDLE_VALUE_ = INVALID_HANDLE_VALUE;
+#else
+const DWORD_ DUPLICATE_CLOSE_SOURCE_ = 1;
+const DWORD_ DUPLICATE_SAME_ACCESS_ = 2;
+const HANDLE_ INVALID_HANDLE_VALUE_ = (HANDLE_)(-1);
+#endif
+
+const DWORD_ duplicate_close_source = DUPLICATE_CLOSE_SOURCE_;
+const DWORD_ duplicate_same_access = DUPLICATE_SAME_ACCESS_;
+const HANDLE_ invalid_handle_value = INVALID_HANDLE_VALUE_;
+
 }
 }
 }

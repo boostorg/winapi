@@ -47,7 +47,7 @@ SetCriticalSectionSpinCount(
     boost::detail::winapi::DWORD_ dwSpinCount);
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= 0x0400
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 TryEnterCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
 #endif
@@ -77,7 +77,7 @@ using ::InitializeCriticalSectionEx;
 using ::SetCriticalSectionSpinCount;
 #endif
 using ::EnterCriticalSection;
-#if BOOST_USE_WINAPI_VERSION >= 0x0400
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 using ::TryEnterCriticalSection;
 #endif
 using ::LeaveCriticalSection;
@@ -136,7 +136,7 @@ BOOST_FORCEINLINE DWORD_ SetCriticalSectionSpinCount(CRITICAL_SECTION_* lpCritic
 }
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= 0x0400
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 BOOST_FORCEINLINE BOOL_ TryEnterCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
     return ::TryEnterCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
