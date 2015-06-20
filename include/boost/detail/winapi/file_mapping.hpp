@@ -11,7 +11,6 @@
 #define BOOST_DETAIL_WINAPI_FILE_MAPPING_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/security.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -28,6 +27,7 @@ CreateFileMappingA(
     boost::detail::winapi::DWORD_ dwMaximumSizeHigh,
     boost::detail::winapi::DWORD_ dwMaximumSizeLow,
     boost::detail::winapi::LPCSTR_ lpName);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 OpenFileMappingA(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
@@ -43,11 +43,13 @@ CreateFileMappingW(
     boost::detail::winapi::DWORD_ dwMaximumSizeHigh,
     boost::detail::winapi::DWORD_ dwMaximumSizeLow,
     boost::detail::winapi::LPCWSTR_ lpName);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 OpenFileMappingW(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandle,
     boost::detail::winapi::LPCWSTR_ lpName);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
 MapViewOfFileEx(
     boost::detail::winapi::HANDLE_ hFileMappingObject,
@@ -56,10 +58,12 @@ MapViewOfFileEx(
     boost::detail::winapi::DWORD_ dwFileOffsetLow,
     boost::detail::winapi::SIZE_T_ dwNumberOfBytesToMap,
     boost::detail::winapi::LPVOID_ lpBaseAddress);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 FlushViewOfFile(
     boost::detail::winapi::LPCVOID_ lpBaseAddress,
     boost::detail::winapi::SIZE_T_ dwNumberOfBytesToFlush);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 UnmapViewOfFile(boost::detail::winapi::LPCVOID_ lpBaseAddress);
 }
@@ -69,14 +73,13 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::CreateFileMappingA;
+using ::OpenFileMappingA;
 #endif
-using ::CreateFileMappingW;
-
-#else
+using ::OpenFileMappingW;
+using ::MapViewOfFileEx;
+using ::FlushViewOfFile;
+using ::UnmapViewOfFile;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateFileMappingA(
@@ -113,16 +116,6 @@ BOOST_FORCEINLINE HANDLE_ CreateFileMappingW(
         dwMaximumSizeLow,
         lpName);
 }
-
-#endif
-
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::OpenFileMappingA;
-#endif
-using ::OpenFileMappingW;
-using ::MapViewOfFileEx;
-using ::FlushViewOfFile;
-using ::UnmapViewOfFile;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_file_mapping(

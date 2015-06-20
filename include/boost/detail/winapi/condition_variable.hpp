@@ -21,14 +21,6 @@
 #include <boost/detail/winapi/basic_types.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
-namespace boost { namespace detail { namespace winapi {
-typedef struct _RTL_CONDITION_VARIABLE {
-    PVOID_ Ptr;
-} CONDITION_VARIABLE_, *PCONDITION_VARIABLE_;
-struct _RTL_CRITICAL_SECTION;
-struct _RTL_SRWLOCK;
-}}}
-
 extern "C" {
 struct _RTL_CONDITION_VARIABLE;
 struct _RTL_CRITICAL_SECTION;
@@ -62,20 +54,11 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
-typedef ::CONDITION_VARIABLE CONDITION_VARIABLE_;
-typedef ::PCONDITION_VARIABLE PCONDITION_VARIABLE_;
-
-using ::InitializeConditionVariable;
-using ::WakeConditionVariable;
-using ::WakeAllConditionVariable;
-using ::SleepConditionVariableCS;
-using ::SleepConditionVariableSRW;
-
-const ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = CONDITION_VARIABLE_LOCKMODE_SHARED;
-
-#else // defined( BOOST_USE_WINDOWS_H )
+typedef struct _RTL_CONDITION_VARIABLE {
+    PVOID_ Ptr;
+} CONDITION_VARIABLE_, *PCONDITION_VARIABLE_;
+struct _RTL_CRITICAL_SECTION;
+struct _RTL_SRWLOCK;
 
 BOOST_FORCEINLINE VOID_ InitializeConditionVariable(PCONDITION_VARIABLE_ ConditionVariable)
 {
@@ -116,8 +99,10 @@ BOOST_FORCEINLINE BOOL_ SleepConditionVariableSRW(
         Flags);
 }
 
+#if defined( BOOST_USE_WINDOWS_H )
+const ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = CONDITION_VARIABLE_LOCKMODE_SHARED;
+#else // defined( BOOST_USE_WINDOWS_H )
 const ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = 0x00000001;
-
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 const ULONG_ condition_variable_lockmode_shared = CONDITION_VARIABLE_LOCKMODE_SHARED_;

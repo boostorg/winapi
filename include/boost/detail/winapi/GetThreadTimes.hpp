@@ -10,6 +10,7 @@
 #ifndef BOOST_DETAIL_WINAPI_GETTHREADTIMES_HPP
 #define BOOST_DETAIL_WINAPI_GETTHREADTIMES_HPP
 
+#include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/time.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -18,7 +19,8 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI GetThreadTimes(
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+GetThreadTimes(
     boost::detail::winapi::HANDLE_ hThread,
     ::_FILETIME* lpCreationTime,
     ::_FILETIME* lpExitTime,
@@ -30,9 +32,7 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI GetThreadTimes(
 namespace boost {
 namespace detail {
 namespace winapi {
-#if defined( BOOST_USE_WINDOWS_H )
-using ::GetThreadTimes;
-#else
+
 BOOST_FORCEINLINE BOOL_ GetThreadTimes(
     HANDLE_ hThread,
     LPFILETIME_ lpCreationTime,
@@ -47,7 +47,7 @@ BOOST_FORCEINLINE BOOL_ GetThreadTimes(
         reinterpret_cast< ::_FILETIME* >(lpKernelTime),
         reinterpret_cast< ::_FILETIME* >(lpUserTime));
 }
-#endif
+
 }
 }
 }

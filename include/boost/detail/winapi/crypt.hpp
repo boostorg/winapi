@@ -17,10 +17,6 @@
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
-namespace boost { namespace detail { namespace winapi {
-typedef ULONG_PTR_ HCRYPTPROV_;
-}}}
-
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
@@ -71,12 +67,10 @@ CryptReleaseContext(
 }
 #endif
 
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+namespace boost {
+namespace detail {
+namespace winapi {
+
 #if defined( BOOST_USE_WINDOWS_H )
 
 typedef ::HCRYPTPROV HCRYPTPROV_;
@@ -90,6 +84,8 @@ const DWORD_ CRYPT_MACHINE_KEYSET_  = CRYPT_MACHINE_KEYSET;
 const DWORD_ CRYPT_SILENT_          = CRYPT_SILENT;
 
 #else
+
+typedef ULONG_PTR_ HCRYPTPROV_;
 
 const DWORD_ PROV_RSA_FULL_         = 1;
 

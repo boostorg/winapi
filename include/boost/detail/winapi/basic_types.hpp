@@ -49,6 +49,7 @@ typedef void* HANDLE;
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 struct _LARGE_INTEGER;
+struct _SECURITY_ATTRIBUTES;
 }
 #endif
 
@@ -90,8 +91,6 @@ typedef ::INT_PTR INT_PTR_;
 typedef ::UINT_PTR UINT_PTR_;
 typedef ::LONG_PTR LONG_PTR_;
 typedef ::ULONG_PTR ULONG_PTR_;
-typedef ::LARGE_INTEGER LARGE_INTEGER_;
-typedef ::PLARGE_INTEGER PLARGE_INTEGER_;
 typedef ::VOID VOID_;
 typedef ::PVOID PVOID_;
 typedef ::LPVOID LPVOID_;
@@ -155,11 +154,6 @@ typedef long LONG_PTR_;
 typedef unsigned long ULONG_PTR_;
 # endif
 
-typedef struct _LARGE_INTEGER {
-    LONGLONG_ QuadPart;
-} LARGE_INTEGER_;
-typedef LARGE_INTEGER_ *PLARGE_INTEGER_;
-
 typedef void VOID_;
 typedef void *PVOID_;
 typedef void *LPVOID_;
@@ -174,6 +168,17 @@ typedef WCHAR_ *LPWSTR_;
 typedef const WCHAR_ *LPCWSTR_;
 
 #endif
+
+typedef struct _LARGE_INTEGER {
+    LONGLONG_ QuadPart;
+} LARGE_INTEGER_, *PLARGE_INTEGER_;
+
+typedef struct _SECURITY_ATTRIBUTES {
+    DWORD_  nLength;
+    LPVOID_ lpSecurityDescriptor;
+    BOOL_   bInheritHandle;
+} SECURITY_ATTRIBUTES_, *PSECURITY_ATTRIBUTES_, *LPSECURITY_ATTRIBUTES_;
+
 }
 }
 }

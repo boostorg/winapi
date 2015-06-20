@@ -11,7 +11,6 @@
 #define BOOST_DETAIL_WINAPI_SEMAPHORE_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/security.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -59,14 +58,11 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::CreateSemaphoreA;
+using ::OpenSemaphoreA;
 #endif
-using ::CreateSemaphoreW;
-
-#else // defined( BOOST_USE_WINDOWS_H )
+using ::OpenSemaphoreW;
+using ::ReleaseSemaphore;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateSemaphoreA(SECURITY_ATTRIBUTES_* lpSemaphoreAttributes, LONG_ lInitialCount, LONG_ lMaximumCount, LPCSTR_ lpName)
@@ -79,14 +75,6 @@ BOOST_FORCEINLINE HANDLE_ CreateSemaphoreW(SECURITY_ATTRIBUTES_* lpSemaphoreAttr
 {
     return ::CreateSemaphoreW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSemaphoreAttributes), lInitialCount, lMaximumCount, lpName);
 }
-
-#endif // defined( BOOST_USE_WINDOWS_H )
-
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::OpenSemaphoreA;
-#endif
-using ::OpenSemaphoreW;
-using ::ReleaseSemaphore;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_semaphore(SECURITY_ATTRIBUTES_* lpSemaphoreAttributes, LONG_ lInitialCount, LONG_ lMaximumCount, LPCSTR_ lpName)

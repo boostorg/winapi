@@ -11,7 +11,6 @@
 #define BOOST_DETAIL_WINAPI_EVENT_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/security.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -62,14 +61,12 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::CreateEventA;
+using ::OpenEventA;
 #endif
-using ::CreateEventW;
-
-#else // defined( BOOST_USE_WINDOWS_H )
+using ::OpenEventW;
+using ::SetEvent;
+using ::ResetEvent;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateEventA(SECURITY_ATTRIBUTES_* lpEventAttributes, BOOL_ bManualReset, BOOL_ bInitialState, LPCSTR_ lpName)
@@ -82,15 +79,6 @@ BOOST_FORCEINLINE HANDLE_ CreateEventW(SECURITY_ATTRIBUTES_* lpEventAttributes, 
 {
     return ::CreateEventW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), bManualReset, bInitialState, lpName);
 }
-
-#endif // defined( BOOST_USE_WINDOWS_H )
-
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::OpenEventA;
-#endif
-using ::OpenEventW;
-using ::SetEvent;
-using ::ResetEvent;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_event(SECURITY_ATTRIBUTES_* lpEventAttributes, BOOL_ bManualReset, BOOL_ bInitialState, LPCSTR_ lpName)

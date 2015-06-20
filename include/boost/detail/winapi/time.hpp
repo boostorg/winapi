@@ -19,24 +19,6 @@
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
-namespace boost { namespace detail { namespace winapi {
-typedef struct _FILETIME {
-    DWORD_ dwLowDateTime;
-    DWORD_ dwHighDateTime;
-} FILETIME_, *PFILETIME_, *LPFILETIME_;
-
-typedef struct _SYSTEMTIME {
-    WORD_ wYear;
-    WORD_ wMonth;
-    WORD_ wDayOfWeek;
-    WORD_ wDay;
-    WORD_ wHour;
-    WORD_ wMinute;
-    WORD_ wSecond;
-    WORD_ wMilliseconds;
-} SYSTEMTIME_, *PSYSTEMTIME_, *LPSYSTEMTIME_;
-}}}
-
 extern "C" {
 struct _FILETIME;
 struct _SYSTEMTIME;
@@ -85,6 +67,22 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
+typedef struct _FILETIME {
+    DWORD_ dwLowDateTime;
+    DWORD_ dwHighDateTime;
+} FILETIME_, *PFILETIME_, *LPFILETIME_;
+
+typedef struct _SYSTEMTIME {
+    WORD_ wYear;
+    WORD_ wMonth;
+    WORD_ wDayOfWeek;
+    WORD_ wDay;
+    WORD_ wHour;
+    WORD_ wMinute;
+    WORD_ wSecond;
+    WORD_ wMilliseconds;
+} SYSTEMTIME_, *PSYSTEMTIME_, *LPSYSTEMTIME_;
+
 #if BOOST_PLAT_WINDOWS_DESKTOP
 using ::GetTickCount;
 #endif
@@ -92,37 +90,23 @@ using ::GetTickCount;
 using ::GetTickCount64;
 #endif
 
-#if defined( BOOST_USE_WINDOWS_H )
-
-typedef ::FILETIME FILETIME_;
-typedef ::PFILETIME PFILETIME_;
-typedef ::LPFILETIME LPFILETIME_;
-
-typedef ::SYSTEMTIME SYSTEMTIME_;
-typedef ::PSYSTEMTIME PSYSTEMTIME_;
-typedef ::LPSYSTEMTIME LPSYSTEMTIME_;
-
-#ifdef BOOST_HAS_GETSYSTEMTIMEASFILETIME  // Windows CE does not define GetSystemTimeAsFileTime
-using ::GetSystemTimeAsFileTime;
-#endif
-#if BOOST_PLAT_WINDOWS_DESKTOP
-using ::FileTimeToLocalFileTime;
-using ::LocalFileTimeToFileTime;
-#endif
-using ::GetSystemTime;
-using ::SystemTimeToFileTime;
-
-#else // defined( BOOST_USE_WINDOWS_H )
-
 BOOST_FORCEINLINE VOID_ GetSystemTime(LPSYSTEMTIME_ lpSystemTime)
 {
     ::GetSystemTime(reinterpret_cast< ::_SYSTEMTIME* >(lpSystemTime));
 }
 
-#ifdef BOOST_HAS_GETSYSTEMTIMEASFILETIME  // Windows CE does not define GetSystemTimeAsFileTime
+#if defined( BOOST_HAS_GETSYSTEMTIMEASFILETIME )
 BOOST_FORCEINLINE VOID_ GetSystemTimeAsFileTime(LPFILETIME_ lpSystemTimeAsFileTime)
 {
     ::GetSystemTimeAsFileTime(reinterpret_cast< ::_FILETIME* >(lpSystemTimeAsFileTime));
+}
+#else
+// Windows CE does not define GetSystemTimeAsFileTime
+BOOST_FORCEINLINE VOID_ GetSystemTimeAsFileTime(FILETIME_* lpFileTime)
+{
+    boost::detail::winapi::SYSTEMTIME_ st;
+    boost::detail::winapi::GetSystemTime(&st);
+    boost::detail::winapi::SystemTimeToFileTime(&st, lpFileTime);
 }
 #endif
 
@@ -145,17 +129,6 @@ BOOST_FORCEINLINE BOOL_ FileTimeToLocalFileTime(const FILETIME_* lpFileTime, FIL
 BOOST_FORCEINLINE BOOL_ LocalFileTimeToFileTime(const FILETIME_* lpLocalFileTime, FILETIME_* lpFileTime)
 {
     return ::LocalFileTimeToFileTime(reinterpret_cast< const ::_FILETIME* >(lpLocalFileTime), reinterpret_cast< ::_FILETIME* >(lpFileTime));
-}
-#endif
-
-#endif // defined( BOOST_USE_WINDOWS_H )
-
-#ifndef BOOST_HAS_GETSYSTEMTIMEASFILETIME
-BOOST_FORCEINLINE VOID_ GetSystemTimeAsFileTime(FILETIME_* lpFileTime)
-{
-    boost::detail::winapi::SYSTEMTIME_ st;
-    boost::detail::winapi::GetSystemTime(&st);
-    boost::detail::winapi::SystemTimeToFileTime(&st, lpFileTime);
 }
 #endif
 

@@ -18,8 +18,11 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI CloseHandle(boost::detail::winapi::HANDLE_ handle);
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI DuplicateHandle(
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+CloseHandle(boost::detail::winapi::HANDLE_ handle);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+DuplicateHandle(
     boost::detail::winapi::HANDLE_ hSourceProcessHandle,
     boost::detail::winapi::HANDLE_ hSourceHandle,
     boost::detail::winapi::HANDLE_ hTargetProcessHandle,

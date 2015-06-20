@@ -20,27 +20,33 @@
 #undef HeapAlloc
 extern "C" {
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
-    GetProcessHeap(boost::detail::winapi::VOID_);
+GetProcessHeap(boost::detail::winapi::VOID_);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-    GetProcessHeaps(boost::detail::winapi::DWORD_ NumberOfHeaps, boost::detail::winapi::PHANDLE_ ProcessHeaps);
+GetProcessHeaps(boost::detail::winapi::DWORD_ NumberOfHeaps, boost::detail::winapi::PHANDLE_ ProcessHeaps);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 HeapCreate(
     boost::detail::winapi::DWORD_ flOptions,
     boost::detail::winapi::SIZE_T_ dwInitialSize,
     boost::detail::winapi::SIZE_T_ dwMaximumSize);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-    HeapDestroy(boost::detail::winapi::HANDLE_ hHeap);
+HeapDestroy(boost::detail::winapi::HANDLE_ hHeap);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
 HeapAlloc(
     boost::detail::winapi::HANDLE_ hHeap,
     boost::detail::winapi::DWORD_ dwFlags,
     boost::detail::winapi::SIZE_T_ dwBytes);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
 HeapReAlloc(
     boost::detail::winapi::HANDLE_ hHeap,
     boost::detail::winapi::DWORD_ dwFlags,
     boost::detail::winapi::LPVOID_ lpMem,
     boost::detail::winapi::SIZE_T_ dwBytes);
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 HeapFree(
     boost::detail::winapi::HANDLE_ hHeap,

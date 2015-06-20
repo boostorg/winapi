@@ -18,7 +18,23 @@
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
-namespace boost { namespace detail { namespace winapi {
+extern "C" {
+struct _SYSTEM_INFO;
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
+GetSystemInfo(::_SYSTEM_INFO* lpSystemInfo);
+
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
+GetNativeSystemInfo(::_SYSTEM_INFO* lpSystemInfo);
+#endif
+}
+#endif
+
+namespace boost {
+namespace detail {
+namespace winapi {
+
 typedef struct _SYSTEM_INFO {
     union {
         DWORD_ dwOemId;
@@ -37,34 +53,6 @@ typedef struct _SYSTEM_INFO {
     WORD_ wProcessorLevel;
     WORD_ wProcessorRevision;
 } SYSTEM_INFO_, *LPSYSTEM_INFO_;
-}}}
-
-extern "C" {
-struct _SYSTEM_INFO;
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
-GetSystemInfo(::_SYSTEM_INFO* lpSystemInfo);
-
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
-BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
-GetNativeSystemInfo(::_SYSTEM_INFO* lpSystemInfo);
-#endif
-}
-#endif
-
-namespace boost {
-namespace detail {
-namespace winapi {
-#if defined( BOOST_USE_WINDOWS_H )
-
-typedef ::SYSTEM_INFO SYSTEM_INFO_;
-typedef ::LPSYSTEM_INFO LPSYSTEM_INFO_;
-using ::GetSystemInfo;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
-using ::GetNativeSystemInfo;
-#endif
-
-#else // defined( BOOST_USE_WINDOWS_H )
 
 BOOST_FORCEINLINE VOID_ GetSystemInfo(LPSYSTEM_INFO_ lpSystemInfo)
 {
@@ -78,7 +66,6 @@ BOOST_FORCEINLINE VOID_ GetNativeSystemInfo(LPSYSTEM_INFO_ lpSystemInfo)
 }
 #endif
 
-#endif // defined( BOOST_USE_WINDOWS_H )
 }
 }
 }

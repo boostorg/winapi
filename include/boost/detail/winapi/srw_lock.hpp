@@ -21,12 +21,6 @@
 #include <boost/detail/winapi/basic_types.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
-namespace boost { namespace detail { namespace winapi {
-typedef struct _RTL_SRWLOCK {
-    PVOID_ Ptr;
-} SRWLOCK_, *PSRWLOCK_;
-}}}
-
 extern "C" {
 struct _RTL_SRWLOCK;
 
@@ -57,23 +51,15 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
+typedef struct _RTL_SRWLOCK {
+    PVOID_ Ptr;
+} SRWLOCK_, *PSRWLOCK_;
+
 #if defined( BOOST_USE_WINDOWS_H )
-
-typedef ::SRWLOCK SRWLOCK_;
-typedef ::PSRWLOCK PSRWLOCK_;
 #define BOOST_DETAIL_WINAPI_SRWLOCK_INIT SRWLOCK_INIT
-
-using ::InitializeSRWLock;
-using ::ReleaseSRWLockExclusive;
-using ::ReleaseSRWLockShared;
-using ::AcquireSRWLockExclusive;
-using ::AcquireSRWLockShared;
-using ::TryAcquireSRWLockExclusive;
-using ::TryAcquireSRWLockShared;
-
-#else // defined( BOOST_USE_WINDOWS_H )
-
+#else
 #define BOOST_DETAIL_WINAPI_SRWLOCK_INIT {0}
+#endif
 
 BOOST_FORCEINLINE VOID_ InitializeSRWLock(PSRWLOCK_ SRWLock)
 {
@@ -109,8 +95,6 @@ BOOST_FORCEINLINE BOOLEAN_ TryAcquireSRWLockShared(PSRWLOCK_ SRWLock)
 {
     return ::TryAcquireSRWLockShared(reinterpret_cast< ::_RTL_SRWLOCK* >(SRWLock));
 }
-
-#endif // defined( BOOST_USE_WINDOWS_H )
 
 }
 }

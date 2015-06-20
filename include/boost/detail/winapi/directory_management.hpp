@@ -11,7 +11,6 @@
 #define BOOST_DETAIL_WINAPI_DIRECTORY_MANAGEMENT_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/security.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -39,14 +38,13 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 namespace boost {
 namespace detail {
 namespace winapi {
-#if defined( BOOST_USE_WINDOWS_H )
 
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::CreateDirectoryA;
+using ::GetTempPathA;
+using ::RemoveDirectoryA;
 #endif
-using ::CreateDirectoryW;
-
-#else
+using ::GetTempPathW;
+using ::RemoveDirectoryW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE BOOL_ CreateDirectoryA(LPCSTR_ pPathName, PSECURITY_ATTRIBUTES_ pSecurityAttributes)
@@ -59,15 +57,6 @@ BOOST_FORCEINLINE BOOL_ CreateDirectoryW(LPCWSTR_ pPathName, PSECURITY_ATTRIBUTE
 {
     return ::CreateDirectoryW(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
-
-#endif
-
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::GetTempPathA;
-using ::RemoveDirectoryA;
-#endif
-using ::GetTempPathW;
-using ::RemoveDirectoryW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE BOOL_ create_directory(LPCSTR_ pPathName, PSECURITY_ATTRIBUTES_ pSecurityAttributes)

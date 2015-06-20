@@ -28,10 +28,7 @@ QueryPerformanceFrequency(::_LARGE_INTEGER* lpFrequency);
 namespace boost {
 namespace detail {
 namespace winapi {
-#if defined( BOOST_USE_WINDOWS_H )
-using ::QueryPerformanceCounter;
-using ::QueryPerformanceFrequency;
-#else
+
 BOOST_FORCEINLINE BOOL_ QueryPerformanceCounter(LARGE_INTEGER_* lpPerformanceCount)
 {
     return ::QueryPerformanceCounter(reinterpret_cast< ::_LARGE_INTEGER* >(lpPerformanceCount));
@@ -41,7 +38,7 @@ BOOST_FORCEINLINE BOOL_ QueryPerformanceFrequency(LARGE_INTEGER_* lpFrequency)
 {
     return ::QueryPerformanceFrequency(reinterpret_cast< ::_LARGE_INTEGER* >(lpFrequency));
 }
-#endif
+
 }
 }
 }

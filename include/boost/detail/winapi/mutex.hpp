@@ -11,7 +11,6 @@
 #define BOOST_DETAIL_WINAPI_MUTEX_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/security.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -54,14 +53,11 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::CreateMutexA;
+using ::OpenMutexA;
 #endif
-using ::CreateMutexW;
-
-#else // defined( BOOST_USE_WINDOWS_H )
+using ::OpenMutexW;
+using ::ReleaseMutex;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateMutexA(
@@ -80,14 +76,6 @@ BOOST_FORCEINLINE HANDLE_ CreateMutexW(
 {
     return ::CreateMutexW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), bInitialOwner, lpName);
 }
-
-#endif // defined( BOOST_USE_WINDOWS_H )
-
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::OpenMutexA;
-#endif
-using ::OpenMutexW;
-using ::ReleaseMutex;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_mutex(SECURITY_ATTRIBUTES_* lpAttributes, BOOL_ bInitialOwner, LPCSTR_ lpName)

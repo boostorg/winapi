@@ -21,14 +21,6 @@
 #include <boost/detail/winapi/basic_types.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
-namespace boost { namespace detail { namespace winapi {
-typedef union _RTL_RUN_ONCE {
-    PVOID_ Ptr;
-} INIT_ONCE_, *PINIT_ONCE_, *LPINIT_ONCE_;
-
-typedef BOOL_ (WINAPI *PINIT_ONCE_FN_) (PINIT_ONCE_ InitOnce, PVOID_ Parameter, PVOID_ *Context);
-}}}
-
 extern "C" {
 union _RTL_RUN_ONCE;
 
@@ -67,27 +59,13 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
+typedef union _RTL_RUN_ONCE {
+    PVOID_ Ptr;
+} INIT_ONCE_, *PINIT_ONCE_, *LPINIT_ONCE_;
 
-typedef ::INIT_ONCE INIT_ONCE_;
-typedef ::PINIT_ONCE PINIT_ONCE_;
-typedef ::LPINIT_ONCE LPINIT_ONCE_;
-#define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT INIT_ONCE_STATIC_INIT
-typedef ::PINIT_ONCE_FN PINIT_ONCE_FN_;
-
-using ::InitOnceInitialize;
-using ::InitOnceExecuteOnce;
-using ::InitOnceBeginInitialize;
-using ::InitOnceComplete;
-
-const DWORD_ INIT_ONCE_ASYNC_ = INIT_ONCE_ASYNC;
-const DWORD_ INIT_ONCE_CHECK_ONLY_ = INIT_ONCE_CHECK_ONLY;
-const DWORD_ INIT_ONCE_INIT_FAILED_ = INIT_ONCE_INIT_FAILED;
-const DWORD_ INIT_ONCE_CTX_RESERVED_BITS_ = INIT_ONCE_CTX_RESERVED_BITS;
-
-#else // defined( BOOST_USE_WINDOWS_H )
-
-#define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT {0}
+extern "C" {
+typedef BOOL_ (WINAPI *PINIT_ONCE_FN_) (PINIT_ONCE_ InitOnce, PVOID_ Parameter, PVOID_ *Context);
+}
 
 BOOST_FORCEINLINE VOID_ InitOnceInitialize(PINIT_ONCE_ InitOnce)
 {
@@ -109,6 +87,17 @@ BOOST_FORCEINLINE BOOL_ InitOnceComplete(PINIT_ONCE_ lpInitOnce, DWORD_ dwFlags,
     return ::InitOnceComplete(reinterpret_cast< ::_RTL_RUN_ONCE* >(InitOnce), dwFlags, lpContext);
 }
 
+#if defined( BOOST_USE_WINDOWS_H )
+
+#define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT INIT_ONCE_STATIC_INIT
+const DWORD_ INIT_ONCE_ASYNC_ = INIT_ONCE_ASYNC;
+const DWORD_ INIT_ONCE_CHECK_ONLY_ = INIT_ONCE_CHECK_ONLY;
+const DWORD_ INIT_ONCE_INIT_FAILED_ = INIT_ONCE_INIT_FAILED;
+const DWORD_ INIT_ONCE_CTX_RESERVED_BITS_ = INIT_ONCE_CTX_RESERVED_BITS;
+
+#else // defined( BOOST_USE_WINDOWS_H )
+
+#define BOOST_DETAIL_WINAPI_INIT_ONCE_STATIC_INIT {0}
 const DWORD_ INIT_ONCE_ASYNC_ = 0x00000002UL;
 const DWORD_ INIT_ONCE_CHECK_ONLY_ = 0x00000001UL;
 const DWORD_ INIT_ONCE_INIT_FAILED_ = 0x00000004UL;

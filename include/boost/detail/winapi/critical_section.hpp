@@ -61,30 +61,6 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
-typedef ::CRITICAL_SECTION CRITICAL_SECTION_;
-
-using ::InitializeCriticalSection;
-#if BOOST_USE_WINAPI_VERSION >= 0x0403
-using ::InitializeCriticalSectionAndSpinCount;
-
-const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = CRITICAL_SECTION_NO_DEBUG_INFO;
-const DWORD_ CRITICAL_SECTION_FLAG_DYNAMIC_SPIN_ = 0x02000000; // undocumented
-const DWORD_ CRITICAL_SECTION_FLAG_STATIC_INIT_ = 0x04000000; // undocumented
-
-using ::InitializeCriticalSectionEx;
-using ::SetCriticalSectionSpinCount;
-#endif
-using ::EnterCriticalSection;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
-using ::TryEnterCriticalSection;
-#endif
-using ::LeaveCriticalSection;
-using ::DeleteCriticalSection;
-
-#else // defined( BOOST_USE_WINDOWS_H )
-
 struct _RTL_CRITICAL_SECTION_DEBUG;
 
 #pragma pack(push, 8)
@@ -121,7 +97,11 @@ BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionAndSpinCount(CRITICAL_SECTION_*
     return ::InitializeCriticalSectionAndSpinCount(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
 }
 
+#if defined( BOOST_USE_WINDOWS_H )
+const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = CRITICAL_SECTION_NO_DEBUG_INFO;
+#else
 const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = 0x01000000;
+#endif
 const DWORD_ CRITICAL_SECTION_FLAG_DYNAMIC_SPIN_ = 0x02000000; // undocumented
 const DWORD_ CRITICAL_SECTION_FLAG_STATIC_INIT_ = 0x04000000; // undocumented
 
@@ -147,8 +127,6 @@ BOOST_FORCEINLINE VOID_ DeleteCriticalSection(CRITICAL_SECTION_* lpCriticalSecti
 {
     ::DeleteCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
 }
-
-#endif // defined( BOOST_USE_WINDOWS_H )
 
 }
 }
