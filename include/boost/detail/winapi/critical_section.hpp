@@ -35,11 +35,13 @@ InitializeCriticalSectionAndSpinCount(
     ::_RTL_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount);
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 InitializeCriticalSectionEx(
     ::_RTL_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount,
     boost::detail::winapi::DWORD_ Flags);
+#endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 SetCriticalSectionSpinCount(
@@ -65,7 +67,7 @@ struct _RTL_CRITICAL_SECTION_DEBUG;
 
 #pragma pack(push, 8)
 
-typedef struct _RTL_CRITICAL_SECTION {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _RTL_CRITICAL_SECTION {
     _RTL_CRITICAL_SECTION_DEBUG* DebugInfo;
     LONG_ LockCount;
     LONG_ RecursionCount;
@@ -97,31 +99,31 @@ BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionAndSpinCount(CRITICAL_SECTION_*
     return ::InitializeCriticalSectionAndSpinCount(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
 }
 
-#if defined( BOOST_USE_WINDOWS_H )
-const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = CRITICAL_SECTION_NO_DEBUG_INFO;
-#else
-const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = 0x01000000;
-#endif
+// MinGW does not define CRITICAL_SECTION_NO_DEBUG_INFO
+const DWORD_ CRITICAL_SECTION_NO_DEBUG_INFO_ = 0x01000000;
+const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = CRITICAL_SECTION_NO_DEBUG_INFO_;
 const DWORD_ CRITICAL_SECTION_FLAG_DYNAMIC_SPIN_ = 0x02000000; // undocumented
 const DWORD_ CRITICAL_SECTION_FLAG_STATIC_INIT_ = 0x04000000; // undocumented
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionEx(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount, DWORD_ Flags)
 {
     return ::InitializeCriticalSectionEx(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount, Flags);
 }
+#endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 BOOST_FORCEINLINE DWORD_ SetCriticalSectionSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
 {
     return ::SetCriticalSectionSpinCount(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
 }
-#endif
+#endif // BOOST_USE_WINAPI_VERSION >= 0x0403
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 BOOST_FORCEINLINE BOOL_ TryEnterCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
     return ::TryEnterCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
 }
-#endif
+#endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 
 BOOST_FORCEINLINE VOID_ DeleteCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {

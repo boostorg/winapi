@@ -20,7 +20,7 @@
 #undef HeapAlloc
 extern "C" {
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
-GetProcessHeap(boost::detail::winapi::VOID_);
+GetProcessHeap(BOOST_DETAIL_WINAPI_VOID);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 GetProcessHeaps(boost::detail::winapi::DWORD_ NumberOfHeaps, boost::detail::winapi::PHANDLE_ ProcessHeaps);

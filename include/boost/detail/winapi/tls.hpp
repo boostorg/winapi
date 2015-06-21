@@ -20,7 +20,7 @@ extern "C" {
 #if !defined( UNDER_CE )
 // Windows CE define TlsAlloc and TlsFree as inline functions in kfuncs.h
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-TlsAlloc(boost::detail::winapi::VOID_);
+TlsAlloc(BOOST_DETAIL_WINAPI_VOID);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 TlsFree(boost::detail::winapi::DWORD_ dwTlsIndex);

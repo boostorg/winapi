@@ -53,12 +53,12 @@ LocalFileTimeToFileTime(
     ::_FILETIME* lpFileTime);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-GetTickCount(boost::detail::winapi::VOID_);
+GetTickCount(BOOST_DETAIL_WINAPI_VOID);
 #endif
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::ULONGLONG_ WINAPI
-GetTickCount64(boost::detail::winapi::VOID_);
+GetTickCount64(BOOST_DETAIL_WINAPI_VOID);
 #endif
 }
 #endif
@@ -67,12 +67,12 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-typedef struct _FILETIME {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _FILETIME {
     DWORD_ dwLowDateTime;
     DWORD_ dwHighDateTime;
 } FILETIME_, *PFILETIME_, *LPFILETIME_;
 
-typedef struct _SYSTEMTIME {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SYSTEMTIME {
     WORD_ wYear;
     WORD_ wMonth;
     WORD_ wDayOfWeek;

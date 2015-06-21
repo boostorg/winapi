@@ -148,7 +148,7 @@ using ::SetEndOfFile;
 using ::LockFile;
 using ::UnlockFile;
 
-typedef struct _OVERLAPPED {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _OVERLAPPED {
     ULONG_PTR_ Internal;
     ULONG_PTR_ InternalHigh;
     union {
@@ -181,7 +181,7 @@ BOOST_FORCEINLINE HANDLE_ CreateFileA(
         hTemplateFile);
 }
 
-typedef struct _WIN32_FIND_DATAA {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _WIN32_FIND_DATAA {
     DWORD_ dwFileAttributes;
     FILETIME_ ftCreationTime;
     FILETIME_ ftLastAccessTime;
@@ -229,7 +229,7 @@ BOOST_FORCEINLINE HANDLE_ CreateFileW(
         hTemplateFile);
 }
 
-typedef struct _WIN32_FIND_DATAW {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _WIN32_FIND_DATAW {
     DWORD_ dwFileAttributes;
     FILETIME_ ftCreationTime;
     FILETIME_ ftLastAccessTime;

@@ -42,7 +42,7 @@ namespace winapi {
 typedef PVOID_ PSID_;
 typedef WORD_ SECURITY_DESCRIPTOR_CONTROL_, *PSECURITY_DESCRIPTOR_CONTROL_;
 
-typedef struct _ACL {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _ACL {
     BYTE_ AclRevision;
     BYTE_ Sbz1;
     WORD_ AclSize;
@@ -50,7 +50,7 @@ typedef struct _ACL {
     WORD_ Sbz2;
 } ACL_, *PACL_;
 
-typedef struct _SECURITY_DESCRIPTOR {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SECURITY_DESCRIPTOR {
     BYTE_ Revision;
     BYTE_ Sbz1;
     SECURITY_DESCRIPTOR_CONTROL_ Control;

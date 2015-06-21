@@ -21,14 +21,14 @@
 extern "C" {
 // Windows CE define GetCurrentThreadId as an inline function in kfuncs.h
 #if !defined( UNDER_CE )
-BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI GetCurrentThreadId(boost::detail::winapi::VOID_);
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI GetCurrentThreadId(BOOST_DETAIL_WINAPI_VOID);
 #endif
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 SleepEx(
     boost::detail::winapi::DWORD_ dwMilliseconds,
     boost::detail::winapi::BOOL_ bAlertable);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI Sleep(boost::detail::winapi::DWORD_ dwMilliseconds);
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI SwitchToThread(boost::detail::winapi::VOID_);
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI SwitchToThread(BOOST_DETAIL_WINAPI_VOID);
 }
 #endif
 

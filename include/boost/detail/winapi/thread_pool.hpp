@@ -34,14 +34,6 @@ RegisterWaitForSingleObject(
     boost::detail::winapi::ULONG_ dwMilliseconds,
     boost::detail::winapi::ULONG_ dwFlags);
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
-RegisterWaitForSingleObjectEx(
-    boost::detail::winapi::HANDLE_ hObject,
-    WAITORTIMERCALLBACK Callback,
-    boost::detail::winapi::PVOID_ Context,
-    boost::detail::winapi::ULONG_ dwMilliseconds,
-    boost::detail::winapi::ULONG_ dwFlags);
-
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 UnregisterWait(boost::detail::winapi::HANDLE_ WaitHandle);
 
@@ -60,7 +52,6 @@ typedef ::WAITORTIMERCALLBACKFUNC WAITORTIMERCALLBACKFUNC_;
 typedef ::WAITORTIMERCALLBACK WAITORTIMERCALLBACK_;
 
 using ::RegisterWaitForSingleObject;
-using ::RegisterWaitForSingleObjectEx;
 using ::UnregisterWait;
 using ::UnregisterWaitEx;
 

@@ -51,7 +51,7 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-typedef struct _RTL_SRWLOCK {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _RTL_SRWLOCK {
     PVOID_ Ptr;
 } SRWLOCK_, *PSRWLOCK_;
 

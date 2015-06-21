@@ -54,7 +54,7 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-typedef struct _RTL_CONDITION_VARIABLE {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _RTL_CONDITION_VARIABLE {
     PVOID_ Ptr;
 } CONDITION_VARIABLE_, *PCONDITION_VARIABLE_;
 struct _RTL_CRITICAL_SECTION;
@@ -94,7 +94,7 @@ BOOST_FORCEINLINE BOOL_ SleepConditionVariableSRW(
 {
     return ::SleepConditionVariableSRW(
         reinterpret_cast< ::_RTL_CONDITION_VARIABLE* >(ConditionVariable),
-        reinterpret_cast< ::_RTL_SRWLOCK* >(CriticalSection),
+        reinterpret_cast< ::_RTL_SRWLOCK* >(SRWLock),
         dwMilliseconds,
         Flags);
 }

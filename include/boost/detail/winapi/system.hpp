@@ -35,7 +35,7 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-typedef struct _SYSTEM_INFO {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SYSTEM_INFO {
     union {
         DWORD_ dwOemId;
         struct {

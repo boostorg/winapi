@@ -1,10 +1,10 @@
 //  basic_types.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
+//  Copyright 2015 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
-
 
 #ifndef BOOST_DETAIL_WINAPI_BASIC_TYPES_HPP
 #define BOOST_DETAIL_WINAPI_BASIC_TYPES_HPP
@@ -12,6 +12,10 @@
 #include <cstdarg>
 #include <boost/cstdint.hpp>
 #include <boost/detail/winapi/config.hpp>
+
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
 
 #if defined( BOOST_USE_WINDOWS_H )
 # include <windows.h>
@@ -42,16 +46,36 @@ typedef void* HANDLE;
 # error "Win32 functions not available"
 #endif
 
-#ifdef BOOST_HAS_PRAGMA_ONCE
-#pragma once
+#ifndef NO_STRICT
+#ifndef STRICT
+#define STRICT 1
+#endif
+#endif
+
+#if defined(STRICT)
+#define BOOST_DETAIL_WINAPI_DECLARE_HANDLE(x) struct x##__; typedef struct x##__ *x
+#else
+#define BOOST_DETAIL_WINAPI_DECLARE_HANDLE(x) typedef void* x
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-struct _LARGE_INTEGER;
+union _LARGE_INTEGER;
 struct _SECURITY_ATTRIBUTES;
+BOOST_DETAIL_WINAPI_DECLARE_HANDLE(HINSTANCE);
+typedef HINSTANCE HMODULE;
 }
 #endif
+
+#if defined(__GNUC__)
+#define BOOST_DETAIL_WINAPI_MAY_ALIAS __attribute__ ((__may_alias__))
+#else
+#define BOOST_DETAIL_WINAPI_MAY_ALIAS
+#endif
+
+// MinGW64 gcc 4.8.2 fails to compile function declarations with boost::detail::winapi::VOID_ arguments even though
+// the typedef expands to void. In Windows SDK, VOID is a macro which unfolds to void. We use our own macro in such cases.
+#define BOOST_DETAIL_WINAPI_VOID void
 
 namespace boost {
 namespace detail {
@@ -74,7 +98,6 @@ typedef ::PDWORD PDWORD_;
 typedef ::LPDWORD LPDWORD_;
 typedef ::HANDLE HANDLE_;
 typedef ::PHANDLE PHANDLE_;
-typedef ::HMODULE HMODULE_;
 typedef ::INT INT_;
 typedef ::PINT PINT_;
 typedef ::LPINT LPINT_;
@@ -91,9 +114,16 @@ typedef ::INT_PTR INT_PTR_;
 typedef ::UINT_PTR UINT_PTR_;
 typedef ::LONG_PTR LONG_PTR_;
 typedef ::ULONG_PTR ULONG_PTR_;
-typedef ::VOID VOID_;
+typedef ::DWORD_PTR DWORD_PTR_;
+typedef ::PDWORD_PTR PDWORD_PTR_;
+typedef ::SIZE_T SIZE_T_;
+typedef ::PSIZE_T PSIZE_T_;
+typedef ::SSIZE_T SSIZE_T_;
+typedef ::PSSIZE_T PSSIZE_T_;
+typedef VOID VOID_; // VOID is a macro
 typedef ::PVOID PVOID_;
 typedef ::LPVOID LPVOID_;
+typedef ::LPCVOID LPCVOID_;
 typedef ::CHAR CHAR_;
 typedef ::LPSTR LPSTR_;
 typedef ::LPCSTR LPCSTR_;
@@ -101,7 +131,7 @@ typedef ::WCHAR WCHAR_;
 typedef ::LPWSTR LPWSTR_;
 typedef ::LPCWSTR LPCWSTR_;
 
-#else
+#else // defined( BOOST_USE_WINDOWS_H )
 
 typedef int BOOL_;
 typedef BOOL_* PBOOL_;
@@ -119,7 +149,6 @@ typedef DWORD_* PDWORD_;
 typedef DWORD_* LPDWORD_;
 typedef void* HANDLE_;
 typedef void** PHANDLE_;
-typedef void* HMODULE_;
 
 typedef int INT_;
 typedef INT_* PINT_;
@@ -154,6 +183,10 @@ typedef long LONG_PTR_;
 typedef unsigned long ULONG_PTR_;
 # endif
 
+typedef ULONG_PTR_ DWORD_PTR_, *PDWORD_PTR_;
+typedef ULONG_PTR_ SIZE_T_, *PSIZE_T_;
+typedef LONG_PTR_ SSIZE_T_, *PSSIZE_T_;
+
 typedef void VOID_;
 typedef void *PVOID_;
 typedef void *LPVOID_;
@@ -167,13 +200,19 @@ typedef wchar_t WCHAR_;
 typedef WCHAR_ *LPWSTR_;
 typedef const WCHAR_ *LPCWSTR_;
 
-#endif
+#endif // defined( BOOST_USE_WINDOWS_H )
 
-typedef struct _LARGE_INTEGER {
+typedef ::HMODULE HMODULE_;
+
+typedef union BOOST_DETAIL_WINAPI_MAY_ALIAS _LARGE_INTEGER {
+    struct {
+        DWORD_ LowPart;
+        LONG_ HighPart;
+    } u;
     LONGLONG_ QuadPart;
 } LARGE_INTEGER_, *PLARGE_INTEGER_;
 
-typedef struct _SECURITY_ATTRIBUTES {
+typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SECURITY_ATTRIBUTES {
     DWORD_  nLength;
     LPVOID_ lpSecurityDescriptor;
     BOOL_   bInheritHandle;

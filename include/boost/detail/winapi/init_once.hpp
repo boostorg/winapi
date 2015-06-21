@@ -59,32 +59,32 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-typedef union _RTL_RUN_ONCE {
+typedef union BOOST_DETAIL_WINAPI_MAY_ALIAS _RTL_RUN_ONCE {
     PVOID_ Ptr;
 } INIT_ONCE_, *PINIT_ONCE_, *LPINIT_ONCE_;
 
 extern "C" {
-typedef BOOL_ (WINAPI *PINIT_ONCE_FN_) (PINIT_ONCE_ InitOnce, PVOID_ Parameter, PVOID_ *Context);
+typedef BOOL_ (WINAPI *PINIT_ONCE_FN_) (PINIT_ONCE_ lpInitOnce, PVOID_ Parameter, PVOID_ *Context);
 }
 
-BOOST_FORCEINLINE VOID_ InitOnceInitialize(PINIT_ONCE_ InitOnce)
+BOOST_FORCEINLINE VOID_ InitOnceInitialize(PINIT_ONCE_ lpInitOnce)
 {
-    ::InitOnceInitialize(reinterpret_cast< ::_RTL_RUN_ONCE* >(InitOnce));
+    ::InitOnceInitialize(reinterpret_cast< ::_RTL_RUN_ONCE* >(lpInitOnce));
 }
 
-BOOST_FORCEINLINE BOOL_ InitOnceExecuteOnce(PINIT_ONCE_ InitOnce, PINIT_ONCE_FN_ InitFn, PVOID_ Parameter, LPVOID_ *Context)
+BOOST_FORCEINLINE BOOL_ InitOnceExecuteOnce(PINIT_ONCE_ lpInitOnce, PINIT_ONCE_FN_ InitFn, PVOID_ Parameter, LPVOID_ *Context)
 {
-    return ::InitOnceExecuteOnce(reinterpret_cast< ::_RTL_RUN_ONCE* >(InitOnce), reinterpret_cast< ::PINIT_ONCE_FN >(InitFn), Parameter, Context);
+    return ::InitOnceExecuteOnce(reinterpret_cast< ::_RTL_RUN_ONCE* >(lpInitOnce), reinterpret_cast< ::PINIT_ONCE_FN >(InitFn), Parameter, Context);
 }
 
 BOOST_FORCEINLINE BOOL_ InitOnceBeginInitialize(PINIT_ONCE_ lpInitOnce, DWORD_ dwFlags, PBOOL_ fPending, LPVOID_ *lpContext)
 {
-    return ::InitOnceBeginInitialize(reinterpret_cast< ::_RTL_RUN_ONCE* >(InitOnce), dwFlags, fPending, lpContext);
+    return ::InitOnceBeginInitialize(reinterpret_cast< ::_RTL_RUN_ONCE* >(lpInitOnce), dwFlags, fPending, lpContext);
 }
 
 BOOST_FORCEINLINE BOOL_ InitOnceComplete(PINIT_ONCE_ lpInitOnce, DWORD_ dwFlags, LPVOID_ lpContext)
 {
-    return ::InitOnceComplete(reinterpret_cast< ::_RTL_RUN_ONCE* >(InitOnce), dwFlags, lpContext);
+    return ::InitOnceComplete(reinterpret_cast< ::_RTL_RUN_ONCE* >(lpInitOnce), dwFlags, lpContext);
 }
 
 #if defined( BOOST_USE_WINDOWS_H )
