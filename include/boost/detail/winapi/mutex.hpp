@@ -60,19 +60,13 @@ using ::OpenMutexW;
 using ::ReleaseMutex;
 
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_FORCEINLINE HANDLE_ CreateMutexA(
-    SECURITY_ATTRIBUTES_* lpMutexAttributes,
-    BOOL_ bInitialOwner,
-    LPCSTR_ lpName)
+BOOST_FORCEINLINE HANDLE_ CreateMutexA(SECURITY_ATTRIBUTES_* lpMutexAttributes, BOOL_ bInitialOwner, LPCSTR_ lpName)
 {
     return ::CreateMutexA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), bInitialOwner, lpName);
 }
 #endif
 
-BOOST_FORCEINLINE HANDLE_ CreateMutexW(
-    ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
-    BOOL_ bInitialOwner,
-    LPCWSTR_ lpName)
+BOOST_FORCEINLINE HANDLE_ CreateMutexW(SECURITY_ATTRIBUTES_* lpMutexAttributes, BOOL_ bInitialOwner, LPCWSTR_ lpName)
 {
     return ::CreateMutexW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), bInitialOwner, lpName);
 }
