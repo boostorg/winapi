@@ -9,7 +9,7 @@
  * \author Andrey Semashev
  * \date   21.06.2015
  *
- * \brief  This file contains a test boilerplate for checking that every public header does not conflict with native windows.h pre-included.
+ * \brief  This file contains a test boilerplate for checking that every public header does not conflict with native windows.h being post-included.
  */
 
 // NOTE: Use Boost.Predef, the most fine graned header to detect Windows. This header should not include anything
@@ -19,11 +19,11 @@
 
 #if BOOST_OS_WINDOWS
 
-#include <windows.h>
-
 #define BOOST_WINAPI_TEST_INCLUDE_HEADER() <boost/detail/BOOST_WINAPI_TEST_HEADER>
 
 #include BOOST_WINAPI_TEST_INCLUDE_HEADER()
+
+#include <windows.h>
 
 #endif // BOOST_OS_WINDOWS
 
