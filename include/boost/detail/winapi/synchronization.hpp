@@ -10,6 +10,8 @@
 #ifndef BOOST_DETAIL_WINAPI_SYNCHRONIZATION_HPP
 #define BOOST_DETAIL_WINAPI_SYNCHRONIZATION_HPP
 
+#include <boost/predef.h>
+
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/critical_section.hpp>
 #include <boost/detail/winapi/wait.hpp>
