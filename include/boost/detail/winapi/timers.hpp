@@ -17,11 +17,13 @@
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 QueryPerformanceCounter(::_LARGE_INTEGER* lpPerformanceCount);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 QueryPerformanceFrequency(::_LARGE_INTEGER* lpFrequency);
+}
 #endif
 
 
