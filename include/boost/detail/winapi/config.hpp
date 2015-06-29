@@ -35,8 +35,12 @@
 #elif defined(WINVER)
 #define BOOST_USE_WINAPI_VERSION WINVER
 #else
-// By default use Windows Vista API
+// By default use Windows Vista API on compilers that support it and XP on the others
+#if defined(_MSC_VER) && _MSC_VER <= 1400
+#define BOOST_USE_WINAPI_VERSION BOOST_WINAPI_VERSION_WINXP
+#else
 #define BOOST_USE_WINAPI_VERSION BOOST_WINAPI_VERSION_WIN6
+#endif
 #endif
 #endif
 
