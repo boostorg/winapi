@@ -13,6 +13,7 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/predef/platform.h>
+#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -56,7 +57,7 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 GetTickCount(BOOST_DETAIL_WINAPI_VOID);
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_SYMBOL_IMPORT boost::detail::winapi::ULONGLONG_ WINAPI
 GetTickCount64(BOOST_DETAIL_WINAPI_VOID);
 #endif
@@ -86,7 +87,7 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SYSTEMTIME {
 #if BOOST_PLAT_WINDOWS_DESKTOP
 using ::GetTickCount;
 #endif
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 using ::GetTickCount64;
 #endif
 

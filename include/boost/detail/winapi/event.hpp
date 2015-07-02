@@ -12,6 +12,7 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/predef/platform.h>
+#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -29,7 +30,7 @@ CreateEventA(
     boost::detail::winapi::LPCSTR_ lpName);
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateEventExA(
     ::_SECURITY_ATTRIBUTES *lpEventAttributes,
@@ -52,7 +53,7 @@ CreateEventW(
     boost::detail::winapi::BOOL_ bInitialState,
     boost::detail::winapi::LPCWSTR_ lpName);
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateEventExW(
     ::_SECURITY_ATTRIBUTES *lpEventAttributes,
@@ -92,7 +93,7 @@ using ::ResetEvent;
 #if defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ EVENT_ALL_ACCESS_ = EVENT_ALL_ACCESS;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 const DWORD_ CREATE_EVENT_INITIAL_SET_ = CREATE_EVENT_INITIAL_SET;
 const DWORD_ CREATE_EVENT_MANUAL_RESET_ = CREATE_EVENT_MANUAL_RESET;
 #endif
@@ -100,7 +101,7 @@ const DWORD_ CREATE_EVENT_MANUAL_RESET_ = CREATE_EVENT_MANUAL_RESET;
 #else // defined( BOOST_USE_WINDOWS_H )
     
 const DWORD_ EVENT_ALL_ACCESS_ = 0x1F0003;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 const DWORD_ CREATE_EVENT_INITIAL_SET_ = 0x00000002;
 const DWORD_ CREATE_EVENT_MANUAL_RESET_ = 0x00000001;
 #endif
@@ -108,7 +109,7 @@ const DWORD_ CREATE_EVENT_MANUAL_RESET_ = 0x00000001;
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ event_all_access = EVENT_ALL_ACCESS_;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 const DWORD_ create_event_initial_set = CREATE_EVENT_INITIAL_SET_;
 const DWORD_ create_event_manual_reset = CREATE_EVENT_MANUAL_RESET_;
 #endif
@@ -116,7 +117,7 @@ const DWORD_ create_event_manual_reset = CREATE_EVENT_MANUAL_RESET_;
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateEventA(SECURITY_ATTRIBUTES_* lpEventAttributes, BOOL_ bManualReset, BOOL_ bInitialState, LPCSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
     const DWORD_ flags = (bManualReset ? create_event_manual_reset : 0u) | (bInitialState ? create_event_initial_set : 0u);
     return ::CreateEventExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access); 
 #else
@@ -124,7 +125,7 @@ BOOST_FORCEINLINE HANDLE_ CreateEventA(SECURITY_ATTRIBUTES_* lpEventAttributes, 
 #endif
 }
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_FORCEINLINE HANDLE_ CreateEventExA(SECURITY_ATTRIBUTES_* lpEventAttributes, LPCSTR_ lpName, DWORD_ dwFlags, DWORD_ dwDesiredAccess)
 {
     return ::CreateEventExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, dwFlags, dwDesiredAccess);
@@ -134,7 +135,7 @@ BOOST_FORCEINLINE HANDLE_ CreateEventExA(SECURITY_ATTRIBUTES_* lpEventAttributes
 
 BOOST_FORCEINLINE HANDLE_ CreateEventW(SECURITY_ATTRIBUTES_* lpEventAttributes, BOOL_ bManualReset, BOOL_ bInitialState, LPCWSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
     const DWORD_ flags = (bManualReset ? create_event_manual_reset : 0u) | (bInitialState ? create_event_initial_set : 0u);
     return ::CreateEventExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access); 
 #else
@@ -142,7 +143,7 @@ BOOST_FORCEINLINE HANDLE_ CreateEventW(SECURITY_ATTRIBUTES_* lpEventAttributes, 
 #endif
 }
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_FORCEINLINE HANDLE_ CreateEventExW(SECURITY_ATTRIBUTES_* lpEventAttributes, LPCWSTR_ lpName, DWORD_ dwFlags, DWORD_ dwDesiredAccess)
 {
     return ::CreateEventExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, dwFlags, dwDesiredAccess);

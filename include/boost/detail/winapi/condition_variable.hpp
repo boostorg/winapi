@@ -11,12 +11,13 @@
 #define BOOST_DETAIL_WINAPI_CONDITION_VARIABLE_HPP
 
 #include <boost/detail/winapi/config.hpp>
+#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 
 #include <boost/detail/winapi/basic_types.hpp>
 

@@ -31,14 +31,6 @@ InitializeCriticalSectionAndSpinCount(
     ::_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount);
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-InitializeCriticalSectionEx(
-    ::_CRITICAL_SECTION* lpCriticalSection,
-    boost::detail::winapi::DWORD_ dwSpinCount,
-    boost::detail::winapi::DWORD_ Flags);
-#endif
-
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 SetCriticalSectionSpinCount(
     ::_CRITICAL_SECTION* lpCriticalSection,
@@ -101,13 +93,6 @@ const DWORD_ CRITICAL_SECTION_NO_DEBUG_INFO_ = 0x01000000;
 const DWORD_ CRITICAL_SECTION_FLAG_NO_DEBUG_INFO_ = CRITICAL_SECTION_NO_DEBUG_INFO_;
 const DWORD_ CRITICAL_SECTION_FLAG_DYNAMIC_SPIN_ = 0x02000000; // undocumented
 const DWORD_ CRITICAL_SECTION_FLAG_STATIC_INIT_ = 0x04000000; // undocumented
-
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionEx(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount, DWORD_ Flags)
-{
-    return ::InitializeCriticalSectionEx(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount, Flags);
-}
-#endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 BOOST_FORCEINLINE DWORD_ SetCriticalSectionSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
 {

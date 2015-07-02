@@ -20,9 +20,11 @@ else it expands to 0. For mingw-64 on Windows
 it expands to 0. On Windows both gcc and clang
 can target gcc/mingw.
 
-The reason for using this macro in winapi is that
-when the macro expands to 1 it causes some adjustments
-which depend on the win32 implementation of mingw.
+The macro BOOST_WINAPI_IS_MINGW_64 expands to 1
+if the compiler targets gcc/mingw-64 on Windows,
+else it expands to 0. For mingw on Windows
+it expands to 0. On Windows currently only gcc
+can target gcc/mingw-64.
 
 */
 
@@ -30,11 +32,14 @@ which depend on the win32 implementation of mingw.
 #include <_mingw.h>
 #if defined __MINGW64_VERSION_MAJOR
 #define BOOST_WINAPI_IS_MINGW 0
+#define BOOST_WINAPI_IS_MINGW_64 1
 #else
 #define BOOST_WINAPI_IS_MINGW 1
+#define BOOST_WINAPI_IS_MINGW_64 0
 #endif
 #else
 #define BOOST_WINAPI_IS_MINGW 0
+#define BOOST_WINAPI_IS_MINGW_64 0
 #endif
 
 #endif //BOOST_DETAIL_WINAPI_ISMINGW_HXX

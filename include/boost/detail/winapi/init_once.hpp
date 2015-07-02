@@ -11,18 +11,23 @@
 #define BOOST_DETAIL_WINAPI_INIT_ONCE_HPP
 
 #include <boost/detail/winapi/config.hpp>
+#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 
 #include <boost/detail/winapi/basic_types.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+#if BOOST_WINAPI_IS_MINGW_64
+struct _RTL_RUN_ONCE;
+#else
 union _RTL_RUN_ONCE;
+#endif
 
 typedef boost::detail::winapi::BOOL_
 (WINAPI *PINIT_ONCE_FN) (

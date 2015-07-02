@@ -12,6 +12,7 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/predef/platform.h>
+#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -28,7 +29,7 @@ CreateMutexA(
     boost::detail::winapi::LPCSTR_ lpName);
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateMutexExA(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
@@ -52,7 +53,7 @@ CreateMutexW(
     boost::detail::winapi::LPCWSTR_ lpName);
 #endif
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateMutexExW(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
@@ -85,28 +86,28 @@ using ::ReleaseMutex;
 #if defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ MUTEX_ALL_ACCESS_ = MUTEX_ALL_ACCESS;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 const DWORD_ CREATE_MUTEX_INITIAL_OWNER_ = CREATE_MUTEX_INITIAL_OWNER;
 #endif
 
 #else // defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ MUTEX_ALL_ACCESS_ = 0x1F0001;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 const DWORD_ CREATE_MUTEX_INITIAL_OWNER_ = 0x00000001;
 #endif
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ mutex_all_access = MUTEX_ALL_ACCESS_;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 const DWORD_ create_mutex_initial_owner = CREATE_MUTEX_INITIAL_OWNER_;
 #endif
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateMutexA(SECURITY_ATTRIBUTES_* lpMutexAttributes, BOOL_ bInitialOwner, LPCSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
     const DWORD_ flags = bInitialOwner ? create_mutex_initial_owner : 0u;
     return ::CreateMutexExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), lpName, flags, mutex_all_access);
 #else
@@ -114,7 +115,7 @@ BOOST_FORCEINLINE HANDLE_ CreateMutexA(SECURITY_ATTRIBUTES_* lpMutexAttributes, 
 #endif
 }
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_FORCEINLINE HANDLE_ CreateMutexExA(
     SECURITY_ATTRIBUTES_* lpMutexAttributes,
     LPCSTR_ lpName,
@@ -128,7 +129,7 @@ BOOST_FORCEINLINE HANDLE_ CreateMutexExA(
 
 BOOST_FORCEINLINE HANDLE_ CreateMutexW(SECURITY_ATTRIBUTES_* lpMutexAttributes, BOOL_ bInitialOwner, LPCWSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
     const DWORD_ flags = bInitialOwner ? create_mutex_initial_owner : 0u;
     return ::CreateMutexExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), lpName, flags, mutex_all_access);
 #else
@@ -136,7 +137,7 @@ BOOST_FORCEINLINE HANDLE_ CreateMutexW(SECURITY_ATTRIBUTES_* lpMutexAttributes, 
 #endif
 }
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6 && !BOOST_WINAPI_IS_MINGW
 BOOST_FORCEINLINE HANDLE_ CreateMutexExW(
     SECURITY_ATTRIBUTES_* lpMutexAttributes,
     LPCWSTR_ lpName,
