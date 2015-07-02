@@ -1,20 +1,12 @@
-//  critical_section.hpp  --------------------------------------------------------------//
+//  critical_section_mingw.hxx  --------------------------------------------------------------//
 
-//  Copyright 2010 Vicente J. Botet Escriba
-//  Copyright 2015 Andrey Semashev
+//  Copyright 2015 Edward Diener
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
-
-#ifndef BOOST_DETAIL_WINAPI_CRITICAL_SECTION_HPP
-#define BOOST_DETAIL_WINAPI_CRITICAL_SECTION_HPP
-
-#include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/IsMingw.hxx>
-#if BOOST_WINAPI_IS_MINGW
-#include <boost/detail/winapi/critical_section_mingw.hxx>
-#else
+#ifndef BOOST_DETAIL_WINAPI_CRITICAL_SECTION_MINGW_HXX
+#define BOOST_DETAIL_WINAPI_CRITICAL_SECTION_MINGW_HXX
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -22,44 +14,44 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-struct _RTL_CRITICAL_SECTION;
+struct _CRITICAL_SECTION;
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
-InitializeCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
+InitializeCriticalSection(::_CRITICAL_SECTION* lpCriticalSection);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
-EnterCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
+EnterCriticalSection(::_CRITICAL_SECTION* lpCriticalSection);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
-LeaveCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
+LeaveCriticalSection(::_CRITICAL_SECTION* lpCriticalSection);
 
 #if BOOST_USE_WINAPI_VERSION >= 0x0403
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 InitializeCriticalSectionAndSpinCount(
-    ::_RTL_CRITICAL_SECTION* lpCriticalSection,
+    ::_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount);
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 InitializeCriticalSectionEx(
-    ::_RTL_CRITICAL_SECTION* lpCriticalSection,
+    ::_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount,
     boost::detail::winapi::DWORD_ Flags);
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 SetCriticalSectionSpinCount(
-    ::_RTL_CRITICAL_SECTION* lpCriticalSection,
+    ::_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount);
 #endif
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-TryEnterCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
+TryEnterCriticalSection(::_CRITICAL_SECTION* lpCriticalSection);
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
-DeleteCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
+DeleteCriticalSection(::_CRITICAL_SECTION* lpCriticalSection);
 
 }
 #endif
@@ -85,23 +77,23 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _RTL_CRITICAL_SECTION {
 
 BOOST_FORCEINLINE VOID_ InitializeCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
-    ::InitializeCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
+    ::InitializeCriticalSection(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection));
 }
 
 BOOST_FORCEINLINE VOID_ EnterCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
-    ::EnterCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
+    ::EnterCriticalSection(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection));
 }
 
 BOOST_FORCEINLINE VOID_ LeaveCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
-    ::LeaveCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
+    ::LeaveCriticalSection(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection));
 }
 
 #if BOOST_USE_WINAPI_VERSION >= 0x0403
 BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionAndSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
 {
-    return ::InitializeCriticalSectionAndSpinCount(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
+    return ::InitializeCriticalSectionAndSpinCount(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
 }
 
 // MinGW does not define CRITICAL_SECTION_NO_DEBUG_INFO
@@ -113,31 +105,30 @@ const DWORD_ CRITICAL_SECTION_FLAG_STATIC_INIT_ = 0x04000000; // undocumented
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionEx(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount, DWORD_ Flags)
 {
-    return ::InitializeCriticalSectionEx(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount, Flags);
+    return ::InitializeCriticalSectionEx(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount, Flags);
 }
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 BOOST_FORCEINLINE DWORD_ SetCriticalSectionSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
 {
-    return ::SetCriticalSectionSpinCount(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
+    return ::SetCriticalSectionSpinCount(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection), dwSpinCount);
 }
 #endif // BOOST_USE_WINAPI_VERSION >= 0x0403
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 BOOST_FORCEINLINE BOOL_ TryEnterCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
-    return ::TryEnterCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
+    return ::TryEnterCriticalSection(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection));
 }
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 
 BOOST_FORCEINLINE VOID_ DeleteCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
-    ::DeleteCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(lpCriticalSection));
+    ::DeleteCriticalSection(reinterpret_cast< ::_CRITICAL_SECTION* >(lpCriticalSection));
 }
 
 }
 }
 }
 
-#endif // BOOST_WINAPI_IS_MINGW
-#endif // BOOST_DETAIL_WINAPI_CRITICAL_SECTION_HPP
+#endif // BOOST_DETAIL_WINAPI_CRITICAL_SECTION_MINGW_HXX

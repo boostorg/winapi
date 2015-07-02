@@ -10,6 +10,7 @@
 #define BOOST_DETAIL_WINAPI_THREAD_POOL_HPP
 
 #include <boost/detail/winapi/config.hpp>
+#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -34,6 +35,8 @@ RegisterWaitForSingleObject(
     boost::detail::winapi::ULONG_ dwMilliseconds,
     boost::detail::winapi::ULONG_ dwFlags);
 
+#if (BOOST_WINAPI_IS_MINGW && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP) || (!BOOST_WINAPI_IS_MINGW && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K)
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 UnregisterWait(boost::detail::winapi::HANDLE_ WaitHandle);
 
@@ -41,6 +44,9 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 UnregisterWaitEx(
     boost::detail::winapi::HANDLE_ WaitHandle,
     boost::detail::winapi::HANDLE_ CompletionEvent);
+    
+#endif
+
 }
 #endif
 
@@ -52,19 +58,28 @@ typedef ::WAITORTIMERCALLBACKFUNC WAITORTIMERCALLBACKFUNC_;
 typedef ::WAITORTIMERCALLBACK WAITORTIMERCALLBACK_;
 
 using ::RegisterWaitForSingleObject;
+
+#if (BOOST_WINAPI_IS_MINGW && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP) || (!BOOST_WINAPI_IS_MINGW && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K)
+
 using ::UnregisterWait;
 using ::UnregisterWaitEx;
+
+#endif
 
 #if defined( BOOST_USE_WINDOWS_H )
 
 const ULONG_ WT_EXECUTEDEFAULT_ = WT_EXECUTEDEFAULT;
 const ULONG_ WT_EXECUTEINIOTHREAD_ = WT_EXECUTEINIOTHREAD;
+#if !BOOST_WINAPI_IS_MINGW
 const ULONG_ WT_EXECUTEINUITHREAD_ = WT_EXECUTEINUITHREAD;
+#endif
 const ULONG_ WT_EXECUTEINWAITTHREAD_ = WT_EXECUTEINWAITTHREAD;
 const ULONG_ WT_EXECUTEONLYONCE_ = WT_EXECUTEONLYONCE;
 const ULONG_ WT_EXECUTEINTIMERTHREAD_ = WT_EXECUTEINTIMERTHREAD;
 const ULONG_ WT_EXECUTELONGFUNCTION_ = WT_EXECUTELONGFUNCTION;
+#if !BOOST_WINAPI_IS_MINGW
 const ULONG_ WT_EXECUTEINPERSISTENTIOTHREAD_ = WT_EXECUTEINPERSISTENTIOTHREAD;
+#endif
 const ULONG_ WT_EXECUTEINPERSISTENTTHREAD_ = WT_EXECUTEINPERSISTENTTHREAD;
 const ULONG_ WT_TRANSFER_IMPERSONATION_ = WT_TRANSFER_IMPERSONATION;
 
@@ -77,12 +92,16 @@ inline ULONG_ wt_set_max_threadpool_threads(ULONG_ flags, ULONG_ limit)
 
 const ULONG_ WT_EXECUTEDEFAULT_ = 0x00000000;
 const ULONG_ WT_EXECUTEINIOTHREAD_ = 0x00000001;
+#if !BOOST_WINAPI_IS_MINGW
 const ULONG_ WT_EXECUTEINUITHREAD_ = 0x00000002;
+#endif
 const ULONG_ WT_EXECUTEINWAITTHREAD_ = 0x00000004;
 const ULONG_ WT_EXECUTEONLYONCE_ = 0x00000008;
 const ULONG_ WT_EXECUTEINTIMERTHREAD_ = 0x00000020;
 const ULONG_ WT_EXECUTELONGFUNCTION_ = 0x00000010;
+#if !BOOST_WINAPI_IS_MINGW
 const ULONG_ WT_EXECUTEINPERSISTENTIOTHREAD_ = 0x00000040;
+#endif
 const ULONG_ WT_EXECUTEINPERSISTENTTHREAD_ = 0x00000080;
 const ULONG_ WT_TRANSFER_IMPERSONATION_ = 0x00000100;
 
@@ -95,12 +114,16 @@ inline ULONG_ wt_set_max_threadpool_threads(ULONG_ flags, ULONG_ limit)
 
 const ULONG_ wt_execute_default = WT_EXECUTEDEFAULT_;
 const ULONG_ wt_execute_in_io_thread = WT_EXECUTEINIOTHREAD_;
+#if !BOOST_WINAPI_IS_MINGW
 const ULONG_ wt_execute_in_ui_thread = WT_EXECUTEINUITHREAD_;
+#endif
 const ULONG_ wt_execute_in_wait_thread = WT_EXECUTEINWAITTHREAD_;
 const ULONG_ wt_execute_only_once = WT_EXECUTEONLYONCE_;
 const ULONG_ wt_execute_in_timer_thread = WT_EXECUTEINTIMERTHREAD_;
 const ULONG_ wt_execute_long_function = WT_EXECUTELONGFUNCTION_;
+#if !BOOST_WINAPI_IS_MINGW
 const ULONG_ wt_execute_in_persistent_io_thread = WT_EXECUTEINPERSISTENTIOTHREAD_;
+#endif
 const ULONG_ wt_execute_in_persistent_thread = WT_EXECUTEINPERSISTENTTHREAD_;
 const ULONG_ wt_transfer_impersonation = WT_TRANSFER_IMPERSONATION_;
 
