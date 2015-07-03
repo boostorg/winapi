@@ -11,9 +11,6 @@
 #define BOOST_DETAIL_WINAPI_SECURITY_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
-#if !defined( BOOST_USE_WINDOWS_H )
-#include <boost/detail/winapi/IsMingw.hxx>
-#endif
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once

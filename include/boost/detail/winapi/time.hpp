@@ -13,7 +13,6 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/predef/platform.h>
-#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once

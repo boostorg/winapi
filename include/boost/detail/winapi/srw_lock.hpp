@@ -11,7 +11,6 @@
 #define BOOST_DETAIL_WINAPI_SRW_LOCK_HPP
 
 #include <boost/detail/winapi/config.hpp>
-#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once

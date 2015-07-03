@@ -10,7 +10,6 @@
 #define BOOST_DETAIL_WINAPI_THREAD_POOL_HPP
 
 #include <boost/detail/winapi/config.hpp>
-#include <boost/detail/winapi/IsMingw.hxx>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
