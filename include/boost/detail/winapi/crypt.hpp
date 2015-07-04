@@ -12,6 +12,12 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 
+#if defined( BOOST_USE_WINDOWS_H )
+#if BOOST_WINAPI_IS_MINGW
+#include <wincrypt.h>
+#endif
+#endif
+
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif

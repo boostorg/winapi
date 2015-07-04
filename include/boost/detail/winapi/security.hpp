@@ -20,7 +20,11 @@
 extern "C" { 
 struct _ACL;
 struct _SECURITY_DESCRIPTOR;
+#if BOOST_WINAPI_IS_MINGW
+typedef _SECURITY_DESCRIPTOR *PSECURITY_DESCRIPTOR;
+#else
 typedef boost::detail::winapi::PVOID_ PSECURITY_DESCRIPTOR;
+#endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 InitializeSecurityDescriptor(

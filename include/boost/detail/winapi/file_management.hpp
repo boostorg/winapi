@@ -81,8 +81,12 @@ FindClose(boost::detail::winapi::HANDLE_ hFindFile);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 GetFileSizeEx(boost::detail::winapi::HANDLE_ hFile, ::_LARGE_INTEGER* lpFileSize);
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 SetFileValidData(boost::detail::winapi::HANDLE_ hFile, boost::detail::winapi::LONGLONG_ ValidDataLength);
+
+#endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 SetEndOfFile(boost::detail::winapi::HANDLE_ hFile);
@@ -143,7 +147,13 @@ using ::DeleteFileW;
 using ::MoveFileExW;
 
 using ::FindClose;
+
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+
 using ::SetFileValidData;
+
+#endif
+
 using ::SetEndOfFile;
 using ::LockFile;
 using ::UnlockFile;
