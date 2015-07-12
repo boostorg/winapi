@@ -22,7 +22,11 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+#if defined( BOOST_WINAPI_IS_MINGW_W64 )
+struct _RTL_RUN_ONCE;
+#else
 union _RTL_RUN_ONCE;
+#endif
 
 typedef boost::detail::winapi::BOOL_
 (WINAPI *PINIT_ONCE_FN) (
