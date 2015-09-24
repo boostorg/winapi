@@ -57,6 +57,13 @@ namespace winapi
     using ::OpenEventW;
     using ::CreateSemaphoreW;
     using ::OpenSemaphoreW;
+# elif defined (BOOST_PLAT_WINDOWS_RUNTIME)
+    using ::CreateMutexExW;
+    using ::OpenMutexW;
+    using ::CreateEventExW;
+    using ::OpenEventW;
+    using ::CreateSemaphoreExW;
+    using ::OpenSemaphoreW;
 # else
     using ::CreateMutexA;
     using ::OpenMutexA;
@@ -273,7 +280,11 @@ BOOST_FORCEINLINE HANDLE_ create_anonymous_semaphore(_SECURITY_ATTRIBUTES* lpAtt
 #ifdef BOOST_NO_ANSI_APIS
     return CreateSemaphoreW(lpAttributes, lInitialCount, lMaximumCount, 0);
 #else
-    return CreateSemaphoreA(lpAttributes, lInitialCount, lMaximumCount, 0);
+	#if defined (BOOST_PLAT_WINDOWS_RUNTIME)
+		return CreateSemaphoreExW(attr, initial_count, maximum_count, 0, 0, SEMAPHORE_ALL_ACCESS);
+	#else
+		return CreateSemaphoreA(attr, initial_count, maximum_count, 0);
+	#endif
 #endif
 }
 
