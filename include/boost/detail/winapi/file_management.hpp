@@ -32,7 +32,7 @@ CreateFileA(
     boost::detail::winapi::DWORD_ dwFlagsAndAttributes,
     boost::detail::winapi::HANDLE_ hTemplateFile);
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI    
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 DeleteFileA(boost::detail::winapi::LPCSTR_ lpFileName);
 
 struct _WIN32_FIND_DATAA;
@@ -59,7 +59,7 @@ CreateFileW(
     boost::detail::winapi::DWORD_ dwFlagsAndAttributes,
     boost::detail::winapi::HANDLE_ hTemplateFile);
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI    
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 DeleteFileW(boost::detail::winapi::LPCWSTR_ lpFileName);
 
 struct _WIN32_FIND_DATAW;

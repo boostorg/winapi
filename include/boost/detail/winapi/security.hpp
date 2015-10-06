@@ -17,7 +17,7 @@
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
-extern "C" { 
+extern "C" {
 struct _ACL;
 struct _SECURITY_DESCRIPTOR;
 #if defined( BOOST_WINAPI_IS_MINGW )
