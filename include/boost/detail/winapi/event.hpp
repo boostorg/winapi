@@ -92,14 +92,16 @@ using ::ResetEvent;
 #if defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ EVENT_ALL_ACCESS_ = EVENT_ALL_ACCESS;
+const DWORD_ EVENT_MODIFY_STATE_ = EVENT_MODIFY_STATE;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ CREATE_EVENT_INITIAL_SET_ = CREATE_EVENT_INITIAL_SET;
 const DWORD_ CREATE_EVENT_MANUAL_RESET_ = CREATE_EVENT_MANUAL_RESET;
 #endif
 
 #else // defined( BOOST_USE_WINDOWS_H )
-    
-const DWORD_ EVENT_ALL_ACCESS_ = 0x1F0003;
+
+const DWORD_ EVENT_ALL_ACCESS_ = 0x001F0003;
+const DWORD_ EVENT_MODIFY_STATE_ = 0x00000002;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ CREATE_EVENT_INITIAL_SET_ = 0x00000002;
 const DWORD_ CREATE_EVENT_MANUAL_RESET_ = 0x00000001;
@@ -108,6 +110,7 @@ const DWORD_ CREATE_EVENT_MANUAL_RESET_ = 0x00000001;
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ event_all_access = EVENT_ALL_ACCESS_;
+const DWORD_ event_modify_state = EVENT_MODIFY_STATE_;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ create_event_initial_set = CREATE_EVENT_INITIAL_SET_;
 const DWORD_ create_event_manual_reset = CREATE_EVENT_MANUAL_RESET_;
@@ -118,7 +121,7 @@ BOOST_FORCEINLINE HANDLE_ CreateEventA(SECURITY_ATTRIBUTES_* lpEventAttributes, 
 {
 #if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
     const DWORD_ flags = (bManualReset ? create_event_manual_reset : 0u) | (bInitialState ? create_event_initial_set : 0u);
-    return ::CreateEventExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access); 
+    return ::CreateEventExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access);
 #else
     return ::CreateEventA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), bManualReset, bInitialState, lpName);
 #endif
@@ -136,7 +139,7 @@ BOOST_FORCEINLINE HANDLE_ CreateEventW(SECURITY_ATTRIBUTES_* lpEventAttributes, 
 {
 #if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
     const DWORD_ flags = (bManualReset ? create_event_manual_reset : 0u) | (bInitialState ? create_event_initial_set : 0u);
-    return ::CreateEventExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access); 
+    return ::CreateEventExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access);
 #else
     return ::CreateEventW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), bManualReset, bInitialState, lpName);
 #endif
