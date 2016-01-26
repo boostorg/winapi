@@ -1,4 +1,4 @@
-//  GetSystemDirectory.hpp  --------------------------------------------------------------//
+//  GetSystemDirectory_.hpp  --------------------------------------------------------------//
 
 //  Copyright 2016 Klemens D. Morgenstern
 

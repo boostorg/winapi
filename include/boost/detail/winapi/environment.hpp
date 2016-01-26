@@ -1,15 +1,18 @@
-/*
- * environment.hpp
- *
- *  Created on: 11.10.2015
- *      Author: Klemens Morgenstern
- */
+//  environment.hpp  --------------------------------------------------------------//
+
+//  Copyright 2016 Klemens D. Morgenstern
+
+//  Distributed under the Boost Software License, Version 1.0.
+//  See http://www.boost.org/LICENSE_1_0.txt
 
 #ifndef BOOST_DETAIL_WINAPI_ENVIRONMENT_HPP_
 #define BOOST_DETAIL_WINAPI_ENVIRONMENT_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
 
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
 
 namespace boost
 {
@@ -17,77 +20,76 @@ namespace detail
 {
 namespace winapi
 {
-extern "C" {
 
 #if defined(BOOST_USE_WINDOWS_H)
 
-const DWORD_ debug_process                    = DEBUG_PROCESS                   ;
-const DWORD_ debug_only_this_process          = DEBUG_ONLY_THIS_PROCESS         ;
-const DWORD_ create_suspended                 = CREATE_SUSPENDED                ;
-const DWORD_ detached_process                 = DETACHED_PROCESS                ;
-const DWORD_ create_new_console               = CREATE_NEW_CONSOLE              ;
-const DWORD_ normal_priority_class            = NORMAL_PRIORITY_CLASS           ;
-const DWORD_ idle_priority_class              = IDLE_PRIORITY_CLASS             ;
-const DWORD_ high_priority_class              = HIGH_PRIORITY_CLASS             ;
-const DWORD_ realtime_priority_class          = REALTIME_PRIORITY_CLASS         ;
-const DWORD_ create_new_process_group         = CREATE_NEW_PROCESS_GROUP        ;
-const DWORD_ create_unicode_environment       = CREATE_UNICODE_ENVIRONMENT      ;
-const DWORD_ create_separate_wow_vdm          = CREATE_SEPARATE_WOW_VDM         ;
-const DWORD_ create_shared_wow_vdm            = CREATE_SHARED_WOW_VDM           ;
-const DWORD_ create_forcedos                  = CREATE_FORCEDOS                 ;
-const DWORD_ below_normal_priority_class      = BELOW_NORMAL_PRIORITY_CLASS     ;
-const DWORD_ above_normal_priority_class      = ABOVE_NORMAL_PRIORITY_CLASS     ;
-const DWORD_ inherit_parent_affinity          = INHERIT_PARENT_AFFINITY         ;
-const DWORD_ inherit_caller_priority          = INHERIT_CALLER_PRIORITY         ;
-const DWORD_ create_protected_process         = CREATE_PROTECTED_PROCESS        ;
-const DWORD_ extended_startupinfo_present     = EXTENDED_STARTUPINFO_PRESENT    ;
-const DWORD_ process_mode_background_begin    = PROCESS_MODE_BACKGROUND_BEGIN   ;
-const DWORD_ process_mode_background_end      = PROCESS_MODE_BACKGROUND_END     ;
-const DWORD_ create_breakaway_from_job        = CREATE_BREAKAWAY_FROM_JOB       ;
-const DWORD_ create_preserve_code_authz_level = CREATE_PRESERVE_CODE_AUTHZ_LEVEL;
-const DWORD_ create_default_error_mode        = CREATE_DEFAULT_ERROR_MODE       ;
-const DWORD_ create_no_window                 = CREATE_NO_WINDOW                ;
-const DWORD_ profile_user                     = PROFILE_USER                    ;
-const DWORD_ profile_kernel                   = PROFILE_KERNEL                  ;
-const DWORD_ profile_server                   = PROFILE_SERVER                  ;
-const DWORD_ create_ignore_system_default     = CREATE_IGNORE_SYSTEM_DEFAULT    ;
+const DWORD_ DEBUG_PROCESS_                    = DEBUG_PROCESS                   ;
+const DWORD_ DEBUG_ONLY_THIS_PROCESS_          = DEBUG_ONLY_THIS_PROCESS         ;
+const DWORD_ CREATE_SUSPENDED_                 = CREATE_SUSPENDED                ;
+const DWORD_ DETACHED_PROCESS_                 = DETACHED_PROCESS                ;
+const DWORD_ CREATE_NEW_CONSOLE_               = CREATE_NEW_CONSOLE              ;
+const DWORD_ NORMAL_PRIORITY_CLASS_            = NORMAL_PRIORITY_CLASS           ;
+const DWORD_ IDLE_PRIORITY_CLASS_              = IDLE_PRIORITY_CLASS             ;
+const DWORD_ HIGH_PRIORITY_CLASS_              = HIGH_PRIORITY_CLASS             ;
+const DWORD_ REALTIME_PRIORITY_CLASS_          = REALTIME_PRIORITY_CLASS         ;
+const DWORD_ CREATE_NEW_PROCESS_GROUP_         = CREATE_NEW_PROCESS_GROUP        ;
+const DWORD_ CREATE_UNICODE_ENVIRONMENT_       = CREATE_UNICODE_ENVIRONMENT      ;
+const DWORD_ CREATE_SEPARATE_WOW_VDM_          = CREATE_SEPARATE_WOW_VDM         ;
+const DWORD_ CREATE_SHARED_WOW_VDM_            = CREATE_SHARED_WOW_VDM           ;
+const DWORD_ CREATE_FORCEDOS_                  = CREATE_FORCEDOS                 ;
+const DWORD_ BELOW_NORMAL_PRIORITY_CLASS_      = BELOW_NORMAL_PRIORITY_CLASS     ;
+const DWORD_ ABOVE_NORMAL_PRIORITY_CLASS_      = ABOVE_NORMAL_PRIORITY_CLASS     ;
+const DWORD_ INHERIT_PARENT_AFFINITY_          = INHERIT_PARENT_AFFINITY         ;
+const DWORD_ INHERIT_CALLER_PRIORITY_          = INHERIT_CALLER_PRIORITY         ;
+const DWORD_ CREATE_PROTECTED_PROCESS_         = CREATE_PROTECTED_PROCESS        ;
+const DWORD_ EXTENDED_STARTUPINFO_PRESENT_     = EXTENDED_STARTUPINFO_PRESENT    ;
+const DWORD_ PROCESS_MODE_BACKGROUND_BEGIN_    = PROCESS_MODE_BACKGROUND_BEGIN   ;
+const DWORD_ PROCESS_MODE_BACKGROUND_END_      = PROCESS_MODE_BACKGROUND_END     ;
+const DWORD_ CREATE_BREAKAWAY_FROM_JOB_        = CREATE_BREAKAWAY_FROM_JOB       ;
+const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = CREATE_PRESERVE_CODE_AUTHZ_LEVEL;
+const DWORD_ CREATE_DEFAULT_ERROR_MODE_        = CREATE_DEFAULT_ERROR_MODE       ;
+const DWORD_ CREATE_NO_WINDOW_                 = CREATE_NO_WINDOW                ;
+const DWORD_ PROFILE_USER_                     = PROFILE_USER                    ;
+const DWORD_ PROFILE_KERNEL_                   = PROFILE_KERNEL                  ;
+const DWORD_ PROFILE_SERVER_                   = PROFILE_SERVER                  ;
+const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = CREATE_IGNORE_SYSTEM_DEFAULT    ;
 
-#else
+#else // defined( BOOST_USE_WINDOWS_H )
 
-const DWORD_ debug_process                    = 0x1        ;
-const DWORD_ debug_only_this_process          = 0x2        ;
-const DWORD_ create_suspended                 = 0x4        ;
-const DWORD_ detached_process                 = 0x8        ;
-const DWORD_ create_new_console               = 0x10       ;
-const DWORD_ normal_priority_class            = 0x20       ;
-const DWORD_ idle_priority_class              = 0x40       ;
-const DWORD_ high_priority_class              = 0x80       ;
-const DWORD_ realtime_priority_class          = 0x100      ;
-const DWORD_ create_new_process_group         = 0x200      ;
-const DWORD_ create_unicode_environment       = 0x400      ;
-const DWORD_ create_separate_wow_vdm          = 0x800      ;
-const DWORD_ create_shared_wow_vdm            = 0x1000     ;
-const DWORD_ create_forcedos                  = 0x2000     ;
-const DWORD_ below_normal_priority_class      = 0x4000     ;
-const DWORD_ above_normal_priority_class      = 0x8000     ;
-const DWORD_ inherit_parent_affinity          = 0x10000    ;
-const DWORD_ inherit_caller_priority          = 0x20000    ;
-const DWORD_ create_protected_process         = 0x40000    ;
-const DWORD_ extended_startupinfo_present     = 0x80000    ;
-const DWORD_ process_mode_background_begin    = 0x100000   ;
-const DWORD_ process_mode_background_end      = 0x200000   ;
-const DWORD_ create_breakaway_from_job        = 0x1000000  ;
-const DWORD_ create_preserve_code_authz_level = 0x2000000  ;
-const DWORD_ create_default_error_mode        = 0x4000000  ;
-const DWORD_ create_no_window                 = 0x8000000  ;
-const DWORD_ profile_user                     = 0x10000000 ;
-const DWORD_ profile_kernel                   = 0x20000000 ;
-const DWORD_ profile_server                   = 0x40000000 ;
-const DWORD_ create_ignore_system_default     = 0x80000000 ;
-}
+const DWORD_ DEBUG_PROCESS_                    = 0x1        ;
+const DWORD_ DEBUG_ONLY_THIS_PROCESS_          = 0x2        ;
+const DWORD_ CREATE_SUSPENDED_                 = 0x4        ;
+const DWORD_ DETACHED_PROCESS_                 = 0x8        ;
+const DWORD_ CREATE_NEW_CONSOLE_               = 0x10       ;
+const DWORD_ NORMAL_PRIORITY_CLASS_            = 0x20       ;
+const DWORD_ IDLE_PRIORITY_CLASS_              = 0x40       ;
+const DWORD_ HIGH_PRIORITY_CLASS_              = 0x80       ;
+const DWORD_ REALTIME_PRIORITY_CLASS_          = 0x100      ;
+const DWORD_ CREATE_NEW_PROCESS_GROUP_         = 0x200      ;
+const DWORD_ CREATE_UNICODE_ENVIRONMENT_       = 0x400      ;
+const DWORD_ CREATE_SEPARATE_WOW_VDM_          = 0x800      ;
+const DWORD_ CREATE_SHARED_WOW_VDM_            = 0x1000     ;
+const DWORD_ CREATE_FORCEDOS_                  = 0x2000     ;
+const DWORD_ BELOW_NORMAL_PRIORITY_CLASS_      = 0x4000     ;
+const DWORD_ ABOVE_NORMAL_PRIORITY_CLASS_      = 0x8000     ;
+const DWORD_ INHERIT_PARENT_AFFINITY_          = 0x10000    ;
+const DWORD_ INHERIT_CALLER_PRIORITY_          = 0x20000    ;
+const DWORD_ CREATE_PROTECTED_PROCESS_         = 0x40000    ;
+const DWORD_ EXTENDED_STARTUPINFO_PRESENT_     = 0x80000    ;
+const DWORD_ PROCESS_MODE_BACKGROUND_BEGIN_    = 0x100000   ;
+const DWORD_ PROCESS_MODE_BACKGROUND_END_      = 0x200000   ;
+const DWORD_ CREATE_BREAKAWAY_FROM_JOB_        = 0x1000000  ;
+const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = 0x2000000  ;
+const DWORD_ CREATE_DEFAULT_ERROR_MODE_        = 0x4000000  ;
+const DWORD_ CREATE_NO_WINDOW_                 = 0x8000000  ;
+const DWORD_ PROFILE_USER_                     = 0x10000000 ;
+const DWORD_ PROFILE_KERNEL_                   = 0x20000000 ;
+const DWORD_ PROFILE_SERVER_                   = 0x40000000 ;
+const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = 0x80000000 ;
 
 
-#endif
+#endif // defined( BOOST_USE_WINDOWS_H )
+
 
 }
 
