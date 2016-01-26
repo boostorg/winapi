@@ -1,9 +1,11 @@
-/*
- * HANDLE_api.hpp
- *
- *  Created on: 11.10.2015
- *      Author: Klemens Morgenstern
- */
+//  process_api.hpp  --------------------------------------------------------------//
+
+//  Copyright 2016 Klemens D. Morgenstern
+
+//  Distributed under the Boost Software License, Version 1.0.
+//  See http://www.boost.org/LICENSE_1_0.txt
+
+
 
 #ifndef BOOST_DETAIL_PROCESS_API_HPP_
 #define BOOST_DETAIL_PROCESS_API_HPP_
@@ -13,15 +15,66 @@
 #include <boost/detail/winapi/security.hpp>
 #include <boost/detail/winapi/process_info.hpp>
 
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
+
+extern "C" {
+
+#if !defined( BOOST_USE_WINDOWS_H )
+BOOST_SYMBOL_IMPORT BOOST_NORETURN void WINAPI
+ExitProcess(
+   boost::detail::winapi::UINT_ uExitCode);
+
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI TerminateProcess(
+    boost::detail::winapi::HANDLE_ hProcess,
+    boost::detail::winapi::UINT_ uExitCode);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI GetExitCodeProcess(
+    boost::detail::winapi::HANDLE_ hProcess,
+    boost::detail::winapi::DWORD_* lpExitCode);
+
+
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI CreateProcessA(
+    boost::detail::winapi::LPCSTR_ lpApplicationName,
+    boost::detail::winapi::LPSTR_ lpCommandLine,
+                         ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
+                         ::_SECURITY_ATTRIBUTES* lpThreadAttributes,
+	boost::detail::winapi::INT_ bInheritHandles,
+    boost::detail::winapi::DWORD_ dwCreationFlags,
+    boost::detail::winapi::LPVOID_ lpEnvironment,
+    boost::detail::winapi::LPCSTR_ lpCurrentDirectory,
+                         ::_STARTUPINFOA* lpStartupInfo,
+                         ::_PROCESS_INFORMATION* lpProcessInformation);
+
+
+#endif
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI CreateProcessW(
+    boost::detail::winapi::LPCWSTR_ lpApplicationName,
+    boost::detail::winapi::LPWSTR_ lpCommandLine,
+                         ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
+                         ::_SECURITY_ATTRIBUTES* lpThreadAttributes,
+    boost::detail::winapi::INT_ bInheritHandles,
+    boost::detail::winapi::DWORD_ dwCreationFlags,
+    boost::detail::winapi::LPVOID_ lpEnvironment,
+    boost::detail::winapi::LPCWSTR_ lpCurrentDirectory,
+                         ::_STARTUPINFOW* lpStartupInfo,
+                         ::_PROCESS_INFORMATION* lpProcessInformation);
+
+#endif //defined BOOST_WINDOWS_H
+}
+
+
 namespace boost
 {
 namespace detail
 {
 namespace winapi
 {
-extern "C" {
 
-#if defined( BOOST_USE_WINDOWS_H )
 //|| defined( CreateProcess )
 using ::GetExitCodeProcess;
 using ::ExitProcess;
@@ -29,34 +82,57 @@ using ::TerminateProcess;
 using ::CreateProcessA;
 using ::CreateProcessW;
 
-#else
-
-__declspec(dllimport) __declspec (noreturn) void WINAPI ExitProcess (unsigned int uExitCode);
-__declspec(dllimport) int WINAPI TerminateProcess 	(HANDLE_ hProcess, unsigned int uExitCode);
-__declspec(dllimport) int WINAPI GetExitCodeProcess (HANDLE_ hProcess, DWORD_* lpExitCode);
-
-__declspec(dllimport) int WINAPI CreateProcessA (LPCSTR_ lpApplicationName,  LPSTR_ lpCommandLine, LPSECURITY_ATTRIBUTES_ lpProcessAttributes, LPSECURITY_ATTRIBUTES_ lpThreadAttributes, int bInheritHandles, DWORD_ dwCreationFlags, LPVOID_ lpEnvironment, LPCSTR_ lpCurrentDirectory,   STARTUPINFOA_* lpStartupInfo, PROCESS_INFORMATION_* lpProcessInformation);
-__declspec(dllimport) int WINAPI CreateProcessW (LPCWSTR_ lpApplicationName, LPWSTR_ lpCommandLine, LPSECURITY_ATTRIBUTES_ lpProcessAttributes, LPSECURITY_ATTRIBUTES_ lpThreadAttributes, int bInheritHandles, DWORD_ dwCreationFlags, LPVOID_ lpEnvironment, LPCWSTR_ lpCurrentDirectory, STARTUPINFOW_* lpStartupInfo, PROCESS_INFORMATION_* lpProcessInformation);
-
-
-
-#if defined(UNICODE) && !defined(CreateProcess)
-inline static int CreateProcess (LPCWSTR_ lpApplicationName, LPWSTR_ lpCommandLine, LPSECURITY_ATTRIBUTES_ lpProcessAttributes, LPSECURITY_ATTRIBUTES_ lpThreadAttributes, int bInheritHandles, DWORD_ dwCreationFlags, LPVOID_ lpEnvironment, LPCWSTR_ lpCurrentDirectory, STARTUPINFOW_* lpStartupInfo, PROCESS_INFORMATION_* lpProcessInformation)
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_FORCEINLINE static INT_ create_process (
+		LPCSTR_ lpApplicationName,
+		LPSTR_ lpCommandLine,
+		LPSECURITY_ATTRIBUTES_ lpProcessAttributes,
+		LPSECURITY_ATTRIBUTES_ lpThreadAttributes,
+		INT_ bInheritHandles, DWORD_ dwCreationFlags,
+		LPVOID_ lpEnvironment,
+		LPCSTR_ lpCurrentDirectory,
+		STARTUPINFOA_* lpStartupInfo,
+		PROCESS_INFORMATION_* lpProcessInformation)
 {
-	return CreateProcessW (lpApplicationName, lpCommandLine, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment, lpCurrentDirectory,  lpStartupInfo,  lpProcessInformation);
+	return CreateProcessA (lpApplicationName,
+                           lpCommandLine,
+                           reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpProcessAttributes),
+                           reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpThreadAttributes),
+                           bInheritHandles,
+                           dwCreationFlags,
+                           lpEnvironment,
+                           lpCurrentDirectory,
+						   reinterpret_cast<::_STARTUPINFOA*>(lpStartupInfo),
+						   reinterpret_cast<::_PROCESS_INFORMATION*>(lpProcessInformation));
 }
+#endif
 
-#elif !defined(CreateProcess)
-inline static int CreateProcess (LPCSTR_ lpApplicationName,  LPSTR_ lpCommandLine, LPSECURITY_ATTRIBUTES_ lpProcessAttributes, LPSECURITY_ATTRIBUTES_ lpThreadAttributes, int bInheritHandles, DWORD_ dwCreationFlags, LPVOID_ lpEnvironment, LPCSTR_ lpCurrentDirectory,   STARTUPINFOA_* lpStartupInfo, PROCESS_INFORMATION_* lpProcessInformation)
+BOOST_FORCEINLINE static INT_ create_process (
+		LPCWSTR_ lpApplicationName,
+		LPWSTR_ lpCommandLine,
+		LPSECURITY_ATTRIBUTES_ lpProcessAttributes,
+		LPSECURITY_ATTRIBUTES_ lpThreadAttributes,
+		INT_ bInheritHandles,
+		DWORD_ dwCreationFlags,
+		LPVOID_ lpEnvironment,
+		LPCWSTR_ lpCurrentDirectory,
+		STARTUPINFOW_* lpStartupInfo,
+		PROCESS_INFORMATION_* lpProcessInformation)
 {
-	return CreateProcessA (lpApplicationName, lpCommandLine, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment, lpCurrentDirectory,  lpStartupInfo,  lpProcessInformation);
-}
-#endif //UNICODE
-#endif //BOOST_USE_WINDOWS_H
+	return CreateProcessW (lpApplicationName,
+                           lpCommandLine,
+                           reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpProcessAttributes),
+                           reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpThreadAttributes),
+                           bInheritHandles,
+                           dwCreationFlags,
+                           lpEnvironment,
+                           lpCurrentDirectory,
+						   reinterpret_cast<::_STARTUPINFOW*>(lpStartupInfo),
+						   reinterpret_cast<::_PROCESS_INFORMATION*>(lpProcessInformation));
 }
 
-}
 
+}
 }
 }
 
