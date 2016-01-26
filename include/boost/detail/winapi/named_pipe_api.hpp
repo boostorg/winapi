@@ -175,7 +175,7 @@ BOOST_FORCEINLINE HANDLE_ create_named_pipe(
 			nOutBufferSize,
 			nInBufferSize,
 			nDefaultTimeOut,
-			reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpSecurityAttributes));
+			reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSecurityAttributes));
 }
 #endif //BOOST_NO_ANSI_APIS
 
@@ -197,7 +197,7 @@ BOOST_FORCEINLINE HANDLE_ create_named_pipe(
 			nOutBufferSize,
 			nInBufferSize,
 			nDefaultTimeOut,
-			reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpSecurityAttributes));
+			reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSecurityAttributes));
 }
 
 #if !defined( BOOST_NO_ANSI_APIS )
