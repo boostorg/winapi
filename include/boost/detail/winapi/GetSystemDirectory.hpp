@@ -1,15 +1,37 @@
-/*
- * GetSystemDirectory.hpp
- *
- *  Created on: 11.10.2015
- *      Author: Klemens
- */
+//  GetSystemDirectory.hpp  --------------------------------------------------------------//
+
+//  Copyright 2016 Klemens D. Morgenstern
+
+//  Distributed under the Boost Software License, Version 1.0.
+//  See http://www.boost.org/LICENSE_1_0.txt
+
 
 #ifndef BOOST_DETAIL_WINAPI_GETSYSTEMDIRECTORY_HPP_
 #define BOOST_DETAIL_WINAPI_GETSYSTEMDIRECTORY_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/tchar.hpp>
+
+
+
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
+
+#if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_SYMBOL_IMPORT boost::detail::winapi::UINT_ WINAPI
+GetSystemDirectoryA(
+    boost::detail::winapi::LPSTR_ lpBuffer,
+    boost::detail::winapi::UINT_   uSize);
+#endif
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::UINT_ WINAPI
+GetSystemDirectoryW(
+    boost::detail::winapi::LPWSTR_ lpBuffer,
+    boost::detail::winapi::UINT_   uSize);
+
+#endif
 
 namespace boost
 {
@@ -17,42 +39,31 @@ namespace detail
 {
 namespace winapi
 {
-extern "C" {
 
-#if defined( BOOST_USE_WINDOWS_H )
-
+#if !defined( BOOST_NO_ANSI_APIS )
 using ::GetSystemDirectoryA;
+#endif
 using ::GetSystemDirectoryW;
-#else
-
-__declspec(dllimport) unsigned int WINAPI GetSystemDirectoryA (LPSTR_ lpBuffer,  unsigned int uSize);
-__declspec(dllimport) unsigned int WINAPI GetSystemDirectoryW (LPWSTR_ lpBuffer, unsigned int uSize);
 
 
-#if defined(UNICODE) && !defined(GetSystemDirectory)
-inline unsigned int GetSystemDirectory (LPWSTR_ lpBuffer,  unsigned int uSize)
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_FORCEINLINE UINT_ get_system_directory (LPSTR_ lpBuffer,  UINT_ uSize)
 {
-	return GetSystemDirectoryW(lpBuffer, uSize);
+	return ::GetSystemDirectoryA(lpBuffer, uSize);
 }
+#endif
 
-
-#elif !defined(GetSystemDirectory)
-inline unsigned int GetSystemDirectory (LPSTR_ lpBuffer,  unsigned int uSize)
+BOOST_FORCEINLINE UINT_ get_system_directory (LPWSTR_ lpBuffer,  UINT_ uSize)
 {
-	return GetSystemDirectoryA(lpBuffer, uSize);
+	return ::GetSystemDirectoryW(lpBuffer, uSize);
 }
 
-#endif
-#endif
-}
 
 }
 
 }
+
 }
-
-
-
-
+}
 
 #endif /* BOOST_DETAIL_WINAPI_GETSYSTEMDIRECTORY_HPP_ */
