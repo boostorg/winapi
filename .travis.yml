@@ -75,4 +75,4 @@ before_script:
   - cd $BOOST/libs/$PROJECT_TO_TEST/test
   - cp travis.jam user-config.jam
 script:
-  - b2 toolset=$TOOLSET target-os=windows -sBOOST_BUILD_PATH=.
+  - ../../../b2 toolset=$TOOLSET target-os=windows -sBOOST_BUILD_PATH=.
