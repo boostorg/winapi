@@ -13,7 +13,9 @@
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/handles.hpp>
 
-#include <windows.h>
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
 
 extern "C"
 {
