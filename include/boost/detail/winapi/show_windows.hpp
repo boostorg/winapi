@@ -1,9 +1,9 @@
-/*
- * show_windows.hpp
- *
- *  Created on: 11.10.2015
- *      Author: Klemens Morgenstern
- */
+//  show_windows.hpp  --------------------------------------------------------------//
+
+//  Copyright 2016 Klemens D. Morgenstern
+
+//  Distributed under the Boost Software License, Version 1.0.
+//  See http://www.boost.org/LICENSE_1_0.txt
 
 #ifndef BOOST_DETAIL_WINAPI_SHOW_WINDOWS_HPP_
 #define BOOST_DETAIL_WINAPI_SHOW_WINDOWS_HPP_
@@ -12,75 +12,78 @@
 #include <boost/detail/winapi/config.hpp>
 
 
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
+
 namespace boost
 {
 namespace detail
 {
 namespace winapi
 {
-extern "C" {
 
 #if defined( BOOST_USE_WINDOWS_H )
 
-const DWOD_ sw_hide 			= SW_HIDE 			 	;
-const DWOD_ sw_shownormal 		= SW_SHOWNORMAL 		;
-const DWOD_ sw_normal 			= SW_NORMAL 			;
-const DWOD_ sw_showminimized 	= SW_SHOWMINIMIZED 	    ;
-const DWOD_ sw_showmaximized	= SW_SHOWMAXIMIZED	 	;
-const DWOD_ sw_maximize 		= SW_MAXIMIZE 		    ;
-const DWOD_ sw_shownoactivate 	= SW_SHOWNOACTIVATE 	;
-const DWOD_ sw_show 			= SW_SHOW 			 	;
-const DWOD_ sw_minimize 		= SW_MINIMIZE 		 	;
-const DWOD_ sw_showminnoactive  = SW_SHOWMINNOACTIVE  	;
-const DWOD_ sw_showna 			= SW_SHOWNA 			;
-const DWOD_ sw_restore 		 	= SW_RESTORE 		 	;
-const DWOD_ sw_showdefault 	 	= SW_SHOWDEFAULT 	 	;
-const DWOD_ sw_forceminimize 	= SW_FORCEMINIMIZE 	    ;
-const DWOD_ sw_max 			 	= SW_MAX 			 	;
-const DWOD_ hide_window 		= HIDE_WINDOW 		 	;
-const DWOD_ show_openwindow 	= SHOW_OPENWINDOW 	 	;
-const DWOD_ show_iconwindow 	= SHOW_ICONWINDOW 	 	;
-const DWOD_ show_fullscreen 	= SHOW_FULLSCREEN 	 	;
-const DWOD_ show_opennoactivate = SHOW_OPENNOACTIVATE 	;
-const DWOD_ sw_parentclosing 	= SW_PARENTCLOSING 	    ;
-const DWOD_ sw_otherzoom 		= SW_OTHERZOOM 		    ;
-const DWOD_ sw_parentopening 	= SW_PARENTOPENING 	    ;
-const DWOD_ sw_otherunzoom 	 	= SW_OTHERUNZOOM 	 	;
+const DWORD_ SW_HIDE_ 				= SW_HIDE 			 	;
+const DWORD_ SW_SHOWNORMAL_ 		= SW_SHOWNORMAL 		;
+const DWORD_ SW_NORMAL_ 			= SW_NORMAL 			;
+const DWORD_ SW_SHOWMINIMIZED_ 		= SW_SHOWMINIMIZED 	    ;
+const DWORD_ SW_SHOWMAXIMIZED_		= SW_SHOWMAXIMIZED	 	;
+const DWORD_ SW_MAXIMIZE_ 			= SW_MAXIMIZE 		    ;
+const DWORD_ SW_SHOWNOACTIVATE_ 	= SW_SHOWNOACTIVATE 	;
+const DWORD_ SW_SHOW_ 				= SW_SHOW 			 	;
+const DWORD_ SW_MINIMIZE_ 			= SW_MINIMIZE 		 	;
+const DWORD_ SW_SHOWMINNOACTIVE_  	= SW_SHOWMINNOACTIVE  	;
+const DWORD_ SW_SHOWNA_ 			= SW_SHOWNA 			;
+const DWORD_ SW_RESTORE_ 		 	= SW_RESTORE 		 	;
+const DWORD_ SW_SHOWDEFAULT_ 	 	= SW_SHOWDEFAULT 	 	;
+const DWORD_ SW_FORCEMINIMIZE_ 		= SW_FORCEMINIMIZE 	    ;
+const DWORD_ SW_MAX_ 			 	= SW_MAX 			 	;
+const DWORD_ HIDE_WINDOW_ 			= HIDE_WINDOW 		 	;
+const DWORD_ SHOW_OPENWINDOW_ 		= SHOW_OPENWINDOW 	 	;
+const DWORD_ SHOW_ICONWINDOW_ 		= SHOW_ICONWINDOW 	 	;
+const DWORD_ SHOW_FULLSCREEN_ 		= SHOW_FULLSCREEN 	 	;
+const DWORD_ SHOW_OPENNOACTIVATE_ 	= SHOW_OPENNOACTIVATE 	;
+const DWORD_ SW_PARENTCLOSING_ 		= SW_PARENTCLOSING 	    ;
+const DWORD_ SW_OTHERZOOM_ 			= SW_OTHERZOOM 		    ;
+const DWORD_ SW_PARENTOPENING_ 		= SW_PARENTOPENING 	    ;
+const DWORD_ SW_OTHERUNZOOM_ 	 	= SW_OTHERUNZOOM 	 	;
 
 
 
 #else
 
-const DWORD_ sw_hide 			 = 0 ;
-const DWORD_ sw_shownormal 		 = 1 ;
-const DWORD_ sw_normal 			 = 1 ;
-const DWORD_ sw_showminimized 	 = 2 ;
-const DWORD_ sw_showmaximized	 = 3 ;
-const DWORD_ sw_maximize 		 = 3 ;
-const DWORD_ sw_shownoactivate 	 = 4 ;
-const DWORD_ sw_show 			 = 5 ;
-const DWORD_ sw_minimize 		 = 6 ;
-const DWORD_ sw_showminnoactive  = 7 ;
-const DWORD_ sw_showna 			 = 8 ;
-const DWORD_ sw_restore 		 = 9 ;
-const DWORD_ sw_showdefault 	 = 10;
-const DWORD_ sw_forceminimize 	 = 11;
-const DWORD_ sw_max 			 = 11;
-const DWORD_ hide_window 		 = 0 ;
-const DWORD_ show_openwindow 	 = 1 ;
-const DWORD_ show_iconwindow 	 = 2 ;
-const DWORD_ show_fullscreen 	 = 3 ;
-const DWORD_ show_opennoactivate = 4 ;
-const DWORD_ sw_parentclosing 	 = 1 ;
-const DWORD_ sw_otherzoom 		 = 2 ;
-const DWORD_ sw_parentopening 	 = 3 ;
-const DWORD_ sw_otherunzoom 	 = 4 ;
+const DWORD_ SW_HIDE_ 				= 0 ;
+const DWORD_ SW_SHOWNORMAL_ 		= 1 ;
+const DWORD_ SW_NORMAL_ 			= 1 ;
+const DWORD_ SW_SHOWMINIMIZED_ 		= 2 ;
+const DWORD_ SW_SHOWMAXIMIZED_		= 3 ;
+const DWORD_ SW_MAXIMIZE_ 			= 3 ;
+const DWORD_ SW_SHOWNOACTIVATE_ 	= 4 ;
+const DWORD_ SW_SHOW_ 				= 5 ;
+const DWORD_ SW_MINIMIZE_ 			= 6 ;
+const DWORD_ SW_SHOWMINNOACTIVE_  	= 7 ;
+const DWORD_ SW_SHOWNA_ 			= 8 ;
+const DWORD_ SW_RESTORE_ 		  	= 9 ;
+const DWORD_ SW_SHOWDEFAULT_ 	  	= 10;
+const DWORD_ SW_FORCEMINIMIZE_ 		= 11;
+const DWORD_ SW_MAX_ 			  	= 11;
+const DWORD_ HIDE_WINDOW_ 			= 0 ;
+const DWORD_ SHOW_OPENWINDOW_ 		= 1 ;
+const DWORD_ SHOW_ICONWINDOW_ 		= 2 ;
+const DWORD_ SHOW_FULLSCREEN_ 		= 3 ;
+const DWORD_ SHOW_OPENNOACTIVATE_ 	= 4 ;
+const DWORD_ SW_PARENTCLOSING_ 		= 1 ;
+const DWORD_ SW_OTHERZOOM_ 			= 2 ;
+const DWORD_ SW_PARENTOPENING_ 		= 3 ;
+const DWORD_ SW_OTHERUNZOOM_ 	  	= 4 ;
 
 
-}
 
 
 #endif
+
 
 }
 
