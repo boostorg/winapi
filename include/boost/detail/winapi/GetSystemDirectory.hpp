@@ -30,7 +30,7 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::UINT_ WINAPI
 GetSystemDirectoryW(
     boost::detail::winapi::LPWSTR_ lpBuffer,
     boost::detail::winapi::UINT_   uSize);
-
+}
 #endif
 
 namespace boost
@@ -60,10 +60,8 @@ BOOST_FORCEINLINE UINT_ get_system_directory (LPWSTR_ lpBuffer,  UINT_ uSize)
 
 
 }
+}
+}
 
-}
-
-}
-}
 
 #endif /* BOOST_DETAIL_WINAPI_GETSYSTEMDIRECTORY_HPP_ */
