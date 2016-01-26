@@ -18,7 +18,7 @@ env:
         #
         # By default is eaual to - BOOST_REMOVE=`basename $TRAVIS_BUILD_DIR`
         # This will force to use local repo content, instead of the Boost's default
-        - BOOST_REMOVE=dll
+        - BOOST_REMOVE=winapi
         -
 
     matrix:
