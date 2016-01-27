@@ -27,7 +27,6 @@ namespace winapi {
 #if defined( BOOST_USE_WINDOWS_H )
 
 typedef ::_OVERLAPPED  OVERLAPPED_;
-typedef ::LPOVERLAPPED LPOVERLAPPED_;
 
 #else //BOOST_USE_WINDOWS_H
 

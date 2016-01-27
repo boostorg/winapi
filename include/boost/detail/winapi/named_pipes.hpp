@@ -217,6 +217,32 @@ BOOST_FORCEINLINE INT_ get_named_pipe_client_computer_name(
 #endif //BOOST_USE_WINAPI_VERSION
 
 
+BOOST_FORCEINLINE INT_     WINAPI connect_named_pipe(
+        HANDLE_ hNamedPipe,
+        OVERLAPPED_* lpOverlapped)
+{
+    return ::ConnectNamedPipe(hNamedPipe, reinterpret_cast<::_OVERLAPPED*>(lpOverlapped));
+}
+
+
+BOOST_FORCEINLINE INT_     WINAPI transact_named_pipe(
+       HANDLE_  hNamedPipe,
+       LPVOID_  lpInBuffer,
+       DWORD_   nInBufferSize,
+       LPVOID_  lpOutBuffer,
+       DWORD_   nOutBufferSize,
+       DWORD_*  lpBytesRead,
+       OVERLAPPED_* lpOverlapped)
+{
+    return ::TransactNamedPipe(
+        hNamedPipe,
+        lpInBuffer,
+        nInBufferSize,
+        lpOutBuffer,
+        nOutBufferSize,
+        lpBytesRead,
+        reinterpret_cast<::_OVERLAPPED*>(lpOverlapped));
+}
 
 }
 }
