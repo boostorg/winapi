@@ -15,14 +15,14 @@
 #pragma once
 #endif
 
-extern "C" {
 
 #if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+
 #if !defined( BOOST_NO_ANSI_APIS )
 struct _SHFILEINFOA;
 #endif // BOOST_NO_ANSI_APIS
 struct _SHFILEINFOW;
-#endif // BOOST_USE_WINDOWS_H
 
 
 
@@ -47,6 +47,9 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_PTR_ WINAPI SHGetFileInfoW(
 }
 
 BOOST_DETAIL_WINAPI_DECLARE_HANDLE(HICON);
+
+#endif // BOOST_USE_WINDOWS_H
+
 
 
 namespace boost

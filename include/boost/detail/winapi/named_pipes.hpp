@@ -18,6 +18,8 @@
 #pragma once
 #endif
 
+
+#if !defined( BOOST_USE_WINDOWS_H )
 extern "C"
 {
 
@@ -102,8 +104,9 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_  WINAPI GetNamedPipeClientCompu
 		  boost::detail::winapi::LPWSTR_ ClientComputerName,
 		  boost::detail::winapi::ULONG_ ClientComputerNameLength);
 #endif //BOOST_USE_WINAPI_VERSION
-
 }
+#endif //BOOST_USE_WINDOWS_H
+
 
 namespace boost
 {

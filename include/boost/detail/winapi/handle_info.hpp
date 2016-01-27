@@ -14,10 +14,12 @@
 #include <boost/detail/winapi/handles.hpp>
 
 
+
+
+#if !defined( BOOST_USE_WINDOWS_H )
 extern "C"
 {
 
-#if !defined( BOOST_USE_WINDOWS_H )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI
 GetHandleInformation(
     boost::detail::winapi::HANDLE_ hObject,
@@ -29,9 +31,9 @@ SetHandleInformation(
     boost::detail::winapi::DWORD_ dwMask,
     boost::detail::winapi::DWORD_ dwFlags);
 
+}
 #endif
 
-}
 
 namespace boost
 {

@@ -20,16 +20,14 @@
 
 
 // Windows CE define GetCurrentProcessId as an inline function in kfuncs.h
-#if !defined( BOOST_USE_WINDOWS_H ) && !defined( UNDER_CE )
+#if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+
+#if !defined( UNDER_CE )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI GetCurrentProcessId(BOOST_DETAIL_WINAPI_VOID);
-}
 #endif
 
-#if !defined( BOOST_USE_WINDOWS_H )
 
-extern "C"
-{
 struct _PROCESS_INFORMATION;
 
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -37,10 +35,7 @@ struct _STARTUPINFOA;
 #endif
 
 struct _STARTUPINFOW;
-}
 
-
-extern "C" {
 
 BOOST_SYMBOL_IMPORT BOOST_NORETURN void WINAPI
 ExitProcess(
