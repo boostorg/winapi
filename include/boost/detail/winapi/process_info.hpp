@@ -34,7 +34,6 @@ namespace detail
 {
 namespace winapi
 {
-extern "C" {
 
 #if defined( BOOST_USE_WINDOWS_H )
 typedef ::PROCESS_INFORMATION PROCESS_INFORMATION_;
@@ -96,27 +95,37 @@ struct STARTUPINFOW_ {
   HANDLE_ hStdError;
 } ;
 
+#endif
+
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 #if !defined(BOOST_NO_ANSI_APIS)
 typedef STARTUPINFOA_ STARTUPINFO_;
-#endif
+#endif // BOOST_NO_ANSI_APIS
 
 #if defined( BOOST_USE_WINDOWS_H )
-//typedef ::STARTUPINFOEX STARTUPINFOEX_;
 
-#else
+typedef ::STARTUPINFOEX STARTUPINFOEX_;
+
+#else // BOOST_NO_ANSI_APIS
 
 typedef struct PROC_THREAD_ATTRIBUTE_LIST_ *PPROC_THREAD_ATTRIBUTE_LIST_;
 
-/*
-struct STARTUPINFOEX_ {
-  STARTUPINFO_                 StartupInfo;
-  PPROC_THREAD_ATTRIBUTE_LIST_ lpAttributeList;
-};*/
+#if !defined(BOOST_NO_ANSI_APIS)
 
-#endif
-#endif
-}
+struct STARTUPINFOEXA_ {
+  STARTUPINFOW_                StartupInfo;
+  PPROC_THREAD_ATTRIBUTE_LIST_ lpAttributeList;
+};
+#endif //BOOST_NO_ANSI_APIS
+struct STARTUPINFOEXW_ {
+  STARTUPINFOW_                StartupInfo;
+  PPROC_THREAD_ATTRIBUTE_LIST_ lpAttributeList;
+};
+
+#endif // BOOST_USE_WINDOWS_H
+#endif // BOOST_USE_WINAPI_VERSION
+
 }}}
 
 #endif /* BOOST_DETAIL_WINAPI_PROCESS_INFO_HPP_ */

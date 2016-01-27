@@ -58,8 +58,6 @@ namespace winapi
 
 typedef ::HICON HICON_;
 
-extern "C" {
-
 #if defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ SHGFI_ICON_ 				= SHGFI_ICON 			;
@@ -131,7 +129,7 @@ struct SHFILEINFOW_ {
 
 
 #endif
-}
+
 
 #if !defined( BOOST_NO_ANSI_APIS )
 
@@ -172,9 +170,9 @@ inline DWORD_PTR_ sh_get_file_info(
 
 
 }
+}
+}
 
-}
-}
 
 
 
