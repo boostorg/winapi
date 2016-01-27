@@ -83,7 +83,7 @@ using ::CreateProcessA;
 using ::CreateProcessW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_FORCEINLINE static INT_ create_process (
+BOOST_FORCEINLINE INT_ create_process (
 		LPCSTR_ lpApplicationName,
 		LPSTR_ lpCommandLine,
 		LPSECURITY_ATTRIBUTES_ lpProcessAttributes,
@@ -107,7 +107,7 @@ BOOST_FORCEINLINE static INT_ create_process (
 }
 #endif
 
-BOOST_FORCEINLINE static INT_ create_process (
+BOOST_FORCEINLINE INT_ create_process (
 		LPCWSTR_ lpApplicationName,
 		LPWSTR_ lpCommandLine,
 		LPSECURITY_ATTRIBUTES_ lpProcessAttributes,
