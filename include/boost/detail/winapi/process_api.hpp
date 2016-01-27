@@ -19,9 +19,17 @@
 #pragma once
 #endif
 
+
+// Windows CE define GetCurrentProcessId as an inline function in kfuncs.h
+#if !defined( BOOST_USE_WINDOWS_H ) && !defined( UNDER_CE )
 extern "C" {
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI GetCurrentProcessId(BOOST_DETAIL_WINAPI_VOID);
+}
+#endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+
 BOOST_SYMBOL_IMPORT BOOST_NORETURN void WINAPI
 ExitProcess(
    boost::detail::winapi::UINT_ uExitCode);
@@ -64,8 +72,9 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI CreateProcessW(
                          ::_STARTUPINFOW* lpStartupInfo,
                          ::_PROCESS_INFORMATION* lpProcessInformation);
 
-#endif //defined BOOST_WINDOWS_H
 }
+#endif //defined BOOST_WINDOWS_H
+
 
 
 namespace boost
@@ -74,6 +83,9 @@ namespace detail
 {
 namespace winapi
 {
+
+using ::GetCurrentProcessId;
+
 
 //|| defined( CreateProcess )
 using ::GetExitCodeProcess;
