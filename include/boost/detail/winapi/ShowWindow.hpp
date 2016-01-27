@@ -1,4 +1,4 @@
-//  show_windows.hpp  --------------------------------------------------------------//
+//  ShowWindow.hpp  --------------------------------------------------------------//
 
 //  Copyright 2016 Klemens D. Morgenstern
 
@@ -11,10 +11,27 @@
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/config.hpp>
 
-
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
+
+#if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+
+BOOST_DETAIL_WINAPI_DECLARE_HANDLE(HWND);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI ShowWindow(
+   HWND hWnd,
+   int  nCmdShow
+);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI ShowWindowAsync(
+   HWND hWnd,
+   int  nCmdShow
+);
+
+}
+#endif // BOOST_USE_WINDOWS_H
 
 namespace boost
 {
@@ -22,6 +39,10 @@ namespace detail
 {
 namespace winapi
 {
+
+typedef ::HWND HWND_;
+using ::ShowWindow;
+using ::ShowWindowAsync;
 
 #if defined( BOOST_USE_WINDOWS_H )
 

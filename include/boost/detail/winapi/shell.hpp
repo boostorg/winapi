@@ -44,10 +44,10 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_PTR_ WINAPI SHGetFileInfoW(
     boost::detail::winapi::UINT_ cbFileInfons,
     boost::detail::winapi::UINT_ uFlags);
 
-}
 
 BOOST_DETAIL_WINAPI_DECLARE_HANDLE(HICON);
 
+}
 #endif // BOOST_USE_WINDOWS_H
 
 
