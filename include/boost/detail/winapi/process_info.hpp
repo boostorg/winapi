@@ -11,7 +11,6 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/config.hpp>
-#include <boost/detail/winapi/handles.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
