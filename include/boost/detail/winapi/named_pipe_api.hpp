@@ -92,12 +92,12 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ 	WINAPI WaitNamedPipeW(
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 #if !defined( BOOST_NO_ANSI_APIS )
-  WINBASEAPI int WINAPI GetNamedPipeClientComputerNameA(
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_  WINAPI GetNamedPipeClientComputerNameA(
 		  boost::detail::winapi::HANDLE_ Pipe,
-		  boost::detail::winapi::LPWSTR_ ClientComputerName,
+		  boost::detail::winapi::LPSTR_ ClientComputerName,
 		  boost::detail::winapi::ULONG_ ClientComputerNameLength);
 #endif // BOOST_NO_ANSI_APIS
-  WINBASEAPI int WINAPI GetNamedPipeClientComputerNameW(
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_  WINAPI GetNamedPipeClientComputerNameW(
 		  boost::detail::winapi::HANDLE_ Pipe,
 		  boost::detail::winapi::LPWSTR_ ClientComputerName,
 		  boost::detail::winapi::ULONG_ ClientComputerNameLength);
