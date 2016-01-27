@@ -224,7 +224,7 @@ BOOST_FORCEINLINE INT_     WINAPI connect_named_pipe(
         HANDLE_ hNamedPipe,
         OVERLAPPED_* lpOverlapped)
 {
-    return ::ConnectNamedPipe(hNamedPipe, reinterpret_cast<::_OVERLAPPED*>(lpOverlapped));
+    return ::ConnectNamedPipe(hNamedPipe, reinterpret_cast< ::_OVERLAPPED* >(lpOverlapped));
 }
 
 
@@ -244,7 +244,7 @@ BOOST_FORCEINLINE INT_     WINAPI transact_named_pipe(
         lpOutBuffer,
         nOutBufferSize,
         lpBytesRead,
-        reinterpret_cast<::_OVERLAPPED*>(lpOverlapped));
+        reinterpret_cast< ::_OVERLAPPED* >(lpOverlapped));
 }
 
 }

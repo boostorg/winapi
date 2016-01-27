@@ -134,7 +134,7 @@ inline DWORD_PTR_ sh_get_file_info(
     return ::SHGetFileInfoA(
             pszPath,
             dwFileAttributes,
-            reinterpret_cast<::_SHFILEINFOA*>(psfinsigned),
+            reinterpret_cast< ::_SHFILEINFOA* >(psfinsigned),
             cbFileInfons,
             uFlags);
 }
@@ -149,7 +149,7 @@ inline DWORD_PTR_ sh_get_file_info(
     return ::SHGetFileInfoW(
             pszPath,
             dwFileAttributes,
-            reinterpret_cast<::_SHFILEINFOW*>(psfinsigned),
+            reinterpret_cast< ::_SHFILEINFOW* >(psfinsigned),
             cbFileInfons,
             uFlags);
 }

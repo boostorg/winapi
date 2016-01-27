@@ -234,14 +234,14 @@ BOOST_FORCEINLINE INT_ create_process(
     return CreateProcessA(
             lpApplicationName,
             lpCommandLine,
-            reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpProcessAttributes),
-            reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpThreadAttributes),
+            reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpProcessAttributes),
+            reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpThreadAttributes),
             bInheritHandles,
             dwCreationFlags,
             lpEnvironment,
             lpCurrentDirectory,
-            reinterpret_cast<::_STARTUPINFOA*>(lpStartupInfo),
-            reinterpret_cast<::_PROCESS_INFORMATION*>(lpProcessInformation));
+            reinterpret_cast< ::_STARTUPINFOA* >(lpStartupInfo),
+            reinterpret_cast< ::_PROCESS_INFORMATION* >(lpProcessInformation));
 }
 #endif
 
@@ -259,14 +259,14 @@ BOOST_FORCEINLINE INT_ create_process(
     return CreateProcessW(
             lpApplicationName,
             lpCommandLine,
-            reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpProcessAttributes),
-            reinterpret_cast<::_SECURITY_ATTRIBUTES*>(lpThreadAttributes),
+            reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpProcessAttributes),
+            reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpThreadAttributes),
             bInheritHandles,
             dwCreationFlags,
             lpEnvironment,
             lpCurrentDirectory,
-            reinterpret_cast<::_STARTUPINFOW*>(lpStartupInfo),
-            reinterpret_cast<::_PROCESS_INFORMATION*>(lpProcessInformation));
+            reinterpret_cast< ::_STARTUPINFOW* >(lpStartupInfo),
+            reinterpret_cast< ::_PROCESS_INFORMATION* >(lpProcessInformation));
 }
 
 }
