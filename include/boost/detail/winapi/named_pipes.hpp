@@ -12,6 +12,7 @@
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/security.hpp>
+#include <boost/detail/winapi/overlapped.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -21,7 +22,6 @@ extern "C"
 {
 
 struct _SECURITY_ATTRIBUTES;
-struct _OVERLAPPED;
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_     WINAPI ImpersonateNamedPipeClient(
 		boost::detail::winapi::HANDLE_ hNamedPipe);
@@ -135,26 +135,9 @@ using ::GetNamedPipeClientComputerNameA;
 using ::GetNamedPipeClientComputerNameW;
 #endif
 
-typedef ::_OVERLAPPED  OVERLAPPED_;
-typedef ::LPOVERLAPPED LPOVERLAPPED_;
-#else // BOOST_USE_WINDOWS_H
 
-struct OVERLAPPED_ {
-  ULONG_PTR_ Internal;
-  ULONG_PTR_ InternalHigh;
-  union {
-    struct {
-      DWORD_ Offset;
-      DWORD_ OffsetHigh;
-    } ;
-    PVOID_  Pointer;
-  } ;
-  HANDLE_    hEvent;
-};
+#endif // BOOST_USE_WINDOWS_H
 
-typedef OVERLAPPED_ *LPOVERLAPPED_;
-
-#endif
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_named_pipe(
