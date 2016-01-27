@@ -5,7 +5,6 @@
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
-
 #ifndef BOOST_DETAIL_HANDLEAPI_HPP_
 #define BOOST_DETAIL_HANDLEAPI_HPP_
 
@@ -13,34 +12,26 @@
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/handles.hpp>
 
-
-
-
 #if !defined( BOOST_USE_WINDOWS_H )
-extern "C"
-{
+extern "C" {
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI
 GetHandleInformation(
-    boost::detail::winapi::HANDLE_ hObject,
-	boost::detail::winapi::DWORD_* lpdwFlags);
+        boost::detail::winapi::HANDLE_ hObject,
+        boost::detail::winapi::DWORD_* lpdwFlags);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::INT_ WINAPI
 SetHandleInformation(
-    boost::detail::winapi::HANDLE_ hObject,
-    boost::detail::winapi::DWORD_ dwMask,
-    boost::detail::winapi::DWORD_ dwFlags);
+        boost::detail::winapi::HANDLE_ hObject,
+        boost::detail::winapi::DWORD_ dwMask,
+        boost::detail::winapi::DWORD_ dwFlags);
 
 }
 #endif
 
-
-namespace boost
-{
-namespace detail
-{
-namespace winapi
-{
+namespace boost {
+namespace detail {
+namespace winapi {
 
 using ::GetHandleInformation;
 using ::SetHandleInformation;
@@ -52,9 +43,8 @@ const DWORD_ HANDLE_FLAG_PROTECT_FROM_CLOSE_ = HANDLE_FLAG_PROTECT_FROM_CLOSE;
 
 #else
 
-const DWORD_ HANDLE_FLAG_INHERIT_ 			 = 0x1;
+const DWORD_ HANDLE_FLAG_INHERIT_            = 0x1;
 const DWORD_ HANDLE_FLAG_PROTECT_FROM_CLOSE_ = 0x2;
-
 
 #endif
 
@@ -62,7 +52,5 @@ const DWORD_ HANDLE_FLAG_PROTECT_FROM_CLOSE_ = 0x2;
 
 }
 }
-
-
 
 #endif /* BOOST_DETAIL_HANDLEAPI_HPP_ */
