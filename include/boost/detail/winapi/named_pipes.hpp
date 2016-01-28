@@ -115,7 +115,6 @@ namespace detail
 namespace winapi
 {
 
-#if defined( BOOST_USE_WINDOWS_H )
 using ::ImpersonateNamedPipeClient;
 using ::CreatePipe;
 using ::ConnectNamedPipe;
@@ -139,7 +138,6 @@ using ::GetNamedPipeClientComputerNameW;
 #endif
 
 
-#endif // BOOST_USE_WINDOWS_H
 
 
 #if !defined( BOOST_NO_ANSI_APIS )
