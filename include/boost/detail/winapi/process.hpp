@@ -5,8 +5,8 @@
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
-#ifndef BOOST_DETAIL_PROCESS_HPP_
-#define BOOST_DETAIL_PROCESS_HPP_
+#ifndef BOOST_DETAIL_WINAPI_PROCESS_HPP_
+#define BOOST_DETAIL_WINAPI_PROCESS_HPP_
 
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/basic_types.hpp>
