@@ -1,0 +1,2 @@
+using gcc : w64 : x86_64-w64-mingw32-g++ ;
+using gcc : w32 : i686-w64-mingw32-g++ ;

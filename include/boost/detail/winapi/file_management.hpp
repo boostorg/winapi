@@ -12,6 +12,7 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/time.hpp>
+#include <boost/detail/winapi/overlapped.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -19,7 +20,6 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-struct _OVERLAPPED;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -158,18 +158,7 @@ using ::SetEndOfFile;
 using ::LockFile;
 using ::UnlockFile;
 
-typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _OVERLAPPED {
-    ULONG_PTR_ Internal;
-    ULONG_PTR_ InternalHigh;
-    union {
-        struct {
-            DWORD_ Offset;
-            DWORD_ OffsetHigh;
-        };
-        PVOID_  Pointer;
-    };
-    HANDLE_    hEvent;
-} OVERLAPPED_, *LPOVERLAPPED_;
+
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateFileA(
