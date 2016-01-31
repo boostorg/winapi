@@ -12,7 +12,7 @@
 
 #include <stdarg.h>
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/GetLastError.hpp>
+#include <boost/detail/winapi/get_last_error.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once

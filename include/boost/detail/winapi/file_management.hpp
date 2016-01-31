@@ -11,7 +11,9 @@
 #define BOOST_DETAIL_WINAPI_FILE_MANAGEMENT_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/detail/winapi/limits.hpp>
 #include <boost/detail/winapi/time.hpp>
+#include <boost/detail/winapi/overlapped.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -19,7 +21,6 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-struct _OVERLAPPED;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -158,18 +159,6 @@ using ::SetEndOfFile;
 using ::LockFile;
 using ::UnlockFile;
 
-typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _OVERLAPPED {
-    ULONG_PTR_ Internal;
-    ULONG_PTR_ InternalHigh;
-    union {
-        struct {
-            DWORD_ Offset;
-            DWORD_ OffsetHigh;
-        };
-        PVOID_  Pointer;
-    };
-    HANDLE_    hEvent;
-} OVERLAPPED_, *LPOVERLAPPED_;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateFileA(
@@ -200,8 +189,8 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _WIN32_FIND_DATAA {
     DWORD_ nFileSizeLow;
     DWORD_ dwReserved0;
     DWORD_ dwReserved1;
-    CHAR_   cFileName[ 260 ]; // MAX_PATH
-    CHAR_   cAlternateFileName[ 14 ];
+    CHAR_   cFileName[MAX_PATH_];
+    CHAR_   cAlternateFileName[14];
 #ifdef _MAC
     DWORD_ dwFileType;
     DWORD_ dwCreatorType;
@@ -248,8 +237,8 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _WIN32_FIND_DATAW {
     DWORD_ nFileSizeLow;
     DWORD_ dwReserved0;
     DWORD_ dwReserved1;
-    WCHAR_  cFileName[ 260 ]; // MAX_PATH
-    WCHAR_  cAlternateFileName[ 14 ];
+    WCHAR_  cFileName[MAX_PATH_];
+    WCHAR_  cAlternateFileName[14];
 #ifdef _MAC
     DWORD_ dwFileType;
     DWORD_ dwCreatorType;
