@@ -13,7 +13,7 @@
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/get_current_process.hpp>
 #include <boost/detail/winapi/get_current_process_id.hpp>
-#include <boost/predef/platform.hpp>
+#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -95,7 +95,6 @@ const DWORD_ CREATE_SEPARATE_WOW_VDM_          = CREATE_SEPARATE_WOW_VDM;
 const DWORD_ CREATE_SHARED_WOW_VDM_            = CREATE_SHARED_WOW_VDM;
 const DWORD_ CREATE_FORCEDOS_                  = CREATE_FORCEDOS;
 const DWORD_ CREATE_BREAKAWAY_FROM_JOB_        = CREATE_BREAKAWAY_FROM_JOB;
-const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = CREATE_PRESERVE_CODE_AUTHZ_LEVEL;
 const DWORD_ CREATE_DEFAULT_ERROR_MODE_        = CREATE_DEFAULT_ERROR_MODE;
 const DWORD_ CREATE_NO_WINDOW_                 = CREATE_NO_WINDOW;
 
@@ -103,7 +102,6 @@ const DWORD_ CREATE_NO_WINDOW_                 = CREATE_NO_WINDOW;
 const DWORD_ PROFILE_USER_                     = PROFILE_USER;
 const DWORD_ PROFILE_KERNEL_                   = PROFILE_KERNEL;
 const DWORD_ PROFILE_SERVER_                   = PROFILE_SERVER;
-const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = CREATE_IGNORE_SYSTEM_DEFAULT;
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ CREATE_PROTECTED_PROCESS_         = CREATE_PROTECTED_PROCESS;
@@ -149,7 +147,6 @@ const DWORD_ CREATE_SEPARATE_WOW_VDM_          = 0x800;
 const DWORD_ CREATE_SHARED_WOW_VDM_            = 0x1000;
 const DWORD_ CREATE_FORCEDOS_                  = 0x2000;
 const DWORD_ CREATE_BREAKAWAY_FROM_JOB_        = 0x1000000;
-const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = 0x2000000;
 const DWORD_ CREATE_DEFAULT_ERROR_MODE_        = 0x4000000;
 const DWORD_ CREATE_NO_WINDOW_                 = 0x8000000;
 
@@ -157,7 +154,6 @@ const DWORD_ CREATE_NO_WINDOW_                 = 0x8000000;
 const DWORD_ PROFILE_USER_                     = 0x10000000;
 const DWORD_ PROFILE_KERNEL_                   = 0x20000000;
 const DWORD_ PROFILE_SERVER_                   = 0x40000000;
-const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = 0x80000000;
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ CREATE_PROTECTED_PROCESS_         = 0x40000;
@@ -191,6 +187,22 @@ const DWORD_ STARTF_PREVENTPINNING_   = 0x00002000;
 #endif
 
 #endif // defined( BOOST_USE_WINDOWS_H )
+
+#if defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
+
+const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = CREATE_PRESERVE_CODE_AUTHZ_LEVEL;
+
+// Undocumented
+const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = CREATE_IGNORE_SYSTEM_DEFAULT;
+
+#else // defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
+
+const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = 0x2000000;
+
+// Undocumented
+const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = 0x80000000;
+
+#endif // defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
 
 typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _PROCESS_INFORMATION {
     HANDLE_ hProcess;

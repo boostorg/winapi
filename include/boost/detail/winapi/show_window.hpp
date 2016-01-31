@@ -9,7 +9,7 @@
 #define BOOST_DETAIL_WINAPI_SHOW_WINDOW_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.hpp>
+#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once

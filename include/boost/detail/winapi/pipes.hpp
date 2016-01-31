@@ -12,7 +12,7 @@
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/overlapped.hpp>
-#include <boost/predef/platform.hpp>
+#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once

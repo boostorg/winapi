@@ -71,8 +71,6 @@ const DWORD_ SHGFI_OPENICON_          = SHGFI_OPENICON;
 const DWORD_ SHGFI_SHELLICONSIZE_     = SHGFI_SHELLICONSIZE;
 const DWORD_ SHGFI_PIDL_              = SHGFI_PIDL;
 const DWORD_ SHGFI_USEFILEATTRIBUTES_ = SHGFI_USEFILEATTRIBUTES;
-const DWORD_ SHGFI_ADDOVERLAYS_       = SHGFI_ADDOVERLAYS;
-const DWORD_ SHGFI_OVERLAYINDEX_      = SHGFI_OVERLAYINDEX;
 
 #else // defined( BOOST_USE_WINDOWS_H )
 
@@ -92,10 +90,13 @@ const DWORD_ SHGFI_OPENICON_          = 0x000000002;
 const DWORD_ SHGFI_SHELLICONSIZE_     = 0x000000004;
 const DWORD_ SHGFI_PIDL_              = 0x000000008;
 const DWORD_ SHGFI_USEFILEATTRIBUTES_ = 0x000000010;
-const DWORD_ SHGFI_ADDOVERLAYS_       = 0x000000020;
-const DWORD_ SHGFI_OVERLAYINDEX_      = 0x000000040;
 
 #endif // defined( BOOST_USE_WINDOWS_H )
+
+// These constants are only declared for _WIN32_IE >= 0x0500. We don't set IE version
+// and 5.0 is the default version since NT4 SP6, so just define the constants unconditionally.
+const DWORD_ SHGFI_ADDOVERLAYS_       = 0x000000020;
+const DWORD_ SHGFI_OVERLAYINDEX_      = 0x000000040;
 
 typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SHFILEINFOA {
     HICON_ hIcon;
