@@ -11,6 +11,8 @@
 #define BOOST_DETAIL_WINAPI_FILE_MAPPING_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/detail/winapi/page_protection.hpp>
+#include <boost/detail/winapi/mapping_access.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
