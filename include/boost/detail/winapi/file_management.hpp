@@ -14,6 +14,11 @@
 #include <boost/detail/winapi/limits.hpp>
 #include <boost/detail/winapi/time.hpp>
 #include <boost/detail/winapi/overlapped.hpp>
+#include <boost/detail/winapi/creation_disposition.hpp>
+#include <boost/detail/winapi/share_mode.hpp>
+#include <boost/detail/winapi/file_attributes.hpp>
+#include <boost/detail/winapi/file_errors.hpp>
+#include <boost/detail/winapi/move_method.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -48,6 +53,9 @@ MoveFileExA(
     boost::detail::winapi::LPCSTR_ lpExistingFileName,
     boost::detail::winapi::LPCSTR_ lpNewFileName,
     boost::detail::winapi::DWORD_ dwFlags);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+GetFileAttributesA(boost::detail::winapi::LPCSTR_ lpFileName);
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -75,6 +83,9 @@ MoveFileExW(
     boost::detail::winapi::LPCWSTR_ lpExistingFileName,
     boost::detail::winapi::LPCWSTR_ lpNewFileName,
     boost::detail::winapi::DWORD_ dwFlags);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+GetFileAttributesW(boost::detail::winapi::LPCWSTR_ lpFileName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 FindClose(boost::detail::winapi::HANDLE_ hFindFile);
@@ -132,6 +143,13 @@ WriteFile(
     boost::detail::winapi::DWORD_ nNumberOfBytesToWrite,
     boost::detail::winapi::LPDWORD_ lpNumberOfBytesWritten,
     ::_OVERLAPPED* lpOverlapped);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+SetFilePointer(
+    boost::detail::winapi::HANDLE_ hFile,
+    boost::detail::winapi::LONG_ lpDistanceToMove,
+    boost::detail::winapi::PLONG_ lpDistanceToMoveHigh,
+    boost::detail::winapi::DWORD_ dwMoveMethod);
 }
 #endif
 
@@ -142,10 +160,12 @@ namespace winapi {
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::DeleteFileA;
 using ::MoveFileExA;
+using ::GetFileAttributesA;
 #endif
 
 using ::DeleteFileW;
 using ::MoveFileExW;
+using ::GetFileAttributesW;
 
 using ::FindClose;
 
@@ -158,6 +178,7 @@ using ::SetFileValidData;
 using ::SetEndOfFile;
 using ::LockFile;
 using ::UnlockFile;
+using ::SetFilePointer;
 
 
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -292,7 +313,6 @@ BOOST_FORCEINLINE BOOL_ WriteFile(
     return ::WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, reinterpret_cast< ::_OVERLAPPED* >(lpOverlapped));
 };
 
-
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_file(
     LPCSTR_ lpFileName,
@@ -331,6 +351,11 @@ BOOST_FORCEINLINE BOOL_ find_next_file(HANDLE_ hFindFile, WIN32_FIND_DATAA_* lpF
 BOOST_FORCEINLINE BOOL_ move_file(LPCSTR_ lpExistingFileName, LPCSTR_ lpNewFileName, DWORD_ dwFlags)
 {
     return ::MoveFileExA(lpExistingFileName, lpNewFileName, dwFlags);
+}
+
+BOOST_FORCEINLINE BOOL_ get_file_attributes(LPCSTR_ lpFileName)
+{
+    return ::GetFileAttributesA(lpFileName);
 }
 #endif
 
@@ -371,6 +396,11 @@ BOOST_FORCEINLINE BOOL_ find_next_file(HANDLE_ hFindFile, WIN32_FIND_DATAW_* lpF
 BOOST_FORCEINLINE BOOL_ move_file(LPCWSTR_ lpExistingFileName, LPCWSTR_ lpNewFileName, DWORD_ dwFlags)
 {
     return ::MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags);
+}
+
+BOOST_FORCEINLINE BOOL_ get_file_attributes(LPCWSTR_ lpFileName)
+{
+    return ::GetFileAttributesW(lpFileName);
 }
 
 }
