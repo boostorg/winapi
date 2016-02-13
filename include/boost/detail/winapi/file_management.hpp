@@ -429,7 +429,7 @@ BOOST_FORCEINLINE BOOL_ move_file(LPCSTR_ lpExistingFileName, LPCSTR_ lpNewFileN
     return ::MoveFileExA(lpExistingFileName, lpNewFileName, dwFlags);
 }
 
-BOOST_FORCEINLINE BOOL_ get_file_attributes(LPCSTR_ lpFileName)
+BOOST_FORCEINLINE DWORD_ get_file_attributes(LPCSTR_ lpFileName)
 {
     return ::GetFileAttributesA(lpFileName);
 }
@@ -474,7 +474,7 @@ BOOST_FORCEINLINE BOOL_ move_file(LPCWSTR_ lpExistingFileName, LPCWSTR_ lpNewFil
     return ::MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags);
 }
 
-BOOST_FORCEINLINE BOOL_ get_file_attributes(LPCWSTR_ lpFileName)
+BOOST_FORCEINLINE DWORD_ get_file_attributes(LPCWSTR_ lpFileName)
 {
     return ::GetFileAttributesW(lpFileName);
 }
