@@ -137,7 +137,7 @@ BOOST_FORCEINLINE HANDLE_ CreateFileMappingA(
 
 BOOST_FORCEINLINE HANDLE_ CreateFileMappingW(
     HANDLE_ hFile,
-    ::_SECURITY_ATTRIBUTES* lpFileMappingAttributes,
+    SECURITY_ATTRIBUTES_* lpFileMappingAttributes,
     DWORD_ flProtect,
     DWORD_ dwMaximumSizeHigh,
     DWORD_ dwMaximumSizeLow,
@@ -178,7 +178,7 @@ BOOST_FORCEINLINE HANDLE_ open_file_mapping(DWORD_ dwDesiredAccess, BOOL_ bInher
 
 BOOST_FORCEINLINE HANDLE_ create_file_mapping(
     HANDLE_ hFile,
-    ::_SECURITY_ATTRIBUTES* lpFileMappingAttributes,
+    SECURITY_ATTRIBUTES_* lpFileMappingAttributes,
     DWORD_ flProtect,
     DWORD_ dwMaximumSizeHigh,
     DWORD_ dwMaximumSizeLow,
