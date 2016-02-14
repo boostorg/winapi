@@ -52,6 +52,14 @@ OpenFileMappingW(
     boost::detail::winapi::LPCWSTR_ lpName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
+MapViewOfFile(
+    boost::detail::winapi::HANDLE_ hFileMappingObject,
+    boost::detail::winapi::DWORD_ dwDesiredAccess,
+    boost::detail::winapi::DWORD_ dwFileOffsetHigh,
+    boost::detail::winapi::DWORD_ dwFileOffsetLow,
+    boost::detail::winapi::SIZE_T_ dwNumberOfBytesToMap);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
 MapViewOfFileEx(
     boost::detail::winapi::HANDLE_ hFileMappingObject,
     boost::detail::winapi::DWORD_ dwDesiredAccess,
@@ -112,6 +120,7 @@ const DWORD_ SEC_IMAGE_NO_EXECUTE_ = (SEC_IMAGE_ | SEC_NOCACHE_);
 using ::OpenFileMappingA;
 #endif
 using ::OpenFileMappingW;
+using ::MapViewOfFile;
 using ::MapViewOfFileEx;
 using ::FlushViewOfFile;
 using ::UnmapViewOfFile;
