@@ -2,6 +2,7 @@
 
 //  Copyright 2010 Vicente J. Botet Escriba
 //  Copyright 2015 Andrey Semashev
+//  Copyright 2016 Jorge Lodos
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -72,6 +73,40 @@ UnmapViewOfFile(boost::detail::winapi::LPCVOID_ lpBaseAddress);
 namespace boost {
 namespace detail {
 namespace winapi {
+
+#if defined( BOOST_USE_WINDOWS_H )
+
+const DWORD_ SEC_FILE_ = SEC_FILE;
+const DWORD_ SEC_IMAGE_ = SEC_IMAGE;
+const DWORD_ SEC_RESERVE_ = SEC_RESERVE;
+const DWORD_ SEC_COMMIT_ = SEC_COMMIT;
+const DWORD_ SEC_NOCACHE_ = SEC_NOCACHE;
+
+const DWORD_ FILE_MAP_COPY_ = FILE_MAP_COPY;
+const DWORD_ FILE_MAP_WRITE_ = FILE_MAP_WRITE;
+const DWORD_ FILE_MAP_READ_ = FILE_MAP_READ;
+const DWORD_ FILE_MAP_ALL_ACCESS_ = FILE_MAP_ALL_ACCESS;
+
+#else // defined( BOOST_USE_WINDOWS_H )
+
+const DWORD_ SEC_FILE_ = 0x800000;
+const DWORD_ SEC_IMAGE_ = 0x1000000;
+const DWORD_ SEC_RESERVE_ = 0x4000000;
+const DWORD_ SEC_COMMIT_ = 0x8000000;
+const DWORD_ SEC_NOCACHE_ = 0x10000000;
+
+const DWORD_ FILE_MAP_COPY_ = 0x0001;
+const DWORD_ FILE_MAP_WRITE_ = 0x0002;
+const DWORD_ FILE_MAP_READ_ = 0x0004;
+const DWORD_ FILE_MAP_ALL_ACCESS_ = 0x000F001F; // STANDARD_RIGHTS_REQUIRED | SECTION_*
+
+#endif // defined( BOOST_USE_WINDOWS_H )
+
+// These constants are not defined in Windows SDK up until 6.0A and MinGW (as of 2016-02-14)
+const DWORD_ SEC_PROTECTED_IMAGE_ = 0x2000000;
+const DWORD_ SEC_WRITECOMBINE_ = 0x40000000;
+const DWORD_ SEC_LARGE_PAGES_ = 0x80000000;
+const DWORD_ SEC_IMAGE_NO_EXECUTE_ = (SEC_IMAGE_ | SEC_NOCACHE_);
 
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::OpenFileMappingA;
