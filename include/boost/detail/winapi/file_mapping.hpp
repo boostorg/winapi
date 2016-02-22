@@ -90,6 +90,16 @@ const DWORD_ SEC_RESERVE_ = SEC_RESERVE;
 const DWORD_ SEC_COMMIT_ = SEC_COMMIT;
 const DWORD_ SEC_NOCACHE_ = SEC_NOCACHE;
 
+// These permission flags are undocumented and some of them are equivalent to the FILE_MAP_* flags.
+// SECTION_QUERY enables NtQuerySection.
+// http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FSection%2FNtQuerySection.html
+const DWORD_ SECTION_QUERY_ = SECTION_QUERY;
+const DWORD_ SECTION_MAP_WRITE_ = SECTION_MAP_WRITE;
+const DWORD_ SECTION_MAP_READ_ = SECTION_MAP_READ;
+const DWORD_ SECTION_MAP_EXECUTE_ = SECTION_MAP_EXECUTE;
+const DWORD_ SECTION_EXTEND_SIZE_ = SECTION_EXTEND_SIZE;
+const DWORD_ SECTION_ALL_ACCESS_ = SECTION_ALL_ACCESS;
+
 const DWORD_ FILE_MAP_COPY_ = FILE_MAP_COPY;
 const DWORD_ FILE_MAP_WRITE_ = FILE_MAP_WRITE;
 const DWORD_ FILE_MAP_READ_ = FILE_MAP_READ;
@@ -103,12 +113,26 @@ const DWORD_ SEC_RESERVE_ = 0x4000000;
 const DWORD_ SEC_COMMIT_ = 0x8000000;
 const DWORD_ SEC_NOCACHE_ = 0x10000000;
 
-const DWORD_ FILE_MAP_COPY_ = 0x0001;
-const DWORD_ FILE_MAP_WRITE_ = 0x0002;
-const DWORD_ FILE_MAP_READ_ = 0x0004;
-const DWORD_ FILE_MAP_ALL_ACCESS_ = 0x000F001F; // STANDARD_RIGHTS_REQUIRED | SECTION_*
+// These permission flags are undocumented and some of them are equivalent to the FILE_MAP_* flags.
+// SECTION_QUERY enables NtQuerySection.
+// http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FSection%2FNtQuerySection.html
+const DWORD_ SECTION_QUERY_ = 0x00000001;
+const DWORD_ SECTION_MAP_WRITE_ = 0x00000002;
+const DWORD_ SECTION_MAP_READ_ = 0x00000004;
+const DWORD_ SECTION_MAP_EXECUTE_ = 0x00000008;
+const DWORD_ SECTION_EXTEND_SIZE_ = 0x00000010;
+const DWORD_ SECTION_ALL_ACCESS_ = 0x000F001F; // STANDARD_RIGHTS_REQUIRED | SECTION_*
+
+const DWORD_ FILE_MAP_COPY_ = SECTION_QUERY_;
+const DWORD_ FILE_MAP_WRITE_ = SECTION_MAP_WRITE_;
+const DWORD_ FILE_MAP_READ_ = SECTION_MAP_READ_;
+const DWORD_ FILE_MAP_ALL_ACCESS_ = SECTION_ALL_ACCESS_;
 
 #endif // defined( BOOST_USE_WINDOWS_H )
+
+// These constants are not defined in Windows SDK up until the one shipped with MSVC 8 and MinGW (as of 2016-02-14)
+const DWORD_ SECTION_MAP_EXECUTE_EXPLICIT_ = 0x00000020; // not included in SECTION_ALL_ACCESS
+const DWORD_ FILE_MAP_EXECUTE_ = SECTION_MAP_EXECUTE_EXPLICIT_; // not included in FILE_MAP_ALL_ACCESS
 
 // These constants are not defined in Windows SDK up until 6.0A and MinGW (as of 2016-02-14)
 const DWORD_ SEC_PROTECTED_IMAGE_ = 0x2000000;
