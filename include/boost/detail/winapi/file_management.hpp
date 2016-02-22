@@ -52,6 +52,9 @@ MoveFileExA(
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 GetFileAttributesA(boost::detail::winapi::LPCSTR_ lpFileName);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+AreFileApisANSI();
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -240,6 +243,7 @@ const DWORD_ FILE_ATTRIBUTE_EA_ = 0x00040000;
 using ::DeleteFileA;
 using ::MoveFileExA;
 using ::GetFileAttributesA;
+using ::AreFileApisANSI;
 #endif
 
 using ::DeleteFileW;
