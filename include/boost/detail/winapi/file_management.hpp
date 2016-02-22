@@ -54,7 +54,7 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 GetFileAttributesA(boost::detail::winapi::LPCSTR_ lpFileName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-AreFileApisANSI();
+AreFileApisANSI(BOOST_DETAIL_WINAPI_VOID);
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
