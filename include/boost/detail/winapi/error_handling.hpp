@@ -94,7 +94,7 @@ const WORD_ SUBLANG_DEFAULT_=               0x01;    // user default
 
 BOOST_FORCEINLINE WORD_ MAKELANGID_(WORD_ p, WORD_ s)
 {
-    return ((((WORD_)(s)) << 10) | (WORD_)(p));
+    return (WORD_)((((WORD_)(s)) << 10) | (WORD_)(p));
 }
 
 const DWORD_ SEM_FAILCRITICALERRORS_ =     0x0001;
