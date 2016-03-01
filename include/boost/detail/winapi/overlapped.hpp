@@ -24,6 +24,11 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
+#ifdef BOOST_MSVC
+#pragma warning(push)
+#pragma warning(disable:4201) // nonstandard extension used : nameless struct/union
+#endif
+
 typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _OVERLAPPED {
     ULONG_PTR_ Internal;
     ULONG_PTR_ InternalHigh;
@@ -36,6 +41,10 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _OVERLAPPED {
     };
     HANDLE_    hEvent;
 } OVERLAPPED_, *LPOVERLAPPED_;
+
+#ifdef BOOST_MSVC
+#pragma warning(pop)
+#endif
 
 }}}
 
