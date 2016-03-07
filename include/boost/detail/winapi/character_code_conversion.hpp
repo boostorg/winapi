@@ -93,6 +93,11 @@ const DWORD_ WC_NO_BEST_FIT_CHARS_ = 0x00000400;
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+// This constant is not present in MinGW
+const DWORD_ WC_ERR_INVALID_CHARS_ = 0x00000080;
+#endif
+
 using ::MultiByteToWideChar;
 using ::WideCharToMultiByte;
 
