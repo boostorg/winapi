@@ -52,6 +52,12 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI  SetEnvironmentVariableW
 
 namespace boost { namespace detail { namespace winapi {
 
+#if defined( BOOST_USE_WINDOWS_H )
+const DWORD_ ERROR_ENVVAR_NOT_FOUND_  = ERROR_ENVVAR_NOT_FOUND;
+#else
+const DWORD_ ERROR_ENVVAR_NOT_FOUND_  = 203;
+#endif
+
 
 #if !defined( BOOST_NO_ANSI_APIS )
 
@@ -72,10 +78,10 @@ template<class Char> Char* get_environment_strings();
 #if !defined( BOOST_NO_ANSI_APIS )
 
 template<>
-char* get_environment_strings<char>() {return GetEnvironmentStringsA();}
+inline char* get_environment_strings<char>() {return GetEnvironmentStringsA();}
 
-BOOL_ free_environment_strings(boost::detail::winapi::LPSTR_ p) { return FreeEnvironmentStringsA(p);}
-DWORD_ get_environment_variable(
+inline BOOL_ free_environment_strings(boost::detail::winapi::LPSTR_ p) { return FreeEnvironmentStringsA(p);}
+inline DWORD_ get_environment_variable(
         LPCSTR_ name,
         LPSTR_   buffer,
         DWORD_  size
@@ -84,7 +90,7 @@ DWORD_ get_environment_variable(
     return GetEnvironmentVariableA(name, buffer, size);
 }
 
-BOOL_ set_environment_variable(
+inline BOOL_ set_environment_variable(
         LPCSTR_ name,
         LPCSTR_ value
         )
@@ -96,9 +102,10 @@ BOOL_ set_environment_variable(
 
 
 template<>
-wchar_t* get_environment_strings<wchar_t>() {return GetEnvironmentStringsW();}
-BOOL_ free_environment_strings(boost::detail::winapi::LPWSTR_ p) { return FreeEnvironmentStringsW(p);}
-DWORD_ get_environment_variable(
+inline wchar_t* get_environment_strings<wchar_t>() {return GetEnvironmentStringsW();}
+
+inline BOOL_ free_environment_strings(boost::detail::winapi::LPWSTR_ p) { return FreeEnvironmentStringsW(p);}
+inline DWORD_ get_environment_variable(
         LPCWSTR_ name,
         LPWSTR_   buffer,
         DWORD_  size
@@ -107,7 +114,7 @@ DWORD_ get_environment_variable(
     return GetEnvironmentVariableW(name, buffer, size);
 }
 
-BOOL_ set_environment_variable(
+inline BOOL_ set_environment_variable(
         LPCWSTR_ name,
         LPCWSTR_ value
         )
