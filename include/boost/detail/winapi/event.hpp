@@ -109,6 +109,10 @@ const DWORD_ CREATE_EVENT_MANUAL_RESET_ = 0x00000001;
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
+// Undocumented and not present in Windows SDK. Enables NtQueryEvent.
+// http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FEvent%2FNtQueryEvent.html
+const DWORD_ EVENT_QUERY_STATE_ = 0x00000001;
+
 const DWORD_ event_all_access = EVENT_ALL_ACCESS_;
 const DWORD_ event_modify_state = EVENT_MODIFY_STATE_;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
