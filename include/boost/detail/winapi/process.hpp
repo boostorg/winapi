@@ -11,6 +11,7 @@
 
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/detail/winapi/access_rights.hpp>
 #include <boost/detail/winapi/get_current_process.hpp>
 #include <boost/detail/winapi/get_current_process_id.hpp>
 #include <boost/predef/platform.h>
@@ -74,6 +75,11 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI CreateProcessW(
     boost::detail::winapi::LPCWSTR_ lpCurrentDirectory,
     ::_STARTUPINFOW* lpStartupInfo,
     ::_PROCESS_INFORMATION* lpProcessInformation);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI OpenProcess(
+  boost::detail::winapi::DWORD_ dwDesiredAccess,
+  boost::detail::winapi::BOOL_  bInheritHandle,
+  boost::detail::winapi::DWORD_ dwProcessId);
 
 } // extern "C"
 #endif //defined BOOST_WINDOWS_H
@@ -195,12 +201,16 @@ const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = CREATE_PRESERVE_CODE_AUTHZ_LEVE
 // Undocumented
 const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = CREATE_IGNORE_SYSTEM_DEFAULT;
 
+const DWORD_ PROCESS_ALL_ACCESS_ = PROCESS_ALL_ACCESS;
+
 #else // defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
 
 const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = 0x2000000;
 
 // Undocumented
 const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = 0x80000000;
+
+const DWORD_ PROCESS_ALL_ACCESS_ = (STANDARD_RIGHTS_REQUIRED_ | SYNCHRONIZE_ | 0xfff);
 
 #endif // defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
 
@@ -274,6 +284,7 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _STARTUPINFOEXW {
 using ::GetExitCodeProcess;
 using ::ExitProcess;
 using ::TerminateProcess;
+using ::OpenProcess;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE BOOL_ CreateProcessA(
