@@ -10,6 +10,7 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/limits.hpp>
+#include <boost/detail/winapi/access_rights.hpp>
 #include <boost/core/underlying_type.hpp>
 
 
@@ -60,6 +61,15 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI OpenJobObjectW(
 
 namespace boost { namespace detail { namespace winapi {
 
+#if defined ( BOOST_USE_WINDOWS_H )
+
+const DWORD_ JOB_OBJECT_ALL_ACCESS_ = JOB_OBJECT_ALL_ACCESS;
+
+#else
+
+const DWORD_ JOB_OBJECT_ALL_ACCESS_ = (STANDARD_RIGHTS_REQUIRED_ | SYNCHRONIZE_ | 0x1F);
+
+#endif
 
 #if !defined( BOOST_NO_ANSI_APIS )
 
