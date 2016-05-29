@@ -151,6 +151,15 @@ WriteFile(
     boost::detail::winapi::LPDWORD_ lpNumberOfBytesWritten,
     ::_OVERLAPPED* lpOverlapped);
 
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+ReadFile(
+    boost::detail::winapi::HANDLE_       hFile,
+    boost::detail::winapi::LPVOID_       lpBuffer,
+    boost::detail::winapi::DWORD_        nNumberOfBytesToRead,
+    boost::detail::winapi::LPDWORD_      lpNumberOfBytesRead,
+  ::_OVERLAPPED* lpOverlapped);
+
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 SetFilePointer(
     boost::detail::winapi::HANDLE_ hFile,
@@ -199,6 +208,8 @@ const DWORD_ FILE_BEGIN_ = FILE_BEGIN;
 const DWORD_ FILE_CURRENT_ = FILE_CURRENT;
 const DWORD_ FILE_END_ = FILE_END;
 
+const DWORD_ ERROR_BROKEN_PIPE_ = ERROR_BROKEN_PIPE;
+
 #else // defined( BOOST_USE_WINDOWS_H )
 
 const DWORD_ INVALID_FILE_SIZE_ = ((DWORD_)0xFFFFFFFF);
@@ -233,6 +244,8 @@ const DWORD_ FILE_SHARE_DELETE_ = 0x00000004;
 const DWORD_ FILE_BEGIN_ = 0;
 const DWORD_ FILE_CURRENT_ = 1;
 const DWORD_ FILE_END_ = 2;
+
+const DWORD_ ERROR_BROKEN_PIPE_ = 109;
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
@@ -413,6 +426,16 @@ BOOST_FORCEINLINE BOOL_ WriteFile(
 {
     return ::WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, reinterpret_cast< ::_OVERLAPPED* >(lpOverlapped));
 }
+
+BOOST_FORCEINLINE BOOL_ ReadFile(
+    HANDLE_ hFile,
+    LPVOID_ lpBuffer,
+    DWORD_ nNumberOfBytesToWrite,
+    LPDWORD_ lpNumberOfBytesWritten,
+    OVERLAPPED_* lpOverlapped)
+{
+    return ::ReadFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, reinterpret_cast< ::_OVERLAPPED* >(lpOverlapped));
+};
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_file(
