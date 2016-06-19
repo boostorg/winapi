@@ -1,0 +1,16 @@
+{
+    "key": "winapi",
+    "name": "WinAPI",
+    "authors": [
+        "Peter Dimov",
+        "Vicente J. Botet Escriba",
+        "Andrey Semashev"
+    ],
+    "description": "Windows API abstraction layer.",
+    "category": [
+        "Miscellaneous"
+    ],
+    "maintainers": [
+        "Andrey Semashev <andrey.semashev -at- gmail.com>"
+    ]
+}
