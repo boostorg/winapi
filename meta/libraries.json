@@ -1,6 +1,7 @@
 {
     "key": "winapi",
     "name": "WinAPI",
+    "status": "hidden",
     "authors": [
         "Peter Dimov",
         "Vicente J. Botet Escriba",
