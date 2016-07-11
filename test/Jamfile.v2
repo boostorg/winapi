@@ -41,10 +41,10 @@ rule test_all
       # Note: The test name starts with '~' in order to group these tests in the test report table, preferably at the end.
       #       All '/' are replaced with '-' because apparently test scripts have a problem with test names containing slashes.
       local test_name = [ regex.replace $(rel_file) "/" "-" ] ;
-      local decl_test_name = ~hdr-decl/$(test_name) ;
-      local use_winh_test_name = ~hdr-use-winh/$(test_name) ;
-      local pre_winh_test_name = ~hdr-pre-winh/$(test_name) ;
-      local post_winh_test_name = ~hdr-post-winh/$(test_name) ;
+      local decl_test_name = ~hdr-decl-$(test_name) ;
+      local use_winh_test_name = ~hdr-use-winh-$(test_name) ;
+      local pre_winh_test_name = ~hdr-pre-winh-$(test_name) ;
+      local post_winh_test_name = ~hdr-post-winh-$(test_name) ;
       #ECHO $(rel_file) ;
       all_rules += [ compile compile/decl_header.cpp : <define>"BOOST_WINAPI_TEST_HEADER=$(rel_file)" <dependency>$(file) : $(decl_test_name) ] ;
       all_rules += [ compile compile/decl_header.cpp : <define>"BOOST_WINAPI_TEST_HEADER=$(rel_file)" <define>"BOOST_USE_WINDOWS_H" <dependency>$(file) : $(use_winh_test_name) ] ;
