@@ -11,6 +11,7 @@
 #define BOOST_DETAIL_WINAPI_WAIT_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/detail/winapi/error_codes.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -56,7 +57,6 @@ using ::SignalObjectAndWait;
 const DWORD_ INFINITE_ = INFINITE;
 const DWORD_ WAIT_ABANDONED_ = WAIT_ABANDONED;
 const DWORD_ WAIT_OBJECT_0_ = WAIT_OBJECT_0;
-const DWORD_ WAIT_TIMEOUT_ = WAIT_TIMEOUT;
 const DWORD_ WAIT_FAILED_ = WAIT_FAILED;
 
 #else // defined( BOOST_USE_WINDOWS_H )
@@ -64,7 +64,6 @@ const DWORD_ WAIT_FAILED_ = WAIT_FAILED;
 const DWORD_ INFINITE_ = (DWORD_)0xFFFFFFFF;
 const DWORD_ WAIT_ABANDONED_ = 0x00000080L;
 const DWORD_ WAIT_OBJECT_0_ = 0x00000000L;
-const DWORD_ WAIT_TIMEOUT_ = 0x00000102L;
 const DWORD_ WAIT_FAILED_ = (DWORD_)0xFFFFFFFF;
 
 #endif // defined( BOOST_USE_WINDOWS_H )
