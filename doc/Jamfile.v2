@@ -21,3 +21,9 @@ boostbook standalone
 
 alias boostdoc : standalone
     : : : <implicit-dependency>standalone ;
+
+###############################################################################
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : standalone ;
+explicit boostrelease ;
