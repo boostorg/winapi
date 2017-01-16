@@ -98,10 +98,17 @@ CryptGenRandom(
     boost::detail::winapi::DWORD_ dwLen,
     boost::detail::winapi::BYTE_ *pbBuffer);
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 CryptReleaseContext(
     boost::detail::winapi::HCRYPTPROV_ hProv,
     boost::detail::winapi::DWORD_ dwFlags);
+#else
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+CryptReleaseContext(
+    boost::detail::winapi::HCRYPTPROV_ hProv,
+    boost::detail::winapi::ULONG_PTR_ dwFlags);
+#endif
 }
 #endif // !defined( BOOST_USE_WINDOWS_H )
 
