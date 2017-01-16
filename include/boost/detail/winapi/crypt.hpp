@@ -147,14 +147,23 @@ const DWORD_ CRYPT_SILENT_          = 64;
 #endif
 
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::CryptEnumProvidersA;
 using ::CryptAcquireContextA;
 #endif
-using ::CryptEnumProvidersW;
 using ::CryptAcquireContextW;
 using ::CryptGenRandom;
 
 #if !defined( BOOST_NO_ANSI_APIS )
+BOOST_FORCEINLINE BOOL_ CryptEnumProvidersA(
+    DWORD_ dwIndex,
+    DWORD_ *pdwReserved,
+    DWORD_ dwFlags,
+    DWORD_ *pdwProvType,
+    LPSTR_ szProvName,
+    DWORD_ *pcbProvName)
+{
+    return ::CryptEnumProvidersA(dwIndex, pdwReserved, dwFlags, pdwProvType, winapi::detail::cast_ptr(szProvName), pcbProvName);
+}
+
 BOOST_FORCEINLINE BOOL_ crypt_enum_providers(
     DWORD_ dwIndex,
     DWORD_ *pdwReserved,
@@ -176,6 +185,17 @@ BOOST_FORCEINLINE BOOL_ crypt_acquire_context(
     return ::CryptAcquireContextA(phProv, pszContainer, pszProvider, dwProvType, dwFlags);
 }
 #endif
+
+BOOST_FORCEINLINE BOOL_ CryptEnumProvidersW(
+    DWORD_ dwIndex,
+    DWORD_ *pdwReserved,
+    DWORD_ dwFlags,
+    DWORD_ *pdwProvType,
+    LPWSTR_ szProvName,
+    DWORD_ *pcbProvName)
+{
+    return ::CryptEnumProvidersW(dwIndex, pdwReserved, dwFlags, pdwProvType, winapi::detail::cast_ptr(szProvName), pcbProvName);
+}
 
 BOOST_FORCEINLINE BOOL_ crypt_enum_providers(
     DWORD_ dwIndex,
