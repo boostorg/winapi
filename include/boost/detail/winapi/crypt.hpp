@@ -109,7 +109,7 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 CryptReleaseContext(
     boost::detail::winapi::HCRYPTPROV_ hProv,
     boost::detail::winapi::ULONG_PTR_ dwFlags);
-#else    
+#else
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 CryptReleaseContext(
     boost::detail::winapi::HCRYPTPROV_ hProv,
