@@ -45,6 +45,16 @@ OutputDebugStringW(
     );
 
 }
+
+BOOST_SYMBOL_IMPORT
+boost::detail::winapi::USHORT_
+WINAPI
+RtlCaptureStackBackTrace(
+    boost::detail::winapi::ULONG_  FramesToSkip,
+    boost::detail::winapi::ULONG_  FramesToCapture,
+    boost::detail::winapi::PVOID_  *BackTrace,
+    boost::detail::winapi::PULONG_ BackTraceHash
+);
 #endif // extern "C"
 
 namespace boost {
@@ -57,6 +67,8 @@ using ::IsDebuggerPresent;
 
 using ::OutputDebugStringA;
 using ::OutputDebugStringW;
+
+using ::RtlCaptureStackBackTrace;
 
 inline
 void
