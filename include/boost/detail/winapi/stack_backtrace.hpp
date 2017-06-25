@@ -21,8 +21,8 @@
 // Note: RtlCaptureStackBackTrace is available in WinXP SP1 and later, but we don't discriminate SP versions
 #if (BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP)
 
-// Windows SDK shipped with MSVC 7.1 does not declare RtlCaptureStackBackTrace in headers but allows to link with it
-#if !defined( BOOST_USE_WINDOWS_H ) || (defined(_MSC_VER) && (_MSC_VER+0) < 1400)
+// Windows SDK shipped with MSVC 7.1 and 8 does not declare RtlCaptureStackBackTrace in headers but allows to link with it
+#if !defined( BOOST_USE_WINDOWS_H ) || (defined(_MSC_VER) && (_MSC_VER+0) < 1500)
 extern "C" {
 
 BOOST_SYMBOL_IMPORT
