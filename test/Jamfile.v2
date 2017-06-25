@@ -52,6 +52,11 @@ rule test_all
       all_rules += [ compile compile/windows_h_post.cpp : <define>"BOOST_WINAPI_TEST_HEADER=$(rel_file)" <dependency>$(file) : $(post_winh_test_name) ] ;
    }
 
+   for file in [ glob run/*.cpp ]
+   {
+      all_rules += [ run $(file) : : : <test-info>always_show_run_output ] ;
+   }
+
    #ECHO All rules: $(all_rules) ;
    return $(all_rules) ;
 }
