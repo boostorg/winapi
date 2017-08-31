@@ -30,6 +30,22 @@ WaitForMultipleObjects(
     boost::detail::winapi::BOOL_ bWaitAll,
     boost::detail::winapi::DWORD_ dwMilliseconds);
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+WaitForSingleObjectEx(
+    boost::detail::winapi::HANDLE_ hHandle,
+    boost::detail::winapi::DWORD_ dwMilliseconds,
+    boost::detail::winapi::BOOL_ bAlertable);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+WaitForMultipleObjectsEx(
+    boost::detail::winapi::DWORD_ nCount,
+    boost::detail::winapi::HANDLE_ const* lpHandles,
+    boost::detail::winapi::BOOL_ bWaitAll,
+    boost::detail::winapi::DWORD_ dwMilliseconds,
+    boost::detail::winapi::BOOL_ bAlertable);
+#endif
+
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 SignalObjectAndWait(
@@ -47,6 +63,10 @@ namespace winapi {
 
 using ::WaitForMultipleObjects;
 using ::WaitForSingleObject;
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+using ::WaitForSingleObjectEx;
+using ::WaitForMultipleObjectsEx;
+#endif
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 using ::SignalObjectAndWait;
 #endif
