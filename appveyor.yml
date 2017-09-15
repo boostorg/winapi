@@ -1,0 +1,117 @@
+# Copyright 2016, 2017 Peter Dimov
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+
+# When copying this to a new library, be sure to update the name of the library
+# in two places (once each at the top of install: and test_script:)
+
+version: 1.0.{build}-{branch}
+
+shallow_clone: true
+
+branches:
+  only:
+    - develop
+    - master
+
+matrix:
+  allow_failures:
+    - MAYFAIL: true
+
+environment:
+  global:
+    # see: http://www.boost.org/build/doc/html/bbv2/overview/invocation.html#bbv2.overview.invocation.properties
+    # to use the default for a given environment, comment it out; recommend you build debug and release however..
+    # on Windows it is important to exercise all the possibilities, especially shared vs static
+    # B2_ADDRESS_MODEL: address-model=64,32
+    # B2_LINK: link=shared,static
+    B2_THREADING: threading=multi,single
+    B2_VARIANT: variant=release,debug
+
+  matrix:
+  # test older compilers
+    - TOOLSET: msvc-9.0
+      COMMENT: Visual Studio 2008
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - TOOLSET: msvc-10.0
+      COMMENT: Visual Studio 2010
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - TOOLSET: msvc-11.0
+      COMMENT: Visual Studio 2012
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - TOOLSET: msvc-12.0
+      COMMENT: Visual Studio 2013
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - ADDPATH: C:\cygwin\bin;
+      TOOLSET: gcc
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - ADDPATH: C:\mingw\bin;
+      TOOLSET: gcc
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
+      TOOLSET: gcc
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - TOOLSET: msvc-14.0
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+  # test platform targets
+    - COMMENT: _WIN32_WINNT=0x0400 (NT4)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0400"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0500 (2K)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0500"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0501 (XP)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0501"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0502 (WS03)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0502"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0600 (VISTA/WS08)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0600"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0601 (WIN7)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0601"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0602 (WIN8)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0602"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0603 (WINBLUE)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0603"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0A00 (WIN10) DESKTOP (least restrictive)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WINNT=0x0A00 (WIN10) STORE (most restrictive)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_PC_APP"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      MAYFAIL: true
+
+install:
+  - set SELF=winapi
+  - cd ..
+  - git clone -b %APPVEYOR_REPO_BRANCH% --depth 1 https://github.com/boostorg/boost.git boost-root
+  - cd boost-root
+  - git submodule update --init tools/boostdep
+  - git submodule update --init tools/build
+  - git submodule update --init tools/inspect
+  - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\%SELF%
+  - python tools/boostdep/depinst/depinst.py %SELF%
+  - cmd /c bootstrap
+  - b2 headers
+
+build: off
+
+test_script:
+  - set SELF=winapi
+  - PATH=%ADDPATH%%PATH%
+  - b2 libs/%SELF%/test toolset=%TOOLSET% %CXXFLAGS% %DEFINES% %B2_ADDRESS_MODEL% %B2_LINK% %B2_THREADING% %B2_VARIANT% -j3
