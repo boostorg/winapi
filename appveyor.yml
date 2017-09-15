@@ -30,33 +30,33 @@ environment:
 
   matrix:
   # test older compilers
-    - TOOLSET: msvc-9.0
-      COMMENT: Visual Studio 2008
+    - COMMENT: Visual Studio 2008
+      TOOLSET: msvc-9.0
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - TOOLSET: msvc-10.0
-      COMMENT: Visual Studio 2010
+    - COMMENT: Visual Studio 2010
+      TOOLSET: msvc-10.0
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - TOOLSET: msvc-11.0
-      COMMENT: Visual Studio 2012
+    - COMMENT: Visual Studio 2012
+      TOOLSET: msvc-11.0
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - TOOLSET: msvc-12.0
-      COMMENT: Visual Studio 2013
+    - COMMENT: Visual Studio 2013
+      TOOLSET: msvc-12.0
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - ADDPATH: C:\cygwin\bin;
-      COMMENT: Cygwin
-      TOOLSET: gcc
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - ADDPATH: C:\mingw\bin;
-      COMMENT: MinGW
-      TOOLSET: gcc
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
-      COMMENT: MinGW-w64
-      TOOLSET: gcc
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    - TOOLSET: msvc-14.0
-      COMMENT: Visual Studio 2015
+    - COMMENT: Visual Studio 2015
+      TOOLSET: msvc-14.0
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - COMMENT: Cygwin
+      TOOLSET: gcc
+      ADDPATH: C:\cygwin\bin;
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - COMMENT: MinGW
+      TOOLSET: gcc
+      ADDPATH: C:\mingw\bin;
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - COMMENT: MinGW-w64
+      TOOLSET: gcc
+      ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
   # test platform targets
     - COMMENT: _WIN32_WINNT=0x0400 (NT4)
       TOOLSET: msvc-14.1
