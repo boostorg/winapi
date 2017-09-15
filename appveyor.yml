@@ -43,15 +43,19 @@ environment:
       COMMENT: Visual Studio 2013
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - ADDPATH: C:\cygwin\bin;
+      COMMENT: Cygwin
       TOOLSET: gcc
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - ADDPATH: C:\mingw\bin;
+      COMMENT: MinGW
       TOOLSET: gcc
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
+      COMMENT: MinGW-w64
       TOOLSET: gcc
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - TOOLSET: msvc-14.0
+      COMMENT: Visual Studio 2015
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
   # test platform targets
     - COMMENT: _WIN32_WINNT=0x0400 (NT4)
@@ -82,7 +86,7 @@ environment:
       TOOLSET: msvc-14.1
       DEFINES: define="_WIN32_WINNT=0x0602"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - COMMENT: _WIN32_WINNT=0x0603 (WINBLUE)
+    - COMMENT: _WIN32_WINNT=0x0603 (WIN8.1)
       TOOLSET: msvc-14.1
       DEFINES: define="_WIN32_WINNT=0x0603"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
