@@ -19,7 +19,9 @@
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/access_rights.hpp>
 
-#if !defined( BOOST_USE_WINDOWS_H )
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
+
+#if !defined(BOOST_USE_WINDOWS_H)
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI CreateJobObjectA(
