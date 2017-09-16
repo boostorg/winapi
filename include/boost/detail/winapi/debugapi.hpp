@@ -44,8 +44,8 @@ OutputDebugStringW(
     boost::detail::winapi::LPCWSTR_
     );
 
-}
-#endif // extern "C"
+} // extern "C"
+#endif
 
 namespace boost {
 namespace detail {
@@ -58,16 +58,12 @@ using ::IsDebuggerPresent;
 using ::OutputDebugStringA;
 using ::OutputDebugStringW;
 
-inline
-void
-output_debug_string(char const* s)
+BOOST_FORCEINLINE void output_debug_string(char const* s)
 {
     ::OutputDebugStringA(s);
 }
 
-inline
-void
-output_debug_string(wchar_t const* s)
+BOOST_FORCEINLINE void output_debug_string(wchar_t const* s)
 {
     ::OutputDebugStringW(s);
 }
