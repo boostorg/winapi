@@ -30,7 +30,6 @@ DuplicateHandle(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandle,
     boost::detail::winapi::DWORD_ dwOptions);
-}
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN10
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
@@ -38,7 +37,7 @@ CompareObjectHandles(
     boost::detail::winapi::HANDLE_ hFirstObjectHandle,
     boost::detail::winapi::HANDLE_ hSecondObjectHandle);
 #endif
-
+} // extern "C"
 #endif
 
 namespace boost {
