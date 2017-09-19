@@ -18,6 +18,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 namespace boost { namespace detail { namespace winapi {
@@ -73,9 +75,6 @@ GetModuleFileNameW(
     boost::detail::winapi::LPWSTR_ lpFilename,
     boost::detail::winapi::DWORD_ nSize
 );
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-FreeLibrary(boost::detail::winapi::HMODULE_ hModule);
 
 #if !defined( UNDER_CE )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::FARPROC_ WINAPI
@@ -148,7 +147,6 @@ using ::LoadLibraryW;
 using ::LoadLibraryExW;
 using ::GetModuleHandleW;
 using ::GetModuleFileNameW;
-using ::FreeLibrary;
 
 #if !defined( UNDER_CE )
 // For backward compatibility, don't use directly. Use get_proc_address instead.
@@ -218,4 +216,28 @@ BOOST_FORCEINLINE DWORD_ get_module_file_name(HMODULE_ hModule, LPWSTR_ lpFilena
 } // namespace detail
 } // namespace boost
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
+//
+// FreeLibrary is in a different partition set (slightly)
+//
+
+#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
+
+#if !defined(BOOST_USE_WINDOWS_H)
+extern "C" {
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+FreeLibrary(boost::detail::winapi::HMODULE_ hModule);
+}
+#endif
+
+namespace boost {
+namespace detail {
+namespace winapi {
+using ::FreeLibrary;
+}
+}
+}
+
+#endif // BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_DLL_HPP

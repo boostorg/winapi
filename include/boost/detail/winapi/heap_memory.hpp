@@ -19,12 +19,37 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 #undef HeapAlloc
 extern "C" {
+
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+GetProcessHeaps(boost::detail::winapi::DWORD_ NumberOfHeaps, boost::detail::winapi::PHANDLE_ ProcessHeaps);
+#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 GetProcessHeap(BOOST_DETAIL_WINAPI_VOID);
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-GetProcessHeaps(boost::detail::winapi::DWORD_ NumberOfHeaps, boost::detail::winapi::PHANDLE_ ProcessHeaps);
+BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
+HeapAlloc(
+    boost::detail::winapi::HANDLE_ hHeap,
+    boost::detail::winapi::DWORD_ dwFlags,
+    boost::detail::winapi::SIZE_T_ dwBytes);
 
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+HeapFree(
+    boost::detail::winapi::HANDLE_ hHeap,
+    boost::detail::winapi::DWORD_ dwFlags,
+    boost::detail::winapi::LPVOID_ lpMem);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
+HeapReAlloc(
+    boost::detail::winapi::HANDLE_ hHeap,
+    boost::detail::winapi::DWORD_ dwFlags,
+    boost::detail::winapi::LPVOID_ lpMem,
+    boost::detail::winapi::SIZE_T_ dwBytes);
+#endif // BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 HeapCreate(
     boost::detail::winapi::DWORD_ flOptions,
@@ -33,38 +58,30 @@ HeapCreate(
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 HeapDestroy(boost::detail::winapi::HANDLE_ hHeap);
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
-HeapAlloc(
-    boost::detail::winapi::HANDLE_ hHeap,
-    boost::detail::winapi::DWORD_ dwFlags,
-    boost::detail::winapi::SIZE_T_ dwBytes);
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
-HeapReAlloc(
-    boost::detail::winapi::HANDLE_ hHeap,
-    boost::detail::winapi::DWORD_ dwFlags,
-    boost::detail::winapi::LPVOID_ lpMem,
-    boost::detail::winapi::SIZE_T_ dwBytes);
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-HeapFree(
-    boost::detail::winapi::HANDLE_ hHeap,
-    boost::detail::winapi::DWORD_ dwFlags,
-    boost::detail::winapi::LPVOID_ lpMem);
-}
-#endif
+}      // extern "C"
+#endif // !defined( BOOST_USE_WINDOWS_H )
 
 namespace boost {
 namespace detail {
 namespace winapi {
-using ::GetProcessHeap;
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 using ::GetProcessHeaps;
+#endif
+
+#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
+using ::GetProcessHeap;
+using ::HeapAlloc;
+using ::HeapFree;
+using ::HeapReAlloc;
+#endif
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 using ::HeapCreate;
 using ::HeapDestroy;
-using ::HeapAlloc;
-using ::HeapReAlloc;
-using ::HeapFree;
+#endif
+
 }
 }
 }

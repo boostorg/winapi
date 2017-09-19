@@ -16,8 +16,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
-
 #include <boost/detail/winapi/basic_types.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
@@ -43,5 +43,5 @@ using ::QueueUserAPC;
 }
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
-
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_APC_HPP

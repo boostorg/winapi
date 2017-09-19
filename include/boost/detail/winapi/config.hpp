@@ -1,6 +1,7 @@
 //  config.hpp  --------------------------------------------------------------//
 
 //  Copyright 2013 Andrey Semashev
+//  Copyright 2017 James E. King, III
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -9,13 +10,11 @@
 #ifndef BOOST_DETAIL_WINAPI_CONFIG_HPP_INCLUDED_
 #define BOOST_DETAIL_WINAPI_CONFIG_HPP_INCLUDED_
 
-#if defined __MINGW32__
-#include <_mingw.h>
-#endif
+#include <boost/predef/platform.h>
 
 // BOOST_WINAPI_IS_MINGW indicates that the target Windows SDK is provided by MinGW (http://mingw.org/).
 // BOOST_WINAPI_IS_MINGW_W64 indicates that the target Windows SDK is provided by MinGW-w64 (http://mingw-w64.org).
-#if defined __MINGW32__
+#if BOOST_PLAT_MINGW
 #if defined __MINGW64_VERSION_MAJOR
 #define BOOST_WINAPI_IS_MINGW_W64
 #else
@@ -126,6 +125,47 @@
 #endif
 #endif
 
+#if !defined(BOOST_USE_WINAPI_FAMILY)
+#if defined(WINAPI_FAMILY)
+#define BOOST_USE_WINAPI_FAMILY WINAPI_FAMILY
+#else if defined(WINAPI_FAMILY_DESKTOP_APP)
+// If none is specified, default to a desktop application which is the most
+// backwards compatible to previos ways of doing things, if families are even
+// defined.
+#define BOOST_USE_WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
+#endif
+#endif
+
+//
+// UWP Support
+//
+// On platforms without windows family partition support it is assumed one 
+// has all APIs and access is controlled by _WIN32_WINNT or similar mechanisms.
+//
+// Leveraging Boost.Predef here
+//
+
+#define BOOST_WINAPI_PARTITION_APP           (BOOST_PLAT_WINDOWS_DESKTOP || BOOST_PLAT_WINDOWS_STORE || BOOST_WINAPI_PARTITION_PHONE)
+#define BOOST_WINAPI_PARTITION_PC            (BOOST_PLAT_WINDOWS_STORE)
+#define BOOST_WINAPI_PARTITION_PHONE         (BOOST_PLAT_WINDOWS_PHONE)
+#define BOOST_WINAPI_PARTITION_SYSTEM        (BOOST_PLAT_WINDOWS_SYSTEM)
+#define BOOST_WINAPI_PARTITION_SERVER        (BOOST_PLAT_WINDOWS_SERVER)
+#define BOOST_WINAPI_PARTITION_DESKTOP       (BOOST_PLAT_WINDOWS_DESKTOP)
+
+//
+// Windows 8.x SDK defines some items in the DESKTOP partition and then Windows SDK 10.0 defines 
+// the same items to be in APP or SYSTEM partitions, and APP expands to DESKTOP or PC or PHONE.  
+// The definition of BOOST_WINAPI_PARTITION_APP_SYSTEM provides a universal way to get this 
+// right as it is seen in a number of places in the SDK.
+//
+// 10011 is in ntverp.h of the Windows 10 Platform SDK
+//
+
+#define BOOST_WINAPI_PARTITION_APP_SYSTEM ( \
+        ((BOOST_PLAT_WINDOWS_SDK_VERSION >= BOOST_VERSION_NUMBER(0, 0, 10011)) && (BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM)) || \
+        ((BOOST_PLAT_WINDOWS_SDK_VERSION < BOOST_VERSION_NUMBER(0, 0, 10011)) && BOOST_WINAPI_PARTITION_DESKTOP) \
+    )
+
 #if defined(BOOST_USE_WINDOWS_H) || defined(BOOST_WINAPI_DEFINE_VERSION_MACROS)
 // We have to define the version macros so that windows.h provides the necessary symbols
 #if !defined(_WIN32_WINNT)
@@ -136,6 +176,9 @@
 #endif
 #if !defined(NTDDI_VERSION)
 #define NTDDI_VERSION BOOST_USE_NTDDI_VERSION
+#endif
+#if !defined(WINAPI_FAMILY) && defined(BOOST_USE_WINAPI_FAMILY)
+#define WINAPI_FAMILY BOOST_USE_WINAPI_FAMILY
 #endif
 #endif
 

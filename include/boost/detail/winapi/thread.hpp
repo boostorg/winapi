@@ -18,6 +18,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
@@ -39,4 +41,5 @@ using ::SwitchToThread;
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_THREAD_HPP

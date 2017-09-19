@@ -16,6 +16,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 #if !defined( BOOST_USE_WINDOWS_H )
 namespace boost { namespace detail { namespace winapi {
 typedef HANDLE_ HLOCAL_;
@@ -48,4 +50,5 @@ using ::LocalFree;
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_LOCAL_MEMORY_HPP

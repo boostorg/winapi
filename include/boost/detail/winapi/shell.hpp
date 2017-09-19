@@ -18,6 +18,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
@@ -147,4 +149,5 @@ BOOST_FORCEINLINE DWORD_PTR_ sh_get_file_info(LPCWSTR_ pszPath, DWORD_ dwFileAtt
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
 #endif // BOOST_DETAIL_WINAPI_SHELL_HPP_

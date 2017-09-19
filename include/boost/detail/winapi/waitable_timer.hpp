@@ -15,6 +15,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 typedef boost::detail::winapi::VOID_
@@ -142,4 +144,5 @@ BOOST_FORCEINLINE HANDLE_ create_anonymous_waitable_timer(PSECURITY_ATTRIBUTES_ 
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_WAITABLE_TIMER_HPP
