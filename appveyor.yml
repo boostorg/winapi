@@ -29,6 +29,19 @@ environment:
     B2_VARIANT: variant=release,debug
 
   matrix:
+  # WinCE
+    - COMMENT: _WIN32_WCE=0x0400 (WinCE 4)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WCE=0x0400"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WCE=0x0500 (WinCE 5)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WCE=0x0500"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: _WIN32_WCE=0x0400 (WinCE 6)
+      TOOLSET: msvc-14.1
+      DEFINES: define="_WIN32_WCE=0x0600"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
   # test older compilers
     - COMMENT: Visual Studio 2008
       TOOLSET: msvc-9.0
