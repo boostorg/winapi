@@ -19,7 +19,7 @@
 #if !defined( BOOST_WINAPI_IS_MINGW )
 
 // Note: RtlCaptureStackBackTrace is available in WinXP SP1 and later
-#if (NTDDI_VERSION > 0x05010000)
+#if (BOOST_USE_NTDDI_VERSION > BOOST_WINAPI_NTDDI_WINXP)
 
 // Windows SDK shipped with MSVC 7.1 and 8 does not declare RtlCaptureStackBackTrace in headers but allows to link with it
 #if !defined( BOOST_USE_WINDOWS_H ) || (defined(_MSC_VER) && (_MSC_VER+0) < 1500)
