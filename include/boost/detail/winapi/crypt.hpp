@@ -98,13 +98,10 @@ CryptGenRandom(
     boost::detail::winapi::DWORD_ dwLen,
     boost::detail::winapi::BYTE_ *pbBuffer);
 
-#if defined(_MSC_VER) && (_MSC_VER+0) >= 1500 &&\
-    (\
-        (defined(NTDDI_VERSION) && (NTDDI_VERSION+0) < BOOST_DETAIL_WINAPI_MAKE_NTDDI_VERSION(BOOST_WINAPI_VERSION_WINXP)) ||\
-        (!defined(NTDDI_VERSION) && BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_WINXP)\
-    )
-// Standalone MS Windows SDK 6.0A and later provide a different declaration of CryptReleaseContext for Windows 2000 and older.
-// This is not the case for (a) MinGW and MinGW-w64 and (b) MSVC 7.1 and 8, which are shipped with their own Windows SDK.
+#if defined(_MSC_VER) && (_MSC_VER+0) >= 1500 && (_MSC_VER+0) < 1900 && BOOST_USE_NTDDI_VERSION < BOOST_WINAPI_NTDDI_WINXP
+// Standalone MS Windows SDK 6.0A and later until 10.0 provide a different declaration of CryptReleaseContext for Windows 2000 and older.
+// This is not the case for (a) MinGW and MinGW-w64, (b) MSVC 7.1 and 8, which are shipped with their own Windows SDK,
+// and (c) MSVC 14.0 and later, which are used with Windows SDK 10.
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 CryptReleaseContext(
     boost::detail::winapi::HCRYPTPROV_ hProv,

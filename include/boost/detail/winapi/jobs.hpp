@@ -8,6 +8,14 @@
 #ifndef BOOST_DETAIL_WINAPI_JOBS_HPP_
 #define BOOST_DETAIL_WINAPI_JOBS_HPP_
 
+#include <boost/detail/winapi/config.hpp>
+
+#ifdef BOOST_HAS_PRAGMA_ONCE
+#pragma once
+#endif
+
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
+
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/access_rights.hpp>
 
@@ -79,9 +87,7 @@ const DWORD_ JOB_OBJECT_ALL_ACCESS_ = (STANDARD_RIGHTS_REQUIRED_ | SYNCHRONIZE_ 
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::OpenJobObjectA;
 #endif
-
 using ::OpenJobObjectW;
-
 using ::AssignProcessToJobObject;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
 using ::IsProcessInJob;
@@ -123,5 +129,7 @@ BOOST_FORCEINLINE HANDLE_ open_job_object(DWORD_ dwDesiredAccess, BOOL_ bInherit
 } // namespace winapi
 } // namespace detail
 } // namespace boost
+
+#endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
 
 #endif // BOOST_DETAIL_WINAPI_JOBS_HPP_
