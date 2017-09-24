@@ -1,7 +1,7 @@
 WinAPI
 ======
 
-Windows API declarations without &lt;windows.h>, for internal Boost use.
+Windows API declarations without &lt;windows.h&gt;, for internal Boost use.
 
 ### Build Status
 
