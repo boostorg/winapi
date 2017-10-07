@@ -21,6 +21,8 @@
 // Note: RtlCaptureStackBackTrace is available in WinXP SP1 and later
 #if (BOOST_USE_NTDDI_VERSION > BOOST_WINAPI_NTDDI_WINXP)
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 // Windows SDK shipped with MSVC 7.1 and 8 does not declare RtlCaptureStackBackTrace in headers but allows to link with it
 #if !defined( BOOST_USE_WINDOWS_H ) || (defined(_MSC_VER) && (_MSC_VER+0) < 1500)
 extern "C" {
@@ -48,8 +50,7 @@ using ::RtlCaptureStackBackTrace;
 }
 }
 
-#endif // (BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP)
-
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+#endif // (NTDDI_VERSION > 0x05010000)
 #endif // !defined( BOOST_WINAPI_IS_MINGW )
-
 #endif // BOOST_DETAIL_WINAPI_STACK_BACKTRACE_HPP_INCLUDED_

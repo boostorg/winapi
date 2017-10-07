@@ -27,6 +27,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP
+
 // Some symbols declared below are not present in all versions of Windows SDK, MinGW and MinGW-w64.
 // dbghelp.h/imagehlp.h define the API_VERSION_NUMBER macro which we use to detect its version.
 // When the macro is not available we can only guess based on the compiler version or SDK type.
@@ -168,4 +170,5 @@ BOOST_FORCEINLINE DWORD_ undecorate_symbol_name(
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
 #endif // BOOST_DETAIL_WINAPI_DBGHELP_HPP

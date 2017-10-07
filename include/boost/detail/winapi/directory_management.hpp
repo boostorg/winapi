@@ -22,15 +22,19 @@ extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
     CreateDirectoryA(boost::detail::winapi::LPCSTR_, ::_SECURITY_ATTRIBUTES*);
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
     GetTempPathA(boost::detail::winapi::DWORD_ length, boost::detail::winapi::LPSTR_ buffer);
+#endif
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
     RemoveDirectoryA(boost::detail::winapi::LPCSTR_);
 #endif
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
     CreateDirectoryW(boost::detail::winapi::LPCWSTR_, ::_SECURITY_ATTRIBUTES*);
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
     GetTempPathW(boost::detail::winapi::DWORD_ length, boost::detail::winapi::LPWSTR_ buffer);
+#endif
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
     RemoveDirectoryW(boost::detail::winapi::LPCWSTR_);
 }    
@@ -41,10 +45,14 @@ namespace detail {
 namespace winapi {
 
 #if !defined( BOOST_NO_ANSI_APIS )
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 using ::GetTempPathA;
+#endif
 using ::RemoveDirectoryA;
 #endif
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 using ::GetTempPathW;
+#endif
 using ::RemoveDirectoryW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -64,10 +72,12 @@ BOOST_FORCEINLINE BOOL_ create_directory(LPCSTR_ pPathName, PSECURITY_ATTRIBUTES
 {
     return ::CreateDirectoryA(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_FORCEINLINE DWORD_ get_temp_path(DWORD_ length, LPSTR_ buffer)
 {
     return ::GetTempPathA(length, buffer);
 }
+#endif
 BOOST_FORCEINLINE BOOL_ remove_directory(LPCSTR_ pPathName)
 {
     return ::RemoveDirectoryA(pPathName);
@@ -78,10 +88,12 @@ BOOST_FORCEINLINE BOOL_ create_directory(LPCWSTR_ pPathName, PSECURITY_ATTRIBUTE
 {
     return ::CreateDirectoryW(pPathName, reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(pSecurityAttributes));
 }
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_FORCEINLINE DWORD_ get_temp_path(DWORD_ length, LPWSTR_ buffer)
 {
     return ::GetTempPathW(length, buffer);
 }
+#endif
 BOOST_FORCEINLINE BOOL_ remove_directory(LPCWSTR_ pPathName)
 {
     return ::RemoveDirectoryW(pPathName);

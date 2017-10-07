@@ -22,11 +22,14 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
+#if BOOST_WINAPI_PARTITION_DESKTOP
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI CreateJobObjectA(
     ::_SECURITY_ATTRIBUTES* lpJobAttributes,
     boost::detail::winapi::LPCSTR_ lpName);
 #endif
+#endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI CreateJobObjectW(
     ::_SECURITY_ATTRIBUTES* lpJobAttributes,
     boost::detail::winapi::LPCWSTR_ lpName);
@@ -45,23 +48,28 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI IsProcessInJob(
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI TerminateJobObject(
     boost::detail::winapi::HANDLE_ hJob,
     boost::detail::winapi::UINT_ uExitCode);
-} // extern "C"
+#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+}      // extern "C"
 #endif // !defined( BOOST_USE_WINDOWS_H )
 
 // MinGW does not declare OpenJobObjectA/W in headers but exports them from libraries
 #if !defined( BOOST_USE_WINDOWS_H ) || defined( BOOST_WINAPI_IS_MINGW )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
+#if BOOST_WINAPI_PARTITION_DESKTOP
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI OpenJobObjectA(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandles,
     boost::detail::winapi::LPCSTR_ lpName);
 #endif
+#endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI OpenJobObjectW(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandles,
     boost::detail::winapi::LPCWSTR_ lpName);
+#endif
 } // extern "C"
 #endif // !defined( BOOST_USE_WINDOWS_H ) || defined( BOOST_WINAPI_IS_MINGW )
 
@@ -84,16 +92,7 @@ const DWORD_ JOB_OBJECT_SET_SECURITY_ATTRIBUTES_ = 0x0010;
 const DWORD_ JOB_OBJECT_ALL_ACCESS_ = (STANDARD_RIGHTS_REQUIRED_ | SYNCHRONIZE_ | 0x1F);
 #endif
 
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::OpenJobObjectA;
-#endif
-using ::OpenJobObjectW;
-using ::AssignProcessToJobObject;
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
-using ::IsProcessInJob;
-#endif
-using ::TerminateJobObject;
-
+#if BOOST_WINAPI_PARTITION_DESKTOP
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateJobObjectA(LPSECURITY_ATTRIBUTES_ lpJobAttributes, LPCSTR_ lpName)
 {
@@ -105,12 +104,17 @@ BOOST_FORCEINLINE HANDLE_ create_job_object(LPSECURITY_ATTRIBUTES_ lpJobAttribut
     return ::CreateJobObjectA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpJobAttributes), lpName);
 }
 
+using ::OpenJobObjectA;
+
 BOOST_FORCEINLINE HANDLE_ open_job_object(DWORD_ dwDesiredAccess, BOOL_ bInheritHandles, LPCSTR_ lpName)
 {
     return ::OpenJobObjectA(dwDesiredAccess, bInheritHandles, lpName);
 }
 #endif // !defined( BOOST_NO_ANSI_APIS )
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+using ::AssignProcessToJobObject;
 BOOST_FORCEINLINE HANDLE_ CreateJobObjectW(LPSECURITY_ATTRIBUTES_ lpJobAttributes, LPCWSTR_ lpName)
 {
     return ::CreateJobObjectW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpJobAttributes), lpName);
@@ -126,10 +130,17 @@ BOOST_FORCEINLINE HANDLE_ open_job_object(DWORD_ dwDesiredAccess, BOOL_ bInherit
     return ::OpenJobObjectW(dwDesiredAccess, bInheritHandles, lpName);
 }
 
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+using ::IsProcessInJob;
+#endif
+
+using ::OpenJobObjectW;
+using ::TerminateJobObject;
+#endif
+
 } // namespace winapi
 } // namespace detail
 } // namespace boost
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
-
 #endif // BOOST_DETAIL_WINAPI_JOBS_HPP_

@@ -2,6 +2,7 @@
 
 //  Copyright 2010 Vicente J. Botet Escriba
 //  Copyright 2015 Andrey Semashev
+//  Copyright 2017 James E. King, III
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -18,6 +19,27 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+
+#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+WaitForSingleObjectEx(
+    boost::detail::winapi::HANDLE_ hHandle,
+    boost::detail::winapi::DWORD_ dwMilliseconds,
+    boost::detail::winapi::BOOL_ bAlertable);
+#endif
+
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+SignalObjectAndWait(
+    boost::detail::winapi::HANDLE_ hObjectToSignal,
+    boost::detail::winapi::HANDLE_ hObjectToWaitOn,
+    boost::detail::winapi::DWORD_ dwMilliseconds,
+    boost::detail::winapi::BOOL_ bAlertable);
+#endif
+#endif
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 WaitForSingleObject(
     boost::detail::winapi::HANDLE_ hHandle,
@@ -31,27 +53,14 @@ WaitForMultipleObjects(
     boost::detail::winapi::DWORD_ dwMilliseconds);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-WaitForSingleObjectEx(
-    boost::detail::winapi::HANDLE_ hHandle,
-    boost::detail::winapi::DWORD_ dwMilliseconds,
-    boost::detail::winapi::BOOL_ bAlertable);
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 WaitForMultipleObjectsEx(
     boost::detail::winapi::DWORD_ nCount,
     boost::detail::winapi::HANDLE_ const* lpHandles,
     boost::detail::winapi::BOOL_ bWaitAll,
     boost::detail::winapi::DWORD_ dwMilliseconds,
     boost::detail::winapi::BOOL_ bAlertable);
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
-#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
-BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-SignalObjectAndWait(
-    boost::detail::winapi::HANDLE_ hObjectToSignal,
-    boost::detail::winapi::HANDLE_ hObjectToWaitOn,
-    boost::detail::winapi::DWORD_ dwMilliseconds,
-    boost::detail::winapi::BOOL_ bAlertable);
-#endif
 }
 #endif
 
@@ -59,12 +68,19 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
-using ::WaitForMultipleObjects;
-using ::WaitForSingleObject;
+#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 using ::WaitForSingleObjectEx;
-using ::WaitForMultipleObjectsEx;
+#endif
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
 using ::SignalObjectAndWait;
+#endif
+#endif
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+using ::WaitForMultipleObjects;
+using ::WaitForMultipleObjectsEx;
+using ::WaitForSingleObject;
 #endif
 
 #if defined( BOOST_USE_WINDOWS_H )

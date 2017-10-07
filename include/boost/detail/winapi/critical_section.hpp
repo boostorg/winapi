@@ -23,8 +23,10 @@ extern "C" {
 #if !defined( BOOST_WINAPI_IS_MINGW )
 struct _RTL_CRITICAL_SECTION;
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
 InitializeCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
+#endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
 EnterCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
@@ -33,10 +35,17 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::VOID_ WINAPI
 LeaveCriticalSection(::_RTL_CRITICAL_SECTION* lpCriticalSection);
 
 #if BOOST_USE_WINAPI_VERSION >= 0x0403
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 InitializeCriticalSectionAndSpinCount(
     ::_RTL_CRITICAL_SECTION* lpCriticalSection,
     boost::detail::winapi::DWORD_ dwSpinCount);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+SetCriticalSectionSpinCount(
+    ::_RTL_CRITICAL_SECTION* lpCriticalSection,
+    boost::detail::winapi::DWORD_ dwSpinCount);
+#endif
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
@@ -45,11 +54,6 @@ InitializeCriticalSectionEx(
     boost::detail::winapi::DWORD_ dwSpinCount,
     boost::detail::winapi::DWORD_ Flags);
 #endif
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
-SetCriticalSectionSpinCount(
-    ::_RTL_CRITICAL_SECTION* lpCriticalSection,
-    boost::detail::winapi::DWORD_ dwSpinCount);
 #endif
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
@@ -125,10 +129,12 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _RTL_CRITICAL_SECTION {
 
 #pragma pack(pop)
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_FORCEINLINE VOID_ InitializeCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
     ::InitializeCriticalSection(winapi::detail::cast_ptr(lpCriticalSection));
 }
+#endif
 
 BOOST_FORCEINLINE VOID_ EnterCriticalSection(CRITICAL_SECTION_* lpCriticalSection)
 {
@@ -141,10 +147,17 @@ BOOST_FORCEINLINE VOID_ LeaveCriticalSection(CRITICAL_SECTION_* lpCriticalSectio
 }
 
 #if BOOST_USE_WINAPI_VERSION >= 0x0403
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionAndSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
 {
     return ::InitializeCriticalSectionAndSpinCount(winapi::detail::cast_ptr(lpCriticalSection), dwSpinCount);
 }
+
+BOOST_FORCEINLINE DWORD_ SetCriticalSectionSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
+{
+    return ::SetCriticalSectionSpinCount(winapi::detail::cast_ptr(lpCriticalSection), dwSpinCount);
+}
+#endif
 
 // CRITICAL_SECTION_NO_DEBUG_INFO is defined for WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
 const DWORD_ CRITICAL_SECTION_NO_DEBUG_INFO_ = 0x01000000;
@@ -158,11 +171,6 @@ BOOST_FORCEINLINE BOOL_ InitializeCriticalSectionEx(CRITICAL_SECTION_* lpCritica
     return ::InitializeCriticalSectionEx(winapi::detail::cast_ptr(lpCriticalSection), dwSpinCount, Flags);
 }
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-
-BOOST_FORCEINLINE DWORD_ SetCriticalSectionSpinCount(CRITICAL_SECTION_* lpCriticalSection, DWORD_ dwSpinCount)
-{
-    return ::SetCriticalSectionSpinCount(winapi::detail::cast_ptr(lpCriticalSection), dwSpinCount);
-}
 #endif // BOOST_USE_WINAPI_VERSION >= 0x0403
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4

@@ -17,6 +17,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
@@ -52,4 +54,5 @@ BOOST_FORCEINLINE BOOL_ GetThreadTimes(
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_GET_THREAD_TIMES_HPP

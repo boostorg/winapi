@@ -21,6 +21,7 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+#if BOOST_WINAPI_PARTITION_DESKTOP
 typedef boost::detail::winapi::VOID_ (NTAPI *WAITORTIMERCALLBACKFUNC)
 (boost::detail::winapi::PVOID_, boost::detail::winapi::BOOLEAN_);
 typedef WAITORTIMERCALLBACKFUNC WAITORTIMERCALLBACK;
@@ -33,19 +34,24 @@ RegisterWaitForSingleObject(
     boost::detail::winapi::PVOID_ Context,
     boost::detail::winapi::ULONG_ dwMilliseconds,
     boost::detail::winapi::ULONG_ dwFlags);
+#endif
 }
 #endif
 
 // MinGW is buggy - it is missing these function declarations for Win2000
 #if !defined( BOOST_USE_WINDOWS_H ) || (defined(BOOST_WINAPI_IS_MINGW) && BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_WINXP)
 extern "C" {
+#if BOOST_WINAPI_PARTITION_DESKTOP
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 UnregisterWait(boost::detail::winapi::HANDLE_ WaitHandle);
+#endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 UnregisterWaitEx(
     boost::detail::winapi::HANDLE_ WaitHandle,
     boost::detail::winapi::HANDLE_ CompletionEvent);
+#endif
 }
 #endif
 
@@ -53,13 +59,17 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
+#if BOOST_WINAPI_PARTITION_DESKTOP
 typedef ::WAITORTIMERCALLBACKFUNC WAITORTIMERCALLBACKFUNC_;
 typedef ::WAITORTIMERCALLBACK WAITORTIMERCALLBACK_;
 
 using ::RegisterWaitForSingleObject;
 using ::UnregisterWait;
-using ::UnregisterWaitEx;
+#endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+using ::UnregisterWaitEx;
+#endif
 #if defined( BOOST_USE_WINDOWS_H )
 
 const ULONG_ WT_EXECUTEDEFAULT_ = WT_EXECUTEDEFAULT;
@@ -122,5 +132,4 @@ const ULONG_ wt_transfer_impersonation = WT_TRANSFER_IMPERSONATION_;
 }
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
-
 #endif // BOOST_DETAIL_WINAPI_THREAD_POOL_HPP

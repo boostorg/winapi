@@ -14,6 +14,8 @@
 #pragma once
 #endif
 
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -115,4 +117,5 @@ BOOST_FORCEINLINE BOOL_ set_environment_variable(LPCWSTR_ name, LPCWSTR_ value)
 } // namespace detail
 } // namespace boost
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 #endif // BOOST_DETAIL_WINAPI_ENVIRONMENT_HPP_
