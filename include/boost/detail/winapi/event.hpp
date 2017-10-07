@@ -1,26 +1,24 @@
 //  event.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
-//  Copyright 2015 Andrey Semashev
+//  Copyright 2015, 2017 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 
-#ifndef BOOST_DETAIL_WINAPI_EVENT_HPP
-#define BOOST_DETAIL_WINAPI_EVENT_HPP
+#ifndef BOOST_DETAIL_WINAPI_EVENT_HPP_
+#define BOOST_DETAIL_WINAPI_EVENT_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if !defined( BOOST_USE_WINDOWS_H )
+#if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_APP_SYSTEM
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
-#if !defined( BOOST_PLAT_WINDOWS_RUNTIME_AVALIABLE )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateEventA(
     ::_SECURITY_ATTRIBUTES* lpEventAttributes,
@@ -29,6 +27,18 @@ CreateEventA(
     boost::detail::winapi::LPCSTR_ lpName);
 #endif
 
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
+CreateEventW(
+    ::_SECURITY_ATTRIBUTES* lpEventAttributes,
+    boost::detail::winapi::BOOL_ bManualReset,
+    boost::detail::winapi::BOOL_ bInitialState,
+    boost::detail::winapi::LPCWSTR_ lpName);
+} // extern "C"
+#endif // !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+#if !defined( BOOST_NO_ANSI_APIS )
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateEventExA(
@@ -43,14 +53,7 @@ OpenEventA(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandle,
     boost::detail::winapi::LPCSTR_ lpName);
-#endif
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
-CreateEventW(
-    ::_SECURITY_ATTRIBUTES* lpEventAttributes,
-    boost::detail::winapi::BOOL_ bManualReset,
-    boost::detail::winapi::BOOL_ bInitialState,
-    boost::detail::winapi::LPCWSTR_ lpName);
+#endif // !defined( BOOST_NO_ANSI_APIS )
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -75,7 +78,7 @@ SetEvent(boost::detail::winapi::HANDLE_ hEvent);
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 ResetEvent(boost::detail::winapi::HANDLE_ hEvent);
 #endif
-}
+} // extern "C"
 #endif
 
 namespace boost {
@@ -123,7 +126,7 @@ const DWORD_ create_event_manual_reset = CREATE_EVENT_MANUAL_RESET_;
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateEventA(SECURITY_ATTRIBUTES_* lpEventAttributes, BOOL_ bManualReset, BOOL_ bInitialState, LPCSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if !BOOST_WINAPI_PARTITION_APP_SYSTEM && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
     const DWORD_ flags = (bManualReset ? create_event_manual_reset : 0u) | (bInitialState ? create_event_initial_set : 0u);
     return ::CreateEventExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access);
 #else
@@ -141,7 +144,7 @@ BOOST_FORCEINLINE HANDLE_ CreateEventExA(SECURITY_ATTRIBUTES_* lpEventAttributes
 
 BOOST_FORCEINLINE HANDLE_ CreateEventW(SECURITY_ATTRIBUTES_* lpEventAttributes, BOOL_ bManualReset, BOOL_ bInitialState, LPCWSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if !BOOST_WINAPI_PARTITION_APP_SYSTEM && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
     const DWORD_ flags = (bManualReset ? create_event_manual_reset : 0u) | (bInitialState ? create_event_initial_set : 0u);
     return ::CreateEventExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpEventAttributes), lpName, flags, event_all_access);
 #else
@@ -187,4 +190,4 @@ BOOST_FORCEINLINE HANDLE_ create_anonymous_event(SECURITY_ATTRIBUTES_* lpEventAt
 }
 }
 
-#endif // BOOST_DETAIL_WINAPI_EVENT_HPP
+#endif // BOOST_DETAIL_WINAPI_EVENT_HPP_

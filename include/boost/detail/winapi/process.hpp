@@ -1,7 +1,7 @@
 //  process.hpp  --------------------------------------------------------------//
 
 //  Copyright 2016 Klemens D. Morgenstern
-//  Copyright 2016 Andrey Semashev
+//  Copyright 2016, 2017 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -14,16 +14,15 @@
 #include <boost/detail/winapi/access_rights.hpp>
 #include <boost/detail/winapi/get_current_process.hpp>
 #include <boost/detail/winapi/get_current_process_id.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
-
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
 struct _PROCESS_INFORMATION;
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -33,18 +32,16 @@ struct _STARTUPINFOW;
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 struct _PROC_THREAD_ATTRIBUTE_LIST;
+#if BOOST_WINAPI_PARTITION_DESKTOP
 #if !defined( BOOST_NO_ANSI_APIS )
 struct _STARTUPINFOEXA;
 #endif
 struct _STARTUPINFOEXW;
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
 #endif
 
 BOOST_SYMBOL_IMPORT BOOST_NORETURN boost::detail::winapi::VOID_ WINAPI
 ExitProcess(boost::detail::winapi::UINT_ uExitCode);
-
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI TerminateProcess(
-    boost::detail::winapi::HANDLE_ hProcess,
-    boost::detail::winapi::UINT_ uExitCode);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI GetExitCodeProcess(
     boost::detail::winapi::HANDLE_ hProcess,
@@ -76,19 +73,31 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI CreateProcessW(
     ::_STARTUPINFOW* lpStartupInfo,
     ::_PROCESS_INFORMATION* lpProcessInformation);
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI OpenProcess(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandle,
     boost::detail::winapi::DWORD_ dwProcessId);
 
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI TerminateProcess(
+    boost::detail::winapi::HANDLE_ hProcess,
+    boost::detail::winapi::UINT_ uExitCode);
+
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 } // extern "C"
-#endif //defined BOOST_WINDOWS_H
+#endif // defined BOOST_WINDOWS_H
 
 namespace boost {
 namespace detail {
 namespace winapi {
 
 #if defined( BOOST_USE_WINDOWS_H )
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
 const DWORD_ DEBUG_PROCESS_                    = DEBUG_PROCESS;
 const DWORD_ DEBUG_ONLY_THIS_PROCESS_          = DEBUG_ONLY_THIS_PROCESS;
@@ -123,6 +132,10 @@ const DWORD_ INHERIT_PARENT_AFFINITY_          = INHERIT_PARENT_AFFINITY;
 const DWORD_ INHERIT_CALLER_PRIORITY_          = INHERIT_CALLER_PRIORITY;
 #endif
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP
+
 const DWORD_ STARTF_USESHOWWINDOW_    = STARTF_USESHOWWINDOW;
 const DWORD_ STARTF_USESIZE_          = STARTF_USESIZE;
 const DWORD_ STARTF_USEPOSITION_      = STARTF_USEPOSITION;
@@ -140,6 +153,8 @@ const DWORD_ STARTF_TITLEISAPPID_     = STARTF_TITLEISAPPID;
 const DWORD_ STARTF_PREVENTPINNING_   = STARTF_PREVENTPINNING;
 #endif
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
+
 const DWORD_ PROCESS_TERMINATE_ = PROCESS_TERMINATE;
 const DWORD_ PROCESS_CREATE_THREAD_ = PROCESS_CREATE_THREAD;
 const DWORD_ PROCESS_SET_SESSIONID_ = PROCESS_SET_SESSIONID;
@@ -155,6 +170,8 @@ const DWORD_ PROCESS_SUSPEND_RESUME_ = PROCESS_SUSPEND_RESUME;
 const DWORD_ PROCESS_ALL_ACCESS_ = PROCESS_ALL_ACCESS;
 
 #else // defined( BOOST_USE_WINDOWS_H )
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
 const DWORD_ DEBUG_PROCESS_                    = 0x1;
 const DWORD_ DEBUG_ONLY_THIS_PROCESS_          = 0x2;
@@ -189,6 +206,10 @@ const DWORD_ INHERIT_PARENT_AFFINITY_          = 0x10000;
 const DWORD_ INHERIT_CALLER_PRIORITY_          = 0x20000;
 #endif
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP
+
 const DWORD_ STARTF_USESHOWWINDOW_    = 0x00000001;
 const DWORD_ STARTF_USESIZE_          = 0x00000002;
 const DWORD_ STARTF_USEPOSITION_      = 0x00000004;
@@ -206,6 +227,8 @@ const DWORD_ STARTF_TITLEISAPPID_     = 0x00001000;
 const DWORD_ STARTF_PREVENTPINNING_   = 0x00002000;
 #endif
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
+
 const DWORD_ PROCESS_TERMINATE_ = 0x0001;
 const DWORD_ PROCESS_CREATE_THREAD_ = 0x0002;
 const DWORD_ PROCESS_SET_SESSIONID_ = 0x0004;
@@ -222,6 +245,8 @@ const DWORD_ PROCESS_ALL_ACCESS_ = (STANDARD_RIGHTS_REQUIRED_ | SYNCHRONIZE_ | 0
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 #if defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
 
 const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = CREATE_PRESERVE_CODE_AUTHZ_LEVEL;
@@ -237,6 +262,8 @@ const DWORD_ CREATE_PRESERVE_CODE_AUTHZ_LEVEL_ = 0x2000000;
 const DWORD_ CREATE_IGNORE_SYSTEM_DEFAULT_     = 0x80000000;
 
 #endif // defined( BOOST_USE_WINDOWS_H ) && !defined( BOOST_WINAPI_IS_MINGW )
+
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
 typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _PROCESS_INFORMATION {
     HANDLE_ hProcess;
@@ -291,24 +318,35 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _STARTUPINFOW {
 
 typedef struct _PROC_THREAD_ATTRIBUTE_LIST PROC_THREAD_ATTRIBUTE_LIST_, *PPROC_THREAD_ATTRIBUTE_LIST_;
 
+#if BOOST_WINAPI_PARTITION_DESKTOP
+
 #if !defined(BOOST_NO_ANSI_APIS)
 typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _STARTUPINFOEXA {
     STARTUPINFOA_ StartupInfo;
     PPROC_THREAD_ATTRIBUTE_LIST_ lpAttributeList;
 } STARTUPINFOEXA_, *LPSTARTUPINFOEXA_;
-#endif //BOOST_NO_ANSI_APIS
+#endif // !defined(BOOST_NO_ANSI_APIS)
 
 typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _STARTUPINFOEXW {
     STARTUPINFOW_ StartupInfo;
     PPROC_THREAD_ATTRIBUTE_LIST_ lpAttributeList;
 } STARTUPINFOEXW_, *LPSTARTUPINFOEXW_;
 
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
+
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+using ::TerminateProcess;
+using ::OpenProcess;
+
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
 using ::GetExitCodeProcess;
 using ::ExitProcess;
-using ::TerminateProcess;
-using ::OpenProcess;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE BOOL_ CreateProcessA(
@@ -412,10 +450,10 @@ BOOST_FORCEINLINE BOOL_ create_process(
         reinterpret_cast< ::_PROCESS_INFORMATION* >(lpProcessInformation));
 }
 
-}
-}
-}
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
-#endif // BOOST_PLAT_WINDOWS_DESKTOP
+}
+}
+}
 
 #endif // BOOST_DETAIL_WINAPI_PROCESS_HPP_

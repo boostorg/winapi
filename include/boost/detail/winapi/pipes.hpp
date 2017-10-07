@@ -1,7 +1,7 @@
 //  pipes.hpp  --------------------------------------------------------------//
 
 //  Copyright 2016 Klemens D. Morgenstern
-//  Copyright 2016 Andrey Semashev
+//  Copyright 2016, 2017 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -12,13 +12,26 @@
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/config.hpp>
 #include <boost/detail/winapi/overlapped.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
+#if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_DESKTOP && !defined( BOOST_NO_ANSI_APIS )
+extern "C" {
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI CreateNamedPipeA(
+    boost::detail::winapi::LPCSTR_ lpName,
+    boost::detail::winapi::DWORD_ dwOpenMode,
+    boost::detail::winapi::DWORD_ dwPipeMode,
+    boost::detail::winapi::DWORD_ nMaxInstances,
+    boost::detail::winapi::DWORD_ nOutBufferSize,
+    boost::detail::winapi::DWORD_ nInBufferSize,
+    boost::detail::winapi::DWORD_ nDefaultTimeOut,
+    _SECURITY_ATTRIBUTES *lpSecurityAttributes);
+} // extern "C"
+#endif // !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_DESKTOP && !defined( BOOST_NO_ANSI_APIS )
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
@@ -63,16 +76,6 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI TransactNamedPipe(
     _OVERLAPPED* lpOverlapped);
 
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI CreateNamedPipeA(
-    boost::detail::winapi::LPCSTR_ lpName,
-    boost::detail::winapi::DWORD_ dwOpenMode,
-    boost::detail::winapi::DWORD_ dwPipeMode,
-    boost::detail::winapi::DWORD_ nMaxInstances,
-    boost::detail::winapi::DWORD_ nOutBufferSize,
-    boost::detail::winapi::DWORD_ nInBufferSize,
-    boost::detail::winapi::DWORD_ nDefaultTimeOut,
-    _SECURITY_ATTRIBUTES *lpSecurityAttributes);
-
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI WaitNamedPipeA(
     boost::detail::winapi::LPCSTR_ lpNamedPipeName,
     boost::detail::winapi::DWORD_ nTimeOut);
@@ -194,7 +197,7 @@ BOOST_FORCEINLINE BOOL_ TransactNamedPipe(HANDLE_ hNamedPipe, LPVOID_ lpInBuffer
 }
 
 
-#if !defined( BOOST_NO_ANSI_APIS )
+#if BOOST_WINAPI_PARTITION_DESKTOP && !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateNamedPipeA(
     LPCSTR_ lpName,
     DWORD_ dwOpenMode,
@@ -236,7 +239,7 @@ BOOST_FORCEINLINE HANDLE_ create_named_pipe(
         nDefaultTimeOut,
         reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSecurityAttributes));
 }
-#endif // !defined( BOOST_NO_ANSI_APIS )
+#endif // BOOST_WINAPI_PARTITION_DESKTOP && !defined( BOOST_NO_ANSI_APIS )
 
 BOOST_FORCEINLINE HANDLE_ CreateNamedPipeW(
     LPCWSTR_ lpName,
@@ -312,6 +315,6 @@ BOOST_FORCEINLINE BOOL_ get_named_pipe_client_computer_name(HANDLE_ Pipe, LPWSTR
 }
 }
 
-#endif // BOOST_PLAT_WINDOWS_DESKTOP
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
 #endif // BOOST_DETAIL_WINAPI_PIPES_HPP_

@@ -7,11 +7,10 @@
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 
-#ifndef BOOST_DETAIL_WINAPI_SEMAPHORE_HPP
-#define BOOST_DETAIL_WINAPI_SEMAPHORE_HPP
+#ifndef BOOST_DETAIL_WINAPI_SEMAPHORE_HPP_
+#define BOOST_DETAIL_WINAPI_SEMAPHORE_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -19,15 +18,16 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 #if !defined( BOOST_NO_ANSI_APIS )
-#if !defined( BOOST_PLAT_WINDOWS_RUNTIME_AVALIABLE )
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateSemaphoreA(
     ::_SECURITY_ATTRIBUTES* lpSemaphoreAttributes,
     boost::detail::winapi::LONG_ lInitialCount,
     boost::detail::winapi::LONG_ lMaximumCount,
     boost::detail::winapi::LPCSTR_ lpName);
-#endif
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -40,12 +40,7 @@ CreateSemaphoreExA(
     boost::detail::winapi::DWORD_ dwDesiredAccess);
 #endif
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
-OpenSemaphoreA(
-    boost::detail::winapi::DWORD_ dwDesiredAccess,
-    boost::detail::winapi::BOOL_ bInheritHandle,
-    boost::detail::winapi::LPCSTR_ lpName);
-#endif
+#endif // !defined( BOOST_NO_ANSI_APIS )
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateSemaphoreW(
@@ -65,28 +60,41 @@ CreateSemaphoreExW(
     boost::detail::winapi::DWORD_ dwDesiredAccess);
 #endif
 
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+ReleaseSemaphore(
+    boost::detail::winapi::HANDLE_ hSemaphore,
+    boost::detail::winapi::LONG_ lReleaseCount,
+    boost::detail::winapi::LPLONG_ lpPreviousCount);
+
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
+#if !defined( BOOST_NO_ANSI_APIS )
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
+OpenSemaphoreA(
+    boost::detail::winapi::DWORD_ dwDesiredAccess,
+    boost::detail::winapi::BOOL_ bInheritHandle,
+    boost::detail::winapi::LPCSTR_ lpName);
+#endif // !defined( BOOST_NO_ANSI_APIS )
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 OpenSemaphoreW(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandle,
     boost::detail::winapi::LPCWSTR_ lpName);
 
-BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
-ReleaseSemaphore(
-    boost::detail::winapi::HANDLE_ hSemaphore,
-    boost::detail::winapi::LONG_ lReleaseCount,
-    boost::detail::winapi::LPLONG_ lpPreviousCount);
-}
-#endif
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
+} // extern "C"
+#endif // !defined( BOOST_USE_WINDOWS_H )
 
 namespace boost {
 namespace detail {
 namespace winapi {
 
-#if !defined( BOOST_NO_ANSI_APIS )
-using ::OpenSemaphoreA;
-#endif
-using ::OpenSemaphoreW;
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 using ::ReleaseSemaphore;
 
 #if defined( BOOST_USE_WINDOWS_H )
@@ -112,11 +120,7 @@ const DWORD_ semaphore_modify_state = SEMAPHORE_MODIFY_STATE_;
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateSemaphoreA(SECURITY_ATTRIBUTES_* lpSemaphoreAttributes, LONG_ lInitialCount, LONG_ lMaximumCount, LPCSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-    return ::CreateSemaphoreExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSemaphoreAttributes), lInitialCount, lMaximumCount, lpName, 0, semaphore_all_access);
-#else
     return ::CreateSemaphoreA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSemaphoreAttributes), lInitialCount, lMaximumCount, lpName);
-#endif
 }
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
@@ -125,15 +129,11 @@ BOOST_FORCEINLINE HANDLE_ CreateSemaphoreExA(SECURITY_ATTRIBUTES_* lpSemaphoreAt
     return ::CreateSemaphoreExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSemaphoreAttributes), lInitialCount, lMaximumCount, lpName, dwFlags, dwDesiredAccess);
 }
 #endif
-#endif
+#endif // !defined( BOOST_NO_ANSI_APIS )
 
 BOOST_FORCEINLINE HANDLE_ CreateSemaphoreW(SECURITY_ATTRIBUTES_* lpSemaphoreAttributes, LONG_ lInitialCount, LONG_ lMaximumCount, LPCWSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
-    return ::CreateSemaphoreExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSemaphoreAttributes), lInitialCount, lMaximumCount, lpName, 0, semaphore_all_access);
-#else
     return ::CreateSemaphoreW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpSemaphoreAttributes), lInitialCount, lMaximumCount, lpName);
-#endif
 }
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
@@ -148,11 +148,6 @@ BOOST_FORCEINLINE HANDLE_ create_semaphore(SECURITY_ATTRIBUTES_* lpSemaphoreAttr
 {
     return winapi::CreateSemaphoreA(lpSemaphoreAttributes, lInitialCount, lMaximumCount, lpName);
 }
-
-BOOST_FORCEINLINE HANDLE_ open_semaphore(DWORD_ dwDesiredAccess, BOOL_ bInheritHandle, LPCSTR_ lpName)
-{
-    return ::OpenSemaphoreA(dwDesiredAccess, bInheritHandle, lpName);
-}
 #endif
 
 BOOST_FORCEINLINE HANDLE_ create_semaphore(SECURITY_ATTRIBUTES_* lpSemaphoreAttributes, LONG_ lInitialCount, LONG_ lMaximumCount, LPCWSTR_ lpName)
@@ -160,18 +155,35 @@ BOOST_FORCEINLINE HANDLE_ create_semaphore(SECURITY_ATTRIBUTES_* lpSemaphoreAttr
     return winapi::CreateSemaphoreW(lpSemaphoreAttributes, lInitialCount, lMaximumCount, lpName);
 }
 
-BOOST_FORCEINLINE HANDLE_ open_semaphore(DWORD_ dwDesiredAccess, BOOL_ bInheritHandle, LPCWSTR_ lpName)
-{
-    return ::OpenSemaphoreW(dwDesiredAccess, bInheritHandle, lpName);
-}
-
 BOOST_FORCEINLINE HANDLE_ create_anonymous_semaphore(SECURITY_ATTRIBUTES_* lpSemaphoreAttributes, LONG_ lInitialCount, LONG_ lMaximumCount)
 {
     return winapi::CreateSemaphoreW(lpSemaphoreAttributes, lInitialCount, lMaximumCount, 0);
 }
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
+#if !defined( BOOST_NO_ANSI_APIS )
+using ::OpenSemaphoreA;
+
+BOOST_FORCEINLINE HANDLE_ open_semaphore(DWORD_ dwDesiredAccess, BOOL_ bInheritHandle, LPCSTR_ lpName)
+{
+    return ::OpenSemaphoreA(dwDesiredAccess, bInheritHandle, lpName);
+}
+#endif // !defined( BOOST_NO_ANSI_APIS )
+
+using ::OpenSemaphoreW;
+
+BOOST_FORCEINLINE HANDLE_ open_semaphore(DWORD_ dwDesiredAccess, BOOL_ bInheritHandle, LPCWSTR_ lpName)
+{
+    return ::OpenSemaphoreW(dwDesiredAccess, bInheritHandle, lpName);
+}
+
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
 }
 }
 }
 
-#endif // BOOST_DETAIL_WINAPI_SEMAPHORE_HPP
+#endif // BOOST_DETAIL_WINAPI_SEMAPHORE_HPP_

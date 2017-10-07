@@ -2,17 +2,16 @@
 
 //  Copyright 2010 Vicente J. Botet Escriba
 //  Copyright (c) Microsoft Corporation 2014
-//  Copyright 2015 Andrey Semashev
+//  Copyright 2015, 2017 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 
-#ifndef BOOST_DETAIL_WINAPI_TIME_HPP
-#define BOOST_DETAIL_WINAPI_TIME_HPP
+#ifndef BOOST_DETAIL_WINAPI_TIME_HPP_
+#define BOOST_DETAIL_WINAPI_TIME_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -41,7 +40,8 @@ FileTimeToSystemTime(
     const ::_FILETIME* lpFileTime,
     ::_SYSTEMTIME* lpSystemTime);
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 FileTimeToLocalFileTime(
     const ::_FILETIME* lpFileTime,
@@ -52,16 +52,20 @@ LocalFileTimeToFileTime(
     const ::_FILETIME* lpLocalFileTime,
     ::_FILETIME* lpFileTime);
 
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 GetTickCount(BOOST_DETAIL_WINAPI_VOID);
-#endif
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::ULONGLONG_ WINAPI
 GetTickCount64(BOOST_DETAIL_WINAPI_VOID);
 #endif
-}
-#endif
+
+} // extern "C"
+#endif // !defined( BOOST_USE_WINDOWS_H )
 
 namespace boost {
 namespace detail {
@@ -83,7 +87,7 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _SYSTEMTIME {
     WORD_ wMilliseconds;
 } SYSTEMTIME_, *PSYSTEMTIME_, *LPSYSTEMTIME_;
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 using ::GetTickCount;
 #endif
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
@@ -105,7 +109,7 @@ BOOST_FORCEINLINE BOOL_ FileTimeToSystemTime(const FILETIME_* lpFileTime, SYSTEM
     return ::FileTimeToSystemTime(reinterpret_cast< const ::_FILETIME* >(lpFileTime), reinterpret_cast< ::_SYSTEMTIME* >(lpSystemTime));
 }
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_FORCEINLINE BOOL_ FileTimeToLocalFileTime(const FILETIME_* lpFileTime, FILETIME_* lpLocalFileTime)
 {
     return ::FileTimeToLocalFileTime(reinterpret_cast< const ::_FILETIME* >(lpFileTime), reinterpret_cast< ::_FILETIME* >(lpLocalFileTime));
@@ -115,7 +119,7 @@ BOOST_FORCEINLINE BOOL_ LocalFileTimeToFileTime(const FILETIME_* lpLocalFileTime
 {
     return ::LocalFileTimeToFileTime(reinterpret_cast< const ::_FILETIME* >(lpLocalFileTime), reinterpret_cast< ::_FILETIME* >(lpFileTime));
 }
-#endif
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
 #if defined( BOOST_HAS_GETSYSTEMTIMEASFILETIME )
 BOOST_FORCEINLINE VOID_ GetSystemTimeAsFileTime(LPFILETIME_ lpSystemTimeAsFileTime)
@@ -136,4 +140,4 @@ BOOST_FORCEINLINE VOID_ GetSystemTimeAsFileTime(FILETIME_* lpFileTime)
 }
 }
 
-#endif // BOOST_DETAIL_WINAPI_TIME_HPP
+#endif // BOOST_DETAIL_WINAPI_TIME_HPP_

@@ -10,13 +10,12 @@
 #define BOOST_DETAIL_WINAPI_PRIORITY_CLASS_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
@@ -73,6 +72,6 @@ using ::SetPriorityClass;
 }
 }
 
-#endif // BOOST_PLAT_WINDOWS_DESKTOP
+#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
 #endif // BOOST_DETAIL_WINAPI_PRIORITY_CLASS_HPP_

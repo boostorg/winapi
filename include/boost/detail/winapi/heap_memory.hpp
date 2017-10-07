@@ -1,14 +1,14 @@
 //  heap_memory.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
-//  Copyright 2015 Andrey Semashev
+//  Copyright 2015, 2017 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 
-#ifndef BOOST_DETAIL_WINAPI_HEAP_MEMORY_HPP
-#define BOOST_DETAIL_WINAPI_HEAP_MEMORY_HPP
+#ifndef BOOST_DETAIL_WINAPI_HEAP_MEMORY_HPP_
+#define BOOST_DETAIL_WINAPI_HEAP_MEMORY_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
 
@@ -20,12 +20,11 @@
 #undef HeapAlloc
 extern "C" {
 
-#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
 GetProcessHeaps(boost::detail::winapi::DWORD_ NumberOfHeaps, boost::detail::winapi::PHANDLE_ ProcessHeaps);
-#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
-#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 GetProcessHeap(BOOST_DETAIL_WINAPI_VOID);
 
@@ -47,7 +46,6 @@ HeapReAlloc(
     boost::detail::winapi::DWORD_ dwFlags,
     boost::detail::winapi::LPVOID_ lpMem,
     boost::detail::winapi::SIZE_T_ dwBytes);
-#endif // BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -60,22 +58,21 @@ BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 HeapDestroy(boost::detail::winapi::HANDLE_ hHeap);
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
-}      // extern "C"
+} // extern "C"
 #endif // !defined( BOOST_USE_WINDOWS_H )
 
 namespace boost {
 namespace detail {
 namespace winapi {
-#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
+#if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 using ::GetProcessHeaps;
 #endif
 
-#if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 using ::GetProcessHeap;
 using ::HeapAlloc;
 using ::HeapFree;
 using ::HeapReAlloc;
-#endif
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 using ::HeapCreate;
@@ -86,4 +83,4 @@ using ::HeapDestroy;
 }
 }
 
-#endif // BOOST_DETAIL_WINAPI_HEAP_MEMORY_HPP
+#endif // BOOST_DETAIL_WINAPI_HEAP_MEMORY_HPP_

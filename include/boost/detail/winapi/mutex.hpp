@@ -1,26 +1,24 @@
 //  mutex.hpp  --------------------------------------------------------------//
 
 //  Copyright 2010 Vicente J. Botet Escriba
-//  Copyright 2015 Andrey Semashev
+//  Copyright 2015, 2017 Andrey Semashev
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
 
 
-#ifndef BOOST_DETAIL_WINAPI_MUTEX_HPP
-#define BOOST_DETAIL_WINAPI_MUTEX_HPP
+#ifndef BOOST_DETAIL_WINAPI_MUTEX_HPP_
+#define BOOST_DETAIL_WINAPI_MUTEX_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if !defined( BOOST_USE_WINDOWS_H )
+#if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_APP_SYSTEM
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
-#if !defined( BOOST_PLAT_WINDOWS_RUNTIME_AVALIABLE )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateMutexA(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
@@ -28,6 +26,17 @@ CreateMutexA(
     boost::detail::winapi::LPCSTR_ lpName);
 #endif
 
+BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
+CreateMutexW(
+    ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
+    boost::detail::winapi::BOOL_ bInitialOwner,
+    boost::detail::winapi::LPCWSTR_ lpName);
+} // extern "C"
+#endif // !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if !defined( BOOST_USE_WINDOWS_H )
+extern "C" {
+#if !defined( BOOST_NO_ANSI_APIS )
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
 CreateMutexExA(
@@ -42,15 +51,7 @@ OpenMutexA(
     boost::detail::winapi::DWORD_ dwDesiredAccess,
     boost::detail::winapi::BOOL_ bInheritHandle,
     boost::detail::winapi::LPCSTR_ lpName);
-#endif
-
-#if !defined( BOOST_PLAT_WINDOWS_RUNTIME_AVALIABLE )
-BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
-CreateMutexW(
-    ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
-    boost::detail::winapi::BOOL_ bInitialOwner,
-    boost::detail::winapi::LPCWSTR_ lpName);
-#endif
+#endif // !defined( BOOST_NO_ANSI_APIS )
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -69,7 +70,7 @@ OpenMutexW(
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 ReleaseMutex(boost::detail::winapi::HANDLE_ hMutex);
-}
+} // extern "C"
 #endif
 
 namespace boost {
@@ -109,7 +110,7 @@ const DWORD_ create_mutex_initial_owner = CREATE_MUTEX_INITIAL_OWNER_;
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateMutexA(SECURITY_ATTRIBUTES_* lpMutexAttributes, BOOL_ bInitialOwner, LPCSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if !BOOST_WINAPI_PARTITION_APP_SYSTEM && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
     const DWORD_ flags = bInitialOwner ? create_mutex_initial_owner : 0u;
     return ::CreateMutexExA(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), lpName, flags, mutex_all_access);
 #else
@@ -131,7 +132,7 @@ BOOST_FORCEINLINE HANDLE_ CreateMutexExA(
 
 BOOST_FORCEINLINE HANDLE_ CreateMutexW(SECURITY_ATTRIBUTES_* lpMutexAttributes, BOOL_ bInitialOwner, LPCWSTR_ lpName)
 {
-#if BOOST_PLAT_WINDOWS_RUNTIME && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+#if !BOOST_WINAPI_PARTITION_APP_SYSTEM && BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
     const DWORD_ flags = bInitialOwner ? create_mutex_initial_owner : 0u;
     return ::CreateMutexExW(reinterpret_cast< ::_SECURITY_ATTRIBUTES* >(lpMutexAttributes), lpName, flags, mutex_all_access);
 #else
@@ -181,4 +182,4 @@ BOOST_FORCEINLINE HANDLE_ create_anonymous_mutex(SECURITY_ATTRIBUTES_* lpAttribu
 }
 }
 
-#endif // BOOST_DETAIL_WINAPI_MUTEX_HPP
+#endif // BOOST_DETAIL_WINAPI_MUTEX_HPP_

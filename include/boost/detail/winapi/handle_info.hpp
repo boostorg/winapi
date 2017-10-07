@@ -9,13 +9,12 @@
 #define BOOST_DETAIL_HANDLE_INFO_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_DESKTOP
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
@@ -57,6 +56,6 @@ const DWORD_ HANDLE_FLAG_PROTECT_FROM_CLOSE_ = 0x2;
 }
 }
 
-#endif // BOOST_PLAT_WINDOWS_DESKTOP
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
 
 #endif // BOOST_DETAIL_HANDLE_INFO_HPP_

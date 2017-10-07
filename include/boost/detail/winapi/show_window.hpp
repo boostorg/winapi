@@ -9,13 +9,12 @@
 #define BOOST_DETAIL_WINAPI_SHOW_WINDOW_HPP_
 
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/predef/platform.h>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#if BOOST_PLAT_WINDOWS_DESKTOP
+#if BOOST_WINAPI_PARTITION_DESKTOP
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
@@ -100,6 +99,6 @@ const DWORD_ SW_OTHERUNZOOM_      = 4;
 }
 }
 
-#endif // BOOST_PLAT_WINDOWS_DESKTOP
+#endif // BOOST_WINAPI_PARTITION_DESKTOP
 
 #endif // BOOST_DETAIL_WINAPI_SHOW_WINDOW_HPP_
