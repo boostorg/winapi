@@ -130,7 +130,7 @@
 #define BOOST_USE_WINAPI_FAMILY WINAPI_FAMILY
 #else if defined(WINAPI_FAMILY_DESKTOP_APP)
 // If none is specified, default to a desktop application which is the most
-// backwards compatible to previos ways of doing things, if families are even
+// backwards compatible to previous ways of doing things, if families are even
 // defined.
 #define BOOST_USE_WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
 #endif
