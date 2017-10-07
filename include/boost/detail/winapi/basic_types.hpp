@@ -135,10 +135,9 @@ typedef ::WCHAR WCHAR_;
 typedef ::LPWSTR LPWSTR_;
 typedef ::LPCWSTR LPCWSTR_;
 
-#ifndef _NTDEF_
-typedef ::LONG NTSTATUS;
-typedef NTSTATUS *PNTSTATUS;
-#endif
+// ::NTSTATUS is defined in ntdef.h, which is not included by windows.h by default
+typedef LONG_ NTSTATUS_;
+typedef NTSTATUS_ *PNTSTATUS_;
 
 #else // defined( BOOST_USE_WINDOWS_H )
 
