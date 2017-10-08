@@ -143,7 +143,7 @@
 #if !defined(BOOST_USE_WINAPI_FAMILY)
 #if defined(WINAPI_FAMILY)
 #define BOOST_USE_WINAPI_FAMILY WINAPI_FAMILY
-#else if defined(WINAPI_FAMILY_DESKTOP_APP)
+#elif defined(WINAPI_FAMILY_DESKTOP_APP)
 // If none is specified, default to a desktop application which is the most
 // backwards compatible to previous ways of doing things, if families are even
 // defined.
