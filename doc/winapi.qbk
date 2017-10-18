@@ -56,29 +56,29 @@ User's code can include `<boost/detail/winapi/config.hpp>` to define a number of
 
 [section:usage Using Boost.WinAPI]
 
-In order to use Boost.WinAPI you have to include one or several headers from the `boost/detail/winapi` directory. Each header there defines a portion of Windows API, the name of the header should be self-explanatory. Each Boost.WinAPI header may declare a number of symbols like functions and types in the global namespace, mimicking the Windows SDK, and the corresponding set of symbols in the `boost::detail::winapi` namespace. User's code is supposed to use the symbols from the `boost::detail::winapi` namespace only.
+In order to use Boost.WinAPI you have to include one or several headers from the `boost/winapi` directory. Each header there defines a portion of Windows API, the name of the header should be self-explanatory. Each Boost.WinAPI header may declare a number of symbols like functions and types in the global namespace, mimicking the Windows SDK, and the corresponding set of symbols in the `boost::winapi` namespace. User's code is supposed to use the symbols from the `boost::winapi` namespace only.
 
-Most of the functions in the `boost::detail::winapi` have the same name and meaning as the corresponding Windows API functions. Types and constants have a trailing underscore ('_') in their name to avoid clashes with macros that are defined in Windows SDK.
+Most of the functions in the `boost::winapi` have the same name and meaning as the corresponding Windows API functions. Types and constants have a trailing underscore ('_') in their name to avoid clashes with macros that are defined in Windows SDK.
 
 [note Boost.WinAPI does not define function-name macros that expand to the `char` or `wchar_t` based functions depending on the `UNICODE` macro. Boost.WinAPI also does not support `_TCHAR` and related string types. Users have to explicitly use the `*A` or `*W` functions with appropriate argument types. Note however that `*A` functions may not be available if `BOOST_NO_ANSI_APIS` is defined.]
 
 For example, here is how one would create and destroy a semaphore with Boost.WinAPI:
 
     #include <limits>
-    #include <boost/detail/winapi/handles.hpp>
-    #include <boost/detail/winapi/semaphore.hpp>
+    #include <boost/winapi/handles.hpp>
+    #include <boost/winapi/semaphore.hpp>
 
-    boost::detail::winapi::HANDLE_ h = boost::detail::winapi::CreateSemaphoreExW(
+    boost::winapi::HANDLE_ h = boost::winapi::CreateSemaphoreExW(
         NULL,                                                        // security attributes
         0l,                                                          // initial count
-        std::numeric_limits< boost::detail::winapi::LONG_ >::max(),  // max count
+        std::numeric_limits< boost::winapi::LONG_ >::max(),          // max count
         L"Local\\MySemaphore",                                       // semaphore name
         0l,                                                          // flags
-        boost::detail::winapi::SEMAPHORE_ALL_ACCESS_                 // access mode
+        boost::winapi::SEMAPHORE_ALL_ACCESS_                         // access mode
     );
 
     if (h)
-        boost::detail::winapi::CloseHandle(h);
+        boost::winapi::CloseHandle(h);
 
 Refer to [@https://msdn.microsoft.com/library MSDN] for documentation on the particular functions, types and constants.
 

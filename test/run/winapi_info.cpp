@@ -22,7 +22,7 @@
 #if BOOST_OS_WINDOWS
 
 #include <windows.h>
-#include <boost/detail/winapi/config.hpp>
+#include <boost/winapi/config.hpp>
 #include <stdio.h>
 #include <string.h>
 #include <boost/config.hpp>

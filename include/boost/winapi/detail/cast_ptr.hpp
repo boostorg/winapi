@@ -1,22 +1,20 @@
-//  cast_ptr.hpp  --------------------------------------------------------------//
+/*
+ * Copyright 2015 Andrey Semashev
+ *
+ * Distributed under the Boost Software License, Version 1.0.
+ * See http://www.boost.org/LICENSE_1_0.txt
+ */
 
-//  Copyright 2015 Andrey Semashev
+#ifndef BOOST_WINAPI_DETAIL_CAST_PTR_HPP_INCLUDED_
+#define BOOST_WINAPI_DETAIL_CAST_PTR_HPP_INCLUDED_
 
-//  Distributed under the Boost Software License, Version 1.0.
-//  See http://www.boost.org/LICENSE_1_0.txt
-
-
-#ifndef BOOST_DETAIL_WINAPI_DETAIL_CAST_PTR_HPP
-#define BOOST_DETAIL_WINAPI_DETAIL_CAST_PTR_HPP
-
-#include <boost/detail/winapi/config.hpp>
+#include <boost/winapi/config.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
 #endif
 
 namespace boost {
-namespace detail {
 namespace winapi {
 namespace detail {
 
@@ -35,6 +33,5 @@ public:
 }
 }
 }
-}
 
-#endif // BOOST_DETAIL_WINAPI_DETAIL_CAST_PTR_HPP
+#endif // BOOST_WINAPI_DETAIL_CAST_PTR_HPP_INCLUDED_
