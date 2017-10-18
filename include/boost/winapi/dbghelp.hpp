@@ -34,15 +34,15 @@
 #if defined(API_VERSION_NUMBER)
 #if API_VERSION_NUMBER >= 11
 // UnDecorateSymbolNameW available since Windows SDK 6.0A and MinGW-w64 (as of 2016-02-14)
-#define BOOST_DETAIL_WINAPI_HAS_UNDECORATESYMBOLNAMEW
+#define BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW
 #endif
 #elif defined(_MSC_VER) && _MSC_VER >= 1500
 // Until MSVC 9.0 Windows SDK was bundled in Visual Studio and didn't have UnDecorateSymbolNameW.
 // Supposedly, Windows SDK 6.0A was the first standalone one and it is used with MSVC 9.0.
-#define BOOST_DETAIL_WINAPI_HAS_UNDECORATESYMBOLNAMEW
+#define BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW
 #elif !defined(BOOST_WINAPI_IS_MINGW)
 // MinGW does not provide UnDecorateSymbolNameW (as of 2016-02-14)
-#define BOOST_DETAIL_WINAPI_HAS_UNDECORATESYMBOLNAMEW
+#define BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
@@ -57,7 +57,7 @@ UnDecorateSymbolName(
     boost::winapi::DWORD_ UndecoratedLength,
     boost::winapi::DWORD_ Flags);
 
-#if defined( BOOST_DETAIL_WINAPI_HAS_UNDECORATESYMBOLNAMEW )
+#if defined( BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW )
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
 UnDecorateSymbolNameW(
     boost::winapi::LPCWSTR_ DecoratedName,
@@ -118,7 +118,7 @@ const DWORD_ UNDNAME_NO_SPECIAL_SYMS_ = 0x00004000;
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 using ::UnDecorateSymbolName;
-#if defined( BOOST_DETAIL_WINAPI_HAS_UNDECORATESYMBOLNAMEW )
+#if defined( BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW )
 using ::UnDecorateSymbolNameW;
 #endif
 
@@ -147,7 +147,7 @@ BOOST_FORCEINLINE DWORD_ undecorate_symbol_name(
         Flags);
 }
 
-#if defined( BOOST_DETAIL_WINAPI_HAS_UNDECORATESYMBOLNAMEW )
+#if defined( BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW )
 
 BOOST_FORCEINLINE DWORD_ undecorate_symbol_name(
     LPCWSTR_ DecoratedName,

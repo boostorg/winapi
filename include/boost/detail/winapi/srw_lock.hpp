@@ -17,4 +17,7 @@
 #pragma once
 #endif
 
+// Deprecated
+#define BOOST_DETAIL_WINAPI_SRWLOCK_INIT BOOST_WINAPI_SRWLOCK_INIT
+
 #endif // BOOST_DETAIL_WINAPI_SRW_LOCK_HPP
