@@ -89,11 +89,6 @@ const ULONG_ WT_EXECUTEINPERSISTENTIOTHREAD_ = WT_EXECUTEINPERSISTENTIOTHREAD;
 const ULONG_ WT_EXECUTEINPERSISTENTTHREAD_ = WT_EXECUTEINPERSISTENTTHREAD;
 const ULONG_ WT_TRANSFER_IMPERSONATION_ = WT_TRANSFER_IMPERSONATION;
 
-BOOST_FORCEINLINE BOOST_CONSTEXPR ULONG_ wt_set_max_threadpool_threads(ULONG_ flags, ULONG_ limit)
-{
-    return WT_SET_MAX_THREADPOOL_THREADS(flags, limit);
-}
-
 #else // defined( BOOST_USE_WINDOWS_H )
 
 const ULONG_ WT_EXECUTEDEFAULT_ = 0x00000000;
@@ -107,12 +102,14 @@ const ULONG_ WT_EXECUTEINPERSISTENTIOTHREAD_ = 0x00000040;
 const ULONG_ WT_EXECUTEINPERSISTENTTHREAD_ = 0x00000080;
 const ULONG_ WT_TRANSFER_IMPERSONATION_ = 0x00000100;
 
-BOOST_FORCEINLINE BOOST_CONSTEXPR ULONG_ wt_set_max_threadpool_threads(ULONG_ flags, ULONG_ limit)
+#endif // defined( BOOST_USE_WINDOWS_H )
+
+BOOST_FORCEINLINE BOOST_CONSTEXPR ULONG_ wt_set_max_threadpool_threads(ULONG_ flags, ULONG_ limit) BOOST_NOEXCEPT
 {
+    // Note: We don't use WT_SET_MAX_THREADPOOL_THREADS here because the way it's defined
+    //       the function no longer meets C++11 constexpr requirements.
     return flags | (limit << 16);
 }
-
-#endif // defined( BOOST_USE_WINDOWS_H )
 
 const ULONG_ wt_execute_default = WT_EXECUTEDEFAULT_;
 const ULONG_ wt_execute_in_io_thread = WT_EXECUTEINIOTHREAD_;
