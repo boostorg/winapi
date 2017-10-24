@@ -19,7 +19,9 @@
 namespace boost {
 namespace winapi {}
 namespace detail {
-namespace winapi = boost::winapi;
+namespace winapi {
+using namespace boost::winapi;
+} // namespace winapi
 } // namespace detail
 } // namespace boost
 
