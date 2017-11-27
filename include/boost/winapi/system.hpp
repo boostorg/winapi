@@ -44,13 +44,13 @@ namespace boost {
 namespace winapi {
 
 typedef struct BOOST_MAY_ALIAS _SYSTEM_INFO {
-    union {
+    BOOST_WINAPI_DETAIL_EXTENSION union {
         DWORD_ dwOemId;
-        struct {
+        BOOST_WINAPI_DETAIL_EXTENSION struct {
             WORD_ wProcessorArchitecture;
             WORD_ wReserved;
-        } DUMMYSTRUCTNAME;
-    } DUMMYUNIONNAME;
+        };
+    };
     DWORD_ dwPageSize;
     LPVOID_ lpMinimumApplicationAddress;
     LPVOID_ lpMaximumApplicationAddress;
