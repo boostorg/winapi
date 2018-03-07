@@ -85,6 +85,7 @@
 #define BOOST_WINAPI_NTDDI_WIN10_TH2 0x0A000001
 #define BOOST_WINAPI_NTDDI_WIN10_RS1 0x0A000002
 #define BOOST_WINAPI_NTDDI_WIN10_RS2 0x0A000003
+#define BOOST_WINAPI_NTDDI_WIN10_RS3 0x0A000004
 
 #define BOOST_WINAPI_DETAIL_MAKE_NTDDI_VERSION2(x) x##0000
 #define BOOST_WINAPI_DETAIL_MAKE_NTDDI_VERSION(x) BOOST_WINAPI_DETAIL_MAKE_NTDDI_VERSION2(x)
@@ -95,11 +96,13 @@
 #elif defined(WINVER)
 #define BOOST_USE_WINAPI_VERSION WINVER
 #else
-// By default use Windows Vista API on compilers that support it and XP on the others
+// By default use Windows 7 API on compilers that support it and Vista or XP on the others
 #if (defined(_MSC_VER) && _MSC_VER < 1500) || defined(BOOST_WINAPI_IS_MINGW)
 #define BOOST_USE_WINAPI_VERSION BOOST_WINAPI_VERSION_WINXP
-#else
+#elif (defined(_MSC_VER) && _MSC_VER < 1600)
 #define BOOST_USE_WINAPI_VERSION BOOST_WINAPI_VERSION_WIN6
+#else
+#define BOOST_USE_WINAPI_VERSION BOOST_WINAPI_VERSION_WIN7
 #endif
 #endif
 #endif
@@ -119,7 +122,7 @@
 #elif BOOST_USE_WINAPI_VERSION == BOOST_WINAPI_VERSION_WIN7
 #define BOOST_USE_NTDDI_VERSION BOOST_WINAPI_NTDDI_WIN7SP1
 #elif BOOST_USE_WINAPI_VERSION == BOOST_WINAPI_VERSION_WIN10
-#define BOOST_USE_NTDDI_VERSION BOOST_WINAPI_NTDDI_WIN10_RS2
+#define BOOST_USE_NTDDI_VERSION BOOST_WINAPI_NTDDI_WIN10_RS3
 #else
 #define BOOST_USE_NTDDI_VERSION BOOST_WINAPI_DETAIL_MAKE_NTDDI_VERSION(BOOST_USE_WINAPI_VERSION)
 #endif
@@ -153,7 +156,7 @@
 //
 // UWP Support
 //
-// On platforms without windows family partition support it is assumed one 
+// On platforms without windows family partition support it is assumed one
 // has all APIs and access is controlled by _WIN32_WINNT or similar mechanisms.
 //
 // Leveraging Boost.Predef here
@@ -175,9 +178,9 @@
 #endif // BOOST_PLAT_WINDOWS_UWP
 
 //
-// Windows 8.x SDK defines some items in the DESKTOP partition and then Windows SDK 10.0 defines 
-// the same items to be in APP or SYSTEM partitions, and APP expands to DESKTOP or PC or PHONE.  
-// The definition of BOOST_WINAPI_PARTITION_APP_SYSTEM provides a universal way to get this 
+// Windows 8.x SDK defines some items in the DESKTOP partition and then Windows SDK 10.0 defines
+// the same items to be in APP or SYSTEM partitions, and APP expands to DESKTOP or PC or PHONE.
+// The definition of BOOST_WINAPI_PARTITION_APP_SYSTEM provides a universal way to get this
 // right as it is seen in a number of places in the SDK.
 //
 #define BOOST_WINAPI_PARTITION_APP_SYSTEM \
