@@ -88,6 +88,10 @@ environment:
       TOOLSET: gcc
       ADDPATH: C:\cygwin\bin;
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    - COMMENT: Cygwin 64
+      TOOLSET: gcc
+      ADDPATH: C:\cygwin64\bin;
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: MinGW
       TOOLSET: gcc
       ADDPATH: C:\mingw\bin;
