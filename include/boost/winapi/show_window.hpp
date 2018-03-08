@@ -20,11 +20,11 @@
 extern "C" {
 BOOST_WINAPI_DETAIL_DECLARE_HANDLE(HWND);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI ShowWindow(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC ShowWindow(
     HWND hWnd,
     int nCmdShow);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI ShowWindowAsync(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC ShowWindowAsync(
     HWND hWnd,
     int nCmdShow);
 } // extern "C"

@@ -40,15 +40,15 @@ struct _STARTUPINFOEXW;
 #endif // BOOST_WINAPI_PARTITION_DESKTOP
 #endif
 
-BOOST_SYMBOL_IMPORT BOOST_NORETURN boost::winapi::VOID_ WINAPI
+BOOST_SYMBOL_IMPORT BOOST_NORETURN boost::winapi::VOID_ BOOST_WINAPI_DETAIL_WINAPI_CC
 ExitProcess(boost::winapi::UINT_ uExitCode);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI GetExitCodeProcess(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC GetExitCodeProcess(
     boost::winapi::HANDLE_ hProcess,
     boost::winapi::LPDWORD_ lpExitCode);
 
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI CreateProcessA(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC CreateProcessA(
     boost::winapi::LPCSTR_ lpApplicationName,
     boost::winapi::LPSTR_ lpCommandLine,
     ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
@@ -61,7 +61,7 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI CreateProcessA(
     ::_PROCESS_INFORMATION* lpProcessInformation);
 #endif
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI CreateProcessW(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC CreateProcessW(
     boost::winapi::LPCWSTR_ lpApplicationName,
     boost::winapi::LPWSTR_ lpCommandLine,
     ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
@@ -77,12 +77,12 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI CreateProcessW(
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
-BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI OpenProcess(
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_DETAIL_WINAPI_CC OpenProcess(
     boost::winapi::DWORD_ dwDesiredAccess,
     boost::winapi::BOOL_ bInheritHandle,
     boost::winapi::DWORD_ dwProcessId);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI TerminateProcess(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC TerminateProcess(
     boost::winapi::HANDLE_ hProcess,
     boost::winapi::UINT_ uExitCode);
 

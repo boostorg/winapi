@@ -19,31 +19,31 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::winapi::LPSTR_ WINAPI GetEnvironmentStringsA();
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI FreeEnvironmentStringsA(boost::winapi::LPSTR_);
+BOOST_SYMBOL_IMPORT boost::winapi::LPSTR_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentStringsA();
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC FreeEnvironmentStringsA(boost::winapi::LPSTR_);
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI GetEnvironmentVariableA(
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentVariableA(
     boost::winapi::LPCSTR_ lpName,
     boost::winapi::LPSTR_ lpBuffer,
     boost::winapi::DWORD_ nSize
 );
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI SetEnvironmentVariableA(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC SetEnvironmentVariableA(
     boost::winapi::LPCSTR_ lpName,
     boost::winapi::LPCSTR_ lpValue
 );
 #endif // !defined( BOOST_NO_ANSI_APIS )
 
-BOOST_SYMBOL_IMPORT boost::winapi::LPWSTR_ WINAPI GetEnvironmentStringsW();
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI FreeEnvironmentStringsW(boost::winapi::LPWSTR_);
+BOOST_SYMBOL_IMPORT boost::winapi::LPWSTR_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentStringsW();
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC FreeEnvironmentStringsW(boost::winapi::LPWSTR_);
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI GetEnvironmentVariableW(
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentVariableW(
     boost::winapi::LPCWSTR_ lpName,
     boost::winapi::LPWSTR_ lpBuffer,
     boost::winapi::DWORD_ nSize
 );
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI SetEnvironmentVariableW(
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC SetEnvironmentVariableW(
     boost::winapi::LPCWSTR_ lpName,
     boost::winapi::LPCWSTR_ lpValue
 );
