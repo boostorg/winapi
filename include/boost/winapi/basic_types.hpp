@@ -9,8 +9,6 @@
 #ifndef BOOST_WINAPI_BASIC_TYPES_HPP_INCLUDED_
 #define BOOST_WINAPI_BASIC_TYPES_HPP_INCLUDED_
 
-#include <cstdarg>
-#include <boost/cstdint.hpp>
 #include <boost/winapi/config.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -204,8 +202,8 @@ typedef ULONG_* PULONG_;
 BOOST_WINAPI_DETAIL_EXTENSION typedef __int64 LONGLONG_;
 BOOST_WINAPI_DETAIL_EXTENSION typedef unsigned __int64 ULONGLONG_;
 #else
-typedef boost::int64_t LONGLONG_;
-typedef boost::uint64_t ULONGLONG_;
+BOOST_WINAPI_DETAIL_EXTENSION typedef long long LONGLONG_;
+BOOST_WINAPI_DETAIL_EXTENSION typedef unsigned long long ULONGLONG_;
 #endif
 typedef LONGLONG_ LONG64_, *PLONG64_;
 typedef ULONGLONG_ ULONG64_, *PULONG64_;

@@ -11,6 +11,11 @@
 
 #include <boost/predef/version_number.h>
 #include <boost/predef/platform.h>
+#if defined(__CYGWIN__)
+// Cygwin 64 compiler does not define _WIN64 and instead defines it in a private header. We can't define _WIN64 ourselves because
+// the header defines the macro unconditionally and if the user includes both Boost.WinAPI and Cygwin WinAPI headers there will be conflict.
+#include <_cygwin.h>
+#endif
 
 // BOOST_WINAPI_IS_MINGW indicates that the target Windows SDK is provided by MinGW (http://mingw.org/).
 // BOOST_WINAPI_IS_MINGW_W64 indicates that the target Windows SDK is provided by MinGW-w64 (http://mingw-w64.org).
