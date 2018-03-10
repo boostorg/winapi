@@ -16,10 +16,21 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
+#if defined(GetEnvironmentStrings)
+// Unlike most of the WinAPI, GetEnvironmentStrings is a real function and GetEnvironmentStringsA is a macro.
+// In UNICODE builds, GetEnvironmentStrings is also defined as a macro that redirects to GetEnvironmentStringsW,
+// and the narrow character version become inaccessible. Facepalm.
+#if defined(_MSC_VER) || defined(__GNUC__)
+#pragma push_macro("GetEnvironmentStrings")
+#endif
+#undef GetEnvironmentStrings
+#define BOOST_WINAPI_DETAIL_GET_ENVIRONMENT_STRINGS_UNDEFINED
+#endif // defined(GetEnvironmentStrings)
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::winapi::LPSTR_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentStringsA();
+BOOST_SYMBOL_IMPORT boost::winapi::LPSTR_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentStrings();
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC FreeEnvironmentStringsA(boost::winapi::LPSTR_);
 
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_DETAIL_WINAPI_CC GetEnvironmentVariableA(
@@ -54,7 +65,7 @@ namespace boost {
 namespace winapi {
 
 #if !defined( BOOST_NO_ANSI_APIS )
-using ::GetEnvironmentStringsA;
+using ::GetEnvironmentStrings;
 using ::FreeEnvironmentStringsA;
 using ::GetEnvironmentVariableA;
 using ::SetEnvironmentVariableA;
@@ -73,7 +84,7 @@ Char* get_environment_strings();
 template< >
 BOOST_FORCEINLINE char* get_environment_strings< char >()
 {
-    return GetEnvironmentStringsA();
+    return GetEnvironmentStrings();
 }
 
 BOOST_FORCEINLINE BOOL_ free_environment_strings(LPSTR_ p)
@@ -117,5 +128,15 @@ BOOST_FORCEINLINE BOOL_ set_environment_variable(LPCWSTR_ name, LPCWSTR_ value)
 } // namespace winapi
 } // namespace boost
 
+#if defined(BOOST_WINAPI_DETAIL_GET_ENVIRONMENT_STRINGS_UNDEFINED)
+#if defined(_MSC_VER) || defined(__GNUC__)
+#pragma pop_macro("GetEnvironmentStrings")
+#elif defined(UNICODE)
+#define GetEnvironmentStrings GetEnvironmentStringsW
+#endif
+#undef BOOST_WINAPI_DETAIL_GET_ENVIRONMENT_STRINGS_UNDEFINED
+#endif // defined(BOOST_WINAPI_DETAIL_GET_ENVIRONMENT_STRINGS_UNDEFINED)
+
 #endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
 #endif // BOOST_WINAPI_ENVIRONMENT_HPP_INCLUDED_

@@ -254,6 +254,10 @@ typedef union BOOST_MAY_ALIAS _LARGE_INTEGER {
     struct {
         DWORD_ LowPart;
         LONG_ HighPart;
+    };
+    struct {
+        DWORD_ LowPart;
+        LONG_ HighPart;
     } u;
     LONGLONG_ QuadPart;
 } LARGE_INTEGER_, *PLARGE_INTEGER_;
