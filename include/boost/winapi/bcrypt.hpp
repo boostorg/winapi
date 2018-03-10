@@ -34,13 +34,13 @@ typedef PVOID_ BCRYPT_ALG_HANDLE_;
 
 extern "C" {
 
-boost::winapi::NTSTATUS_ BOOST_WINAPI_DETAIL_WINAPI_CC
+boost::winapi::NTSTATUS_ BOOST_WINAPI_WINAPI_CC
 BCryptCloseAlgorithmProvider(
     boost::winapi::BCRYPT_ALG_HANDLE_ hAlgorithm,
     boost::winapi::ULONG_             dwFlags
 );
 
-boost::winapi::NTSTATUS_ BOOST_WINAPI_DETAIL_WINAPI_CC
+boost::winapi::NTSTATUS_ BOOST_WINAPI_WINAPI_CC
 BCryptGenRandom(
     boost::winapi::BCRYPT_ALG_HANDLE_ hAlgorithm,
     boost::winapi::PUCHAR_            pbBuffer,
@@ -48,7 +48,7 @@ BCryptGenRandom(
     boost::winapi::ULONG_             dwFlags
 );
 
-boost::winapi::NTSTATUS_ BOOST_WINAPI_DETAIL_WINAPI_CC
+boost::winapi::NTSTATUS_ BOOST_WINAPI_WINAPI_CC
 BCryptOpenAlgorithmProvider(
     boost::winapi::BCRYPT_ALG_HANDLE_ *phAlgorithm,
     boost::winapi::LPCWSTR_           pszAlgId,

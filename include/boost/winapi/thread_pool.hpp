@@ -21,11 +21,11 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if BOOST_WINAPI_PARTITION_DESKTOP
-typedef boost::winapi::VOID_ (BOOST_WINAPI_DETAIL_NTAPI_CC *WAITORTIMERCALLBACKFUNC)
+typedef boost::winapi::VOID_ (BOOST_WINAPI_NTAPI_CC *WAITORTIMERCALLBACKFUNC)
     (boost::winapi::PVOID_, boost::winapi::BOOLEAN_);
 typedef WAITORTIMERCALLBACKFUNC WAITORTIMERCALLBACK;
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 RegisterWaitForSingleObject(
     boost::winapi::PHANDLE_ phNewWaitObject,
     boost::winapi::HANDLE_ hObject,
@@ -41,12 +41,12 @@ RegisterWaitForSingleObject(
 #if !defined( BOOST_USE_WINDOWS_H ) || (defined(BOOST_WINAPI_IS_MINGW) && BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_WINXP)
 extern "C" {
 #if BOOST_WINAPI_PARTITION_DESKTOP
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 UnregisterWait(boost::winapi::HANDLE_ WaitHandle);
 #endif
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 UnregisterWaitEx(
     boost::winapi::HANDLE_ WaitHandle,
     boost::winapi::HANDLE_ CompletionEvent);

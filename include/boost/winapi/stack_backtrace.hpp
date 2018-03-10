@@ -28,7 +28,7 @@
 extern "C" {
 
 BOOST_SYMBOL_IMPORT boost::winapi::WORD_
-BOOST_WINAPI_DETAIL_NTAPI_CC RtlCaptureStackBackTrace(
+BOOST_WINAPI_NTAPI_CC RtlCaptureStackBackTrace(
     boost::winapi::DWORD_ FramesToSkip,
     boost::winapi::DWORD_ FramesToCapture,
     boost::winapi::PVOID_* BackTrace,

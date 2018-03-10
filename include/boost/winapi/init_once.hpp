@@ -28,29 +28,29 @@ union _RTL_RUN_ONCE;
 #endif
 
 typedef boost::winapi::BOOL_
-(BOOST_WINAPI_DETAIL_WINAPI_CC *PINIT_ONCE_FN) (
+(BOOST_WINAPI_WINAPI_CC *PINIT_ONCE_FN) (
     ::_RTL_RUN_ONCE* InitOnce,
     boost::winapi::PVOID_ Parameter,
     boost::winapi::PVOID_ *Context);
 
-BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 InitOnceInitialize(::_RTL_RUN_ONCE* InitOnce);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 InitOnceExecuteOnce(
     ::_RTL_RUN_ONCE* InitOnce,
     ::PINIT_ONCE_FN InitFn,
     boost::winapi::PVOID_ Parameter,
     boost::winapi::LPVOID_ *Context);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 InitOnceBeginInitialize(
     ::_RTL_RUN_ONCE* lpInitOnce,
     boost::winapi::DWORD_ dwFlags,
     boost::winapi::PBOOL_ fPending,
     boost::winapi::LPVOID_ *lpContext);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 InitOnceComplete(
     ::_RTL_RUN_ONCE* lpInitOnce,
     boost::winapi::DWORD_ dwFlags,
@@ -66,7 +66,7 @@ typedef union BOOST_MAY_ALIAS _RTL_RUN_ONCE {
 } INIT_ONCE_, *PINIT_ONCE_, *LPINIT_ONCE_;
 
 extern "C" {
-typedef BOOL_ (BOOST_WINAPI_DETAIL_WINAPI_CC *PINIT_ONCE_FN_) (PINIT_ONCE_ lpInitOnce, PVOID_ Parameter, PVOID_ *Context);
+typedef BOOL_ (BOOST_WINAPI_WINAPI_CC *PINIT_ONCE_FN_) (PINIT_ONCE_ lpInitOnce, PVOID_ Parameter, PVOID_ *Context);
 }
 
 BOOST_FORCEINLINE VOID_ InitOnceInitialize(PINIT_ONCE_ lpInitOnce)

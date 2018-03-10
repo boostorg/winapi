@@ -21,9 +21,9 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-typedef boost::winapi::VOID_ (BOOST_WINAPI_DETAIL_NTAPI_CC *PAPCFUNC)(boost::winapi::ULONG_PTR_ Parameter);
+typedef boost::winapi::VOID_ (BOOST_WINAPI_NTAPI_CC *PAPCFUNC)(boost::winapi::ULONG_PTR_ Parameter);
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_DETAIL_WINAPI_CC
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 QueueUserAPC(
     PAPCFUNC pfnAPC,
     boost::winapi::HANDLE_ hThread,
