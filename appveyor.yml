@@ -71,12 +71,15 @@ environment:
   # test older compilers, stock settings
     - COMMENT: Visual Studio 2008
       TOOLSET: msvc-9.0
+      B2_ADDRESS_MODEL: address-model=32 # Appveyor installation of this compiler only supports 32 bits
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: Visual Studio 2010
       TOOLSET: msvc-10.0
+      B2_ADDRESS_MODEL: address-model=32 # Appveyor installation of this compiler only supports 32 bits
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: Visual Studio 2012
       TOOLSET: msvc-11.0
+      B2_ADDRESS_MODEL: address-model=32 # Appveyor installation of this compiler only supports 32 bits
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: Visual Studio 2013
       TOOLSET: msvc-12.0
@@ -86,10 +89,12 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     - COMMENT: Cygwin
       TOOLSET: gcc
+      B2_ADDRESS_MODEL: address-model=32 # 32-bit Cygwin only supports 32 bits
       ADDPATH: C:\cygwin\bin;
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: Cygwin 64
       TOOLSET: gcc
+      B2_ADDRESS_MODEL: address-model=64 # Appveyor installation of 64-bit Cygwin only supports 32 bits
       ADDPATH: C:\cygwin64\bin;
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: MinGW
@@ -99,6 +104,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: MinGW-w64
       TOOLSET: gcc
+      B2_ADDRESS_MODEL: address-model=64 # Appveyor installation of MinGW-w64 only supports 32 bits
       ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
   # test platform targets
