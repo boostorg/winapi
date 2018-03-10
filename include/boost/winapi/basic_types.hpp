@@ -62,6 +62,15 @@ typedef void* HANDLE;
 #define BOOST_WINAPI_NTAPI_CC BOOST_WINAPI_DETAIL_STDCALL
 #endif
 
+// Deprecated macro definitions, they are left for preserving compilation of downstream libraries.
+// These will be removed at some point.
+#if !defined(WINAPI)
+#define WINAPI BOOST_WINAPI_WINAPI_CC
+#endif
+#if !defined(NTAPI)
+#define NTAPI BOOST_WINAPI_NTAPI_CC
+#endif
+
 #ifndef NO_STRICT
 #ifndef STRICT
 #define STRICT 1
