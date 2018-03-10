@@ -5,12 +5,21 @@
 #          http://www.boost.org/LICENSE_1_0.txt)
 
 import testing ;
+import modules ;
 import path ;
 import regex ;
+import project ;
+import configure ;
 
 lib advapi32 ;
 lib bcrypt ;
 lib user32 ;
+
+local here = [ modules.binding $(__name__) ] ;
+
+project.push-current [ project.current ] ;
+project.load [ path.join [ path.make $(here:D) ] config/has-bcrypt ] ;
+project.pop-current ;
 
 project
     : requirements
@@ -36,6 +45,20 @@ rule filter-target-os ( properties * )
 {
     local result ;
     if ! ( <target-os>windows in $(properties) || <target-os>cygwin in $(properties) )
+    {
+        result = <build>no ;
+    }
+
+    return $(result) ;
+}
+
+# The rule tests if the Windows SDK supports BCrypt API and library
+rule check-has-bcrypt ( properties * )
+{
+    local result ;
+
+    local has_bcrypt = [ configure.builds /boost/winapi/test/has-bcrypt//has_bcrypt : $(properties) : windows-sdk-supports-bcrypt ] ;
+    if ! $(has_bcrypt)
     {
         result = <build>no ;
     }
@@ -94,13 +117,8 @@ rule test_all
         }
         else if $(test_name) = "bcrypt_abi.cpp"
         {
+            reqs += <conditional>@check-has-bcrypt ;
             reqs += <library>bcrypt ;
-
-            # Windows SDK up until 6.0A doesn't have bcrypt.h. Windows SDK 6.0A has bcrypt.h but is missing bcrypt.lib of x64.
-            # Disable the test on those compilers.
-            reqs += <toolset>msvc-7.1:<build>no ;
-            reqs += <toolset>msvc-8:<build>no ;
-            reqs += <toolset>msvc-9:<build>no ;
         }
         else if $(test_name) = "crypt_abi.cpp" || $(test_name) = "pipes_abi.cpp" || $(test_name) = "security_abi.cpp"
         {
