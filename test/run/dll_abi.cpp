@@ -18,6 +18,8 @@
 
 int main()
 {
+#if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
+
     BOOST_WINAPI_TEST_TYPE_SAME(FARPROC);
     BOOST_WINAPI_TEST_TYPE_SAME(NEARPROC);
     BOOST_WINAPI_TEST_TYPE_SAME(PROC);
@@ -53,6 +55,8 @@ int main()
 #endif
 
     BOOST_WINAPI_TEST_STRUCT(MEMORY_BASIC_INFORMATION, (BaseAddress)(AllocationBase)(AllocationProtect)(RegionSize)(State)(Protect)(Type));
+
+#endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
     return boost::report_errors();
 }
