@@ -23,10 +23,10 @@ environment:
     # see: http://www.boost.org/build/doc/html/bbv2/overview/invocation.html#bbv2.overview.invocation.properties
     # to use the default for a given environment, comment it out; recommend you build debug and release however..
     # on Windows it is important to exercise all the possibilities, especially shared vs static
-    # B2_ADDRESS_MODEL: address-model=64,32
     # B2_LINK: link=shared,static
-    B2_THREADING: threading=multi,single
-    B2_VARIANT: variant=release,debug
+    B2_ADDRESS_MODEL: address-model=64,32
+    B2_THREADING: threading=multi
+    B2_VARIANT: variant=debug
 
   matrix:
   # test UWP Windows SDK 10
@@ -94,6 +94,7 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: MinGW
       TOOLSET: gcc
+      B2_ADDRESS_MODEL: address-model=32 # Legacy MinGW only supports 32 bits
       ADDPATH: C:\mingw\bin;
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: MinGW-w64
