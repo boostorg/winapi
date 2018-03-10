@@ -14,13 +14,6 @@
 
 #define BOOST_USE_WINDOWS_H
 
-// NOTE: Use Boost.Predef, the most fine graned header to detect Windows. This header should not include anything
-//       system- or STL-specific so that the check for Boost.WinAPI header self-sufficiency is not subverted.
-//       Boost.Config does not satisfy this requirement.
-#include <boost/predef/os/windows.h>
-
-#if BOOST_OS_WINDOWS
-
 #include <windows.h>
 #include <boost/winapi/config.hpp>
 #include <stdio.h>
@@ -85,14 +78,6 @@ void print_winsdk_macros()
     PRINT_MACRO(VOID);
     PRINT_MACRO(CONST);
 }
-
-#else // BOOST_OS_WINDOWS
-
-void print_winsdk_macros()
-{
-}
-
-#endif // BOOST_OS_WINDOWS
 
 int main(int, char*[])
 {
