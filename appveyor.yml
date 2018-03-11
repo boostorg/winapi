@@ -62,10 +62,12 @@ environment:
   # test UWP Windows SDK 8.0 (Visual Studio 2012)
     - COMMENT: UWP _WIN32_WINNT=0x0602 (WIN8) DESKTOP
       TOOLSET: msvc-11.0
+      B2_ADDRESS_MODEL: address-model=32 # Appveyor installation of this compiler only supports 32 bits
       DEFINES: define="_WIN32_WINNT=0x0602" define="WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
     - COMMENT: UWP _WIN32_WINNT=0x0602 (WIN8) APP
       TOOLSET: msvc-11.0
+      B2_ADDRESS_MODEL: address-model=32 # Appveyor installation of this compiler only supports 32 bits
       DEFINES: define="_WIN32_WINNT=0x0602" define="WINAPI_FAMILY=WINAPI_FAMILY_APP"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
   # test older compilers, stock settings
