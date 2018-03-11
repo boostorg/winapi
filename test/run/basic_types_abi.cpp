@@ -14,6 +14,9 @@
 
 #include <boost/winapi/basic_types.hpp>
 #include <windows.h>
+#if BOOST_PLAT_WINDOWS_SDK_VERSION >= BOOST_WINAPI_WINDOWS_SDK_6_0
+#include <ntdef.h>
+#endif
 #include <boost/predef/platform/windows_uwp.h>
 #include "abi_test_tools.hpp"
 
