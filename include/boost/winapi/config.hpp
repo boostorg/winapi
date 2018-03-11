@@ -19,8 +19,11 @@
 
 // BOOST_WINAPI_IS_MINGW indicates that the target Windows SDK is provided by MinGW (http://mingw.org/).
 // BOOST_WINAPI_IS_MINGW_W64 indicates that the target Windows SDK is provided by MinGW-w64 (http://mingw-w64.org).
-#if BOOST_PLAT_MINGW
-#if defined __MINGW64_VERSION_MAJOR
+// BOOST_WINAPI_IS_CYGWIN indicates that the target Windows SDK is provided by MinGW variant from Cygwin (https://cygwin.com/).
+#if defined(__CYGWIN__)
+#define BOOST_WINAPI_IS_CYGWIN
+#elif BOOST_PLAT_MINGW
+#if defined(__MINGW64_VERSION_MAJOR)
 #define BOOST_WINAPI_IS_MINGW_W64
 #else
 #define BOOST_WINAPI_IS_MINGW
@@ -142,7 +145,8 @@
 #define BOOST_WINAPI_WINDOWS_SDK_8_0 BOOST_VERSION_NUMBER(0, 0, 9200) // Windows SDK 8.0
 #define BOOST_WINAPI_WINDOWS_SDK_8_1 BOOST_VERSION_NUMBER(0, 0, 9600) // Windows SDK 8.1
 #define BOOST_WINAPI_WINDOWS_SDK_10_0 BOOST_VERSION_NUMBER(0, 0, 10011) // Windows SDK 10.0
-// MinGW does not have the ntverp.h header but it defines VER_PRODUCTBUILD in ddk/ntifs.h
+// MinGW does not have the ntverp.h header but it defines VER_PRODUCTBUILD in ddk/ntifs.h.
+// Cygwin MinGW also defines this version.
 #define BOOST_WINAPI_WINDOWS_SDK_MINGW BOOST_VERSION_NUMBER(0, 0, 10000)
 // MinGW-w64 defines the same version as the Windows SDK bundled with MSVC 8
 #define BOOST_WINAPI_WINDOWS_SDK_MINGW_W64 BOOST_VERSION_NUMBER(0, 0, 3790)

@@ -109,7 +109,7 @@ rule test_all
 
     for file in [ glob run/*.cpp ]
     {
-        local reqs = <conditional>@filter-target-os ;
+        local reqs = <conditional>@filter-target-os <define>"BOOST_WINAPI_DEFINE_VERSION_MACROS=1" ;
         local test_name = [ path.basename $(file) ] ;
         if $(test_name) = "winapi_info.cpp"
         {

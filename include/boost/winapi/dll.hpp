@@ -94,7 +94,7 @@ BOOST_SYMBOL_IMPORT boost::winapi::SIZE_T_ BOOST_WINAPI_WINAPI_CC
 VirtualQuery(
     boost::winapi::LPCVOID_ lpAddress,
     ::_MEMORY_BASIC_INFORMATION* lpBuffer,
-    boost::winapi::ULONG_PTR_ dwLength
+    boost::winapi::SIZE_T_ dwLength
 );
 #else // !defined( BOOST_WINAPI_IS_MINGW )
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
@@ -163,7 +163,7 @@ BOOST_FORCEINLINE FARPROC_ get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName
 #endif
 }
 
-BOOST_FORCEINLINE SIZE_T_ VirtualQuery(LPCVOID_ lpAddress, MEMORY_BASIC_INFORMATION_* lpBuffer, ULONG_PTR_ dwLength)
+BOOST_FORCEINLINE SIZE_T_ VirtualQuery(LPCVOID_ lpAddress, MEMORY_BASIC_INFORMATION_* lpBuffer, SIZE_T_ dwLength)
 {
     return ::VirtualQuery(lpAddress, reinterpret_cast< ::_MEMORY_BASIC_INFORMATION* >(lpBuffer), dwLength);
 }

@@ -19,9 +19,9 @@
 
 #include <boost/winapi/basic_types.hpp>
 
-#if !defined( BOOST_USE_WINDOWS_H )
+#if !defined(BOOST_USE_WINDOWS_H)
 extern "C" {
-#if defined( BOOST_WINAPI_IS_MINGW_W64 )
+#if defined(BOOST_WINAPI_IS_CYGWIN) || defined(BOOST_WINAPI_IS_MINGW_W64)
 struct _RTL_RUN_ONCE;
 #else
 union _RTL_RUN_ONCE;
