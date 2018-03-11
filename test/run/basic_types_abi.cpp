@@ -77,8 +77,8 @@ int main()
 
     BOOST_WINAPI_TEST_TYPE_SAME(VOID);
 
-#if BOOST_PLAT_WINDOWS_SDK_VERSION >= BOOST_WINAPI_WINDOWS_SDK_6_0
-    // Windows SDK that comes with MSVC-7.1 and 8 does not define NTSTATUS
+#if BOOST_PLAT_WINDOWS_SDK_VERSION >= BOOST_WINAPI_WINDOWS_SDK_6_0 && BOOST_WINAPI_PARTITION_APP_SYSTEM
+    // Windows SDK that comes with MSVC-7.1 and 8 does not define NTSTATUS. Up until Windows SDK 10 NTSTATUS is only defined in Desktop API partition.
     BOOST_WINAPI_TEST_TYPE_SAME(NTSTATUS);
     BOOST_WINAPI_TEST_TYPE_SAME(PNTSTATUS);
 #endif
