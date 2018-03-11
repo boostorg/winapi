@@ -96,12 +96,14 @@ int main()
 #endif
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
     BOOST_WINAPI_TEST_STRUCT(PROCESS_INFORMATION, (hProcess)(hThread)(dwProcessId)(dwThreadId));
 
 #if !defined(BOOST_NO_ANSI_APIS)
     BOOST_WINAPI_TEST_STRUCT(STARTUPINFOA, (cb)(lpDesktop)(lpTitle)(dwX)(dwY)(dwXSize)(dwYSize)(dwXCountChars)(dwYCountChars)(dwFillAttribute)(dwFlags)(wShowWindow)(hStdInput)(hStdOutput)(hStdError));
 #endif // !defined(BOOST_NO_ANSI_APIS)
     BOOST_WINAPI_TEST_STRUCT(STARTUPINFOW, (cb)(lpDesktop)(lpTitle)(dwX)(dwY)(dwXSize)(dwYSize)(dwXCountChars)(dwYCountChars)(dwFillAttribute)(dwFlags)(wShowWindow)(hStdInput)(hStdOutput)(hStdError));
+#endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 #if BOOST_WINAPI_PARTITION_DESKTOP
