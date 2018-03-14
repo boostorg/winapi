@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <boost/config.hpp>
+#include <boost/predef/platform/windows_uwp.h>
 
 void print_macro(const char* name, const char* value)
 {
@@ -47,6 +48,8 @@ void print_winsdk_macros()
     PRINT_MACRO(BOOST_NO_ANSI_APIS);
     PRINT_MACRO(BOOST_WINAPI_IS_MINGW);
     PRINT_MACRO(BOOST_WINAPI_IS_MINGW_W64);
+    PRINT_MACRO(BOOST_WINAPI_IS_CYGWIN);
+    PRINT_MACRO(BOOST_PLAT_WINDOWS_SDK_VERSION);
     PRINT_MACRO(__W32API_VERSION);
     PRINT_MACRO(__W32API_MAJOR_VERSION);
     PRINT_MACRO(__W32API_MINOR_VERSION);
@@ -59,6 +62,11 @@ void print_winsdk_macros()
     PRINT_MACRO(__WIN32__);
     PRINT_MACRO(_WIN64);
     PRINT_MACRO(__CYGWIN__);
+    PRINT_MACRO(_X86_);
+    PRINT_MACRO(_AMD64_);
+    PRINT_MACRO(_IA64_);
+    PRINT_MACRO(_ARM_);
+    PRINT_MACRO(_ARM64_);
     PRINT_MACRO(_MAC);
     PRINT_MACRO(_MANAGED);
     PRINT_MACRO(UNICODE);
@@ -75,6 +83,9 @@ void print_winsdk_macros()
     PRINT_MACRO(NTAPI);
     PRINT_MACRO(CALLBACK);
     PRINT_MACRO(APIENTRY);
+    PRINT_MACRO(BOOST_WINAPI_WINAPI_CC);
+    PRINT_MACRO(BOOST_WINAPI_NTAPI_CC);
+    PRINT_MACRO(BOOST_WINAPI_CALLBACK_CC);
     PRINT_MACRO(VOID);
     PRINT_MACRO(CONST);
 }
