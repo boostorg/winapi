@@ -53,6 +53,7 @@ User's code can include `<boost/winapi/config.hpp>` to define a number of macros
                                                 [These macros expand to the constants designating the particular Windows versions and can be used together with `BOOST_USE_WINAPI_VERSION` in preprocessor version checks.]]
     [[`BOOST_WINAPI_IS_MINGW`]                  [Defined if Windows SDK is provided by [@http://mingw.org/ MinGW].]]
     [[`BOOST_WINAPI_IS_MINGW_W64`]              [Defined if Windows SDK is provided by [@http://mingw-w64.org MinGW-w64]. Note that is does not mean that the code is compiled for 64-bit Windows.]]
+    [[`BOOST_WINAPI_IS_CYGWIN`]                 [Defined if Windows SDK is provided by MinGW variant from [@https://cygwin.com/ Cygwin].]]
 ]
 
 [endsect]
