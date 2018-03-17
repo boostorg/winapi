@@ -21,6 +21,7 @@ my $header = <<'END';
 #include <boost/winapi/error_codes.hpp>
 #include <windows.h>
 #include <winerror.h>
+#include <boost/predef/platform/windows_uwp.h>
 #include "abi_test_tools.hpp"
 
 int main()
@@ -41,9 +42,15 @@ while (<>)
     chomp($line);
     if ($line =~ /^\s*BOOST_CONSTEXPR_OR_CONST\s+DWORD_\s+([a-zA-Z_\d]+)_\s+.*$/)
     {
-        print "#if defined(", $1 , ")\n";
+        print "#if ";
+        # Some constants have different values in different Windows SDKs
+        if ($1 eq "ERROR_IPSEC_IKE_NEG_STATUS_END")
+        {
+            print "BOOST_PLAT_WINDOWS_SDK_VERSION >= BOOST_WINAPI_WINDOWS_SDK_6_0 && ";
+        }
+        print "defined(", $1 , ")\n";
         print "    BOOST_WINAPI_TEST_CONSTANT(", $1 , ");\n";
-        print "#endif // defined(", $1 , ")\n";
+        print "#endif\n";
     }
 }
 
