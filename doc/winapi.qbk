@@ -1,5 +1,5 @@
 [/
-  Copyright (c) 2016 Andrey Semashev
+  Copyright (c) 2016-2018 Andrey Semashev
 
   Distributed under the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt
@@ -9,7 +9,7 @@
 [library Boost.WinAPI
   [quickbook 1.6]
   [id winapi]
-  [copyright 2016 Andrey Semashev]
+  [copyright 2016-2018 Andrey Semashev]
   [dirname winapi]
   [license Distributed under the [@http://boost.org/LICENSE_1_0.txt Boost Software License, Version 1.0].]
 ]
