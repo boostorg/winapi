@@ -260,7 +260,7 @@ typedef ::HMODULE HMODULE_;
 #endif
 
 typedef union BOOST_MAY_ALIAS _LARGE_INTEGER {
-    struct {
+    BOOST_WINAPI_DETAIL_EXTENSION struct {
         DWORD_ LowPart;
         LONG_ HighPart;
     };
