@@ -165,6 +165,13 @@ typedef ::LPCWSTR LPCWSTR_;
 
 #else // defined( BOOST_USE_WINDOWS_H )
 
+#if defined(__GNUC__) && !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC)) \
+    && (__GNUC__ * 100 + __GNUC_MINOR__) >= 406
+#pragma GCC diagnostic push
+// ISO C++ 1998 does not support 'long long'
+#pragma GCC diagnostic ignored "-Wlong-long"
+#endif
+
 typedef int BOOL_;
 typedef BOOL_* PBOOL_;
 typedef BOOL_* LPBOOL_;
@@ -245,6 +252,11 @@ typedef const CHAR_ *LPCSTR_;
 typedef wchar_t WCHAR_;
 typedef WCHAR_ *LPWSTR_;
 typedef const WCHAR_ *LPCWSTR_;
+
+#if defined(__GNUC__) && !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC)) \
+    && (__GNUC__ * 100 + __GNUC_MINOR__) >= 406
+#pragma GCC diagnostic pop
+#endif
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
