@@ -144,9 +144,12 @@ DeleteCriticalSection(boost::winapi::detail::winapi_critical_section* lpCritical
 namespace boost {
 namespace winapi {
 
-struct _RTL_CRITICAL_SECTION_DEBUG;
 
 #pragma pack(push, 8)
+
+#if !defined(_WIN32_WCE)
+
+struct _RTL_CRITICAL_SECTION_DEBUG;
 
 typedef struct BOOST_MAY_ALIAS _RTL_CRITICAL_SECTION {
     _RTL_CRITICAL_SECTION_DEBUG* DebugInfo;
@@ -156,6 +159,19 @@ typedef struct BOOST_MAY_ALIAS _RTL_CRITICAL_SECTION {
     HANDLE_ LockSemaphore;
     ULONG_PTR_ SpinCount;
 } CRITICAL_SECTION_, *PCRITICAL_SECTION_;
+
+#else
+
+// Windows CE has different layout
+typedef struct BOOST_MAY_ALIAS CRITICAL_SECTION {
+    unsigned int LockCount;
+    HANDLE OwnerThread;
+    HANDLE hCrit;
+    DWORD needtrap;
+    DWORD dwContentions;
+} CRITICAL_SECTION_, *LPCRITICAL_SECTION_;
+
+#endif
 
 #pragma pack(pop)
 
