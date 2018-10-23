@@ -47,15 +47,18 @@ struct _STARTUPINFOEXW;
 
 #if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
-BOOST_SYMBOL_IMPORT BOOST_NORETURN boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+#if !defined(_WIN32_WCE)
+// On Windows CE ExitProcess is a macro to call TerminateProcess
+BOOST_WINAPI_IMPORT BOOST_NORETURN boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 ExitProcess(boost::winapi::UINT_ uExitCode);
+#endif
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC GetExitCodeProcess(
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC GetExitCodeProcess(
     boost::winapi::HANDLE_ hProcess,
     boost::winapi::LPDWORD_ lpExitCode);
 
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessA(
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessA(
     boost::winapi::LPCSTR_ lpApplicationName,
     boost::winapi::LPSTR_ lpCommandLine,
     ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
@@ -68,7 +71,20 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessA(
     ::_PROCESS_INFORMATION* lpProcessInformation);
 #endif
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessW(
+#if defined(_WIN32_WCE)
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessW(
+    boost::winapi::LPCWSTR_ lpApplicationName,
+    boost::winapi::LPCWSTR_ lpCommandLine,
+    ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
+    ::_SECURITY_ATTRIBUTES* lpThreadAttributes,
+    boost::winapi::INT_ bInheritHandles,
+    boost::winapi::DWORD_ dwCreationFlags,
+    boost::winapi::LPVOID_ lpEnvironment,
+    boost::winapi::LPWSTR_ lpCurrentDirectory,
+    ::_STARTUPINFOW* lpStartupInfo,
+    ::_PROCESS_INFORMATION* lpProcessInformation);
+#else
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessW(
     boost::winapi::LPCWSTR_ lpApplicationName,
     boost::winapi::LPWSTR_ lpCommandLine,
     ::_SECURITY_ATTRIBUTES* lpProcessAttributes,
@@ -79,19 +95,27 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreateProcessW(
     boost::winapi::LPCWSTR_ lpCurrentDirectory,
     ::_STARTUPINFOW* lpStartupInfo,
     ::_PROCESS_INFORMATION* lpProcessInformation);
+#endif
+
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
-BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC OpenProcess(
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC OpenProcess(
     boost::winapi::DWORD_ dwDesiredAccess,
     boost::winapi::BOOL_ bInheritHandle,
     boost::winapi::DWORD_ dwProcessId);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC TerminateProcess(
+#if defined(_WIN32_WCE)
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC TerminateProcess(
+    boost::winapi::HANDLE_ hProcess,
+    boost::winapi::DWORD_ uExitCode);
+#else
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC TerminateProcess(
     boost::winapi::HANDLE_ hProcess,
     boost::winapi::UINT_ uExitCode);
+#endif
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
@@ -366,7 +390,20 @@ using ::OpenProcess;
 #if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
 using ::GetExitCodeProcess;
+#if !defined(_WIN32_WCE)
 using ::ExitProcess;
+#endif
+
+BOOST_FORCEINLINE BOOST_NORETURN boost::winapi::VOID_ exit_process(
+    boost::winapi::UINT_ uExitCode)
+{
+#if !defined(_WIN32_WCE)
+    ExitProcess(uExitCode);
+#else
+    // ExitProcess macro in Windows CE and Windows Mobile SDKs actually does this
+    TerminateProcess(GetCurrentProcess(), (uExitCode));
+#endif
+}
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE BOOL_ CreateProcessA(
@@ -440,7 +477,11 @@ BOOST_FORCEINLINE BOOL_ CreateProcessW(
         bInheritHandles,
         dwCreationFlags,
         lpEnvironment,
+#if defined(_WIN32_WCE)
+        const_cast<LPWSTR_>(lpCurrentDirectory),
+#else
         lpCurrentDirectory,
+#endif
         reinterpret_cast< ::_STARTUPINFOW* >(lpStartupInfo),
         reinterpret_cast< ::_PROCESS_INFORMATION* >(lpProcessInformation));
 }
@@ -465,7 +506,11 @@ BOOST_FORCEINLINE BOOL_ create_process(
         bInheritHandles,
         dwCreationFlags,
         lpEnvironment,
+#if defined(_WIN32_WCE)
+        const_cast<LPWSTR_>(lpCurrentDirectory),
+#else
         lpCurrentDirectory,
+#endif
         reinterpret_cast< ::_STARTUPINFOW* >(lpStartupInfo),
         reinterpret_cast< ::_PROCESS_INFORMATION* >(lpProcessInformation));
 }

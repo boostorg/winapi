@@ -20,10 +20,10 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 GetPriorityClass(boost::winapi::HANDLE_ hProcess);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 SetPriorityClass(
     boost::winapi::HANDLE_ hProcess,
     boost::winapi::DWORD_ dwPriorityClass);

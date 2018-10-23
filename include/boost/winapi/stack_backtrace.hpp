@@ -27,7 +27,7 @@
 #if !defined( BOOST_USE_WINDOWS_H ) || (defined(_MSC_VER) && (_MSC_VER+0) < 1500)
 extern "C" {
 
-BOOST_SYMBOL_IMPORT boost::winapi::WORD_
+BOOST_WINAPI_IMPORT boost::winapi::WORD_
 BOOST_WINAPI_NTAPI_CC RtlCaptureStackBackTrace(
     boost::winapi::DWORD_ FramesToSkip,
     boost::winapi::DWORD_ FramesToCapture,

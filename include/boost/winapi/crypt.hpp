@@ -27,7 +27,7 @@ typedef ULONG_PTR_ HCRYPTPROV_;
 extern "C" {
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptEnumProvidersA(
     boost::winapi::DWORD_ dwIndex,
     boost::winapi::DWORD_ *pdwReserved,
@@ -36,7 +36,7 @@ CryptEnumProvidersA(
     boost::winapi::LPSTR_ szProvName,
     boost::winapi::DWORD_ *pcbProvName);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptAcquireContextA(
     boost::winapi::HCRYPTPROV_ *phProv,
     boost::winapi::LPCSTR_ pszContainer,
@@ -45,7 +45,7 @@ CryptAcquireContextA(
     boost::winapi::DWORD_ dwFlags);
 #endif // !defined( BOOST_NO_ANSI_APIS )
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptEnumProvidersW(
     boost::winapi::DWORD_ dwIndex,
     boost::winapi::DWORD_ *pdwReserved,
@@ -54,7 +54,7 @@ CryptEnumProvidersW(
     boost::winapi::LPWSTR_ szProvName,
     boost::winapi::DWORD_ *pcbProvName);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptAcquireContextW(
     boost::winapi::HCRYPTPROV_ *phProv,
     boost::winapi::LPCWSTR_ szContainer,
@@ -62,7 +62,7 @@ CryptAcquireContextW(
     boost::winapi::DWORD_ dwProvType,
     boost::winapi::DWORD_ dwFlags);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptGenRandom(
     boost::winapi::HCRYPTPROV_ hProv,
     boost::winapi::DWORD_ dwLen,
@@ -74,12 +74,12 @@ CryptGenRandom(
 // Standalone MS Windows SDK 6.0A and later until 10.0 provide a different declaration of CryptReleaseContext for Windows 2000 and older.
 // This is not the case for (a) MinGW and MinGW-w64, (b) MSVC 7.1 and 8, which are shipped with their own Windows SDK,
 // and (c) MSVC 14.0 and later, which are used with Windows SDK 10.
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptReleaseContext(
     boost::winapi::HCRYPTPROV_ hProv,
     boost::winapi::ULONG_PTR_ dwFlags);
 #else
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 CryptReleaseContext(
     boost::winapi::HCRYPTPROV_ hProv,
     boost::winapi::DWORD_ dwFlags);

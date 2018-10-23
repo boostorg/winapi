@@ -31,7 +31,7 @@ struct _SHFILEINFOA;
 struct _SHFILEINFOW;
 
 #if !defined( BOOST_NO_ANSI_APIS )
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_PTR_ BOOST_WINAPI_WINAPI_CC SHGetFileInfoA(
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_PTR_ BOOST_WINAPI_WINAPI_CC SHGetFileInfoA(
     boost::winapi::LPCSTR_ pszPath,
     boost::winapi::DWORD_ dwFileAttributes,
     ::_SHFILEINFOA *psfinsigned,
@@ -39,7 +39,7 @@ BOOST_SYMBOL_IMPORT boost::winapi::DWORD_PTR_ BOOST_WINAPI_WINAPI_CC SHGetFileIn
     boost::winapi::UINT_ uFlags);
 #endif
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_PTR_ BOOST_WINAPI_WINAPI_CC SHGetFileInfoW(
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_PTR_ BOOST_WINAPI_WINAPI_CC SHGetFileInfoW(
     boost::winapi::LPCWSTR_ pszPath,
     boost::winapi::DWORD_ dwFileAttributes,
     ::_SHFILEINFOW *psfinsigned,

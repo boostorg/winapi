@@ -20,7 +20,7 @@
 extern "C" {
 
 #if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 WaitForSingleObjectEx(
     boost::winapi::HANDLE_ hHandle,
     boost::winapi::DWORD_ dwMilliseconds,
@@ -29,7 +29,7 @@ WaitForSingleObjectEx(
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 SignalObjectAndWait(
     boost::winapi::HANDLE_ hObjectToSignal,
     boost::winapi::HANDLE_ hObjectToWaitOn,
@@ -39,19 +39,19 @@ SignalObjectAndWait(
 #endif
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 WaitForSingleObject(
     boost::winapi::HANDLE_ hHandle,
     boost::winapi::DWORD_ dwMilliseconds);
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 WaitForMultipleObjects(
     boost::winapi::DWORD_ nCount,
     boost::winapi::HANDLE_ const* lpHandles,
     boost::winapi::BOOL_ bWaitAll,
     boost::winapi::DWORD_ dwMilliseconds);
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 WaitForMultipleObjectsEx(
     boost::winapi::DWORD_ nCount,
     boost::winapi::HANDLE_ const* lpHandles,

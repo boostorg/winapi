@@ -25,22 +25,22 @@ struct _RTL_CONDITION_VARIABLE;
 struct _RTL_CRITICAL_SECTION;
 struct _RTL_SRWLOCK;
 
-BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 InitializeConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
 
-BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 WakeConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
 
-BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 WakeAllConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 SleepConditionVariableCS(
     ::_RTL_CONDITION_VARIABLE* ConditionVariable,
     ::_RTL_CRITICAL_SECTION* CriticalSection,
     boost::winapi::DWORD_ dwMilliseconds);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 SleepConditionVariableSRW(
     ::_RTL_CONDITION_VARIABLE* ConditionVariable,
     ::_RTL_SRWLOCK* SRWLock,
