@@ -31,6 +31,8 @@
 typedef int BOOL;
 typedef unsigned long DWORD;
 typedef void* HANDLE;
+typedef HANDLE HGLOBAL;
+typedef void* LPVOID;
 #  include <kfuncs.h>
 # endif // UNDER_CE
 #else
