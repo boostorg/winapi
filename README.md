@@ -10,4 +10,4 @@ Develop: [![AppVeyor](https://ci.appveyor.com/api/projects/status/dkb233de24u30x
 
 ### License
 
-Distributed under the [Boost Software License, Version 1.0](http://boost.org/LICENSE_1_0.txt).
+Distributed under the [Boost Software License, Version 1.0](https://boost.org/LICENSE_1_0.txt).
