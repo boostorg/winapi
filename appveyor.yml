@@ -166,6 +166,7 @@ install:
   - git submodule init tools/build
   - git submodule init tools/boost_install
   - git submodule init libs/headers
+  - git submodule init libs/config
   - git submodule update --jobs 4
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\%SELF%
   - python tools/boostdep/depinst/depinst.py %SELF%
