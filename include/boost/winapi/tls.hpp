@@ -16,6 +16,12 @@
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( UNDER_CE )
@@ -55,6 +61,10 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ tls_out_of_indexes = TLS_OUT_OF_INDEXES_;
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_WINAPI_TLS_HPP_INCLUDED_

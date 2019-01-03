@@ -20,6 +20,12 @@
 #pragma once
 #endif
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 /*
  * UWP:
  * API                         SDK 8     SDK 10            _WIN32_WINNT
@@ -590,5 +596,9 @@ using ::SetFilePointer;
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_FILE_MANAGEMENT_HPP_INCLUDED_

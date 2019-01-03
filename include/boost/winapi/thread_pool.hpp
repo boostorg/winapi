@@ -18,6 +18,12 @@
 
 #include <boost/winapi/basic_types.hpp>
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if BOOST_WINAPI_PARTITION_DESKTOP
@@ -124,6 +130,10 @@ BOOST_CONSTEXPR_OR_CONST ULONG_ wt_transfer_impersonation = WT_TRANSFER_IMPERSON
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
 #endif // BOOST_WINAPI_THREAD_POOL_HPP_INCLUDED_

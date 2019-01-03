@@ -14,6 +14,12 @@
 #pragma once
 #endif
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 namespace boost {
 namespace winapi {
 
@@ -50,5 +56,9 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ PAGE_EXECUTE_WRITECOPY_ = 0x80;
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_PAGE_PROTECTION_FLAGS_HPP_INCLUDED_

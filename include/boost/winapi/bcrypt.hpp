@@ -18,6 +18,12 @@
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #if defined(BOOST_USE_WINDOWS_H)
 
 #include <bcrypt.h>
@@ -75,6 +81,10 @@ using ::BCryptOpenAlgorithmProvider;
 
 } // winapi
 } // boost
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 

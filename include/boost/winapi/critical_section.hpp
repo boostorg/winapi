@@ -16,6 +16,12 @@
 #pragma once
 #endif
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #if !defined( BOOST_USE_WINDOWS_H )
 
 extern "C" {
@@ -185,5 +191,9 @@ BOOST_FORCEINLINE VOID_ DeleteCriticalSection(CRITICAL_SECTION_* lpCriticalSecti
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_CRITICAL_SECTION_HPP_INCLUDED_

@@ -28,6 +28,12 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 // Some symbols declared below are not present in all versions of Windows SDK, MinGW and MinGW-w64.
 // dbghelp.h/imagehlp.h define the API_VERSION_NUMBER macro which we use to detect its version.
 // When the macro is not available we can only guess based on the compiler version or SDK type.
@@ -166,6 +172,10 @@ BOOST_FORCEINLINE DWORD_ undecorate_symbol_name(
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP
 #endif // BOOST_WINAPI_DBGHELP_HPP_INCLUDED_

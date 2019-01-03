@@ -15,6 +15,12 @@
 #pragma once
 #endif
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_APP_SYSTEM
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -186,5 +192,9 @@ BOOST_FORCEINLINE HANDLE_ create_anonymous_event(SECURITY_ATTRIBUTES_* lpEventAt
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_WINAPI_EVENT_HPP_INCLUDED_

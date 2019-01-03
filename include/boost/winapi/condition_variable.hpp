@@ -19,6 +19,12 @@
 
 #include <boost/winapi/basic_types.hpp>
 
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic push
+// 'var' defined but not used
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 struct _RTL_CONDITION_VARIABLE;
@@ -114,6 +120,10 @@ BOOST_CONSTEXPR_OR_CONST ULONG_ condition_variable_lockmode_shared = CONDITION_V
 
 }
 }
+
+#if defined(BOOST_GCC) && BOOST_GCC >= 40600
+#pragma GCC diagnostic pop
+#endif
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
