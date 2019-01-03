@@ -79,13 +79,14 @@ install:
 
 script:
   - export COMPILER_VERSION=`$COMPILER --version`
+  - BUILD_JOBS=`(nproc || sysctl -n hw.ncpu) 2> /dev/null`
   - |-
     echo "using $TOOLSET : : $COMPILER : <cxxflags>-std=$CXXSTD ;" > ~/user-config.jam
   - |-
     echo "[**] COMPILER: $COMPILER_VERSION [**]"
   - |-
-    echo "./b2 libs/$SELF/test toolset=$TOOLSET $B2_ADDRESS_MODEL $B2_LINK $B2_THREADING $B2_VARIANT -j3"
-  - ./b2 libs/$SELF/test toolset=$TOOLSET $B2_ADDRESS_MODEL $B2_LINK $B2_THREADING $B2_VARIANT -j3
+    echo "./b2 -j $BUILD_JOBS libs/$SELF/test toolset=$TOOLSET $B2_ADDRESS_MODEL $B2_LINK $B2_THREADING $B2_VARIANT"
+  - ./b2 -j $BUILD_JOBS libs/$SELF/test toolset=$TOOLSET $B2_ADDRESS_MODEL $B2_LINK $B2_THREADING $B2_VARIANT
 
 after_success:
   # If this is not a profiling build skip the rest...
