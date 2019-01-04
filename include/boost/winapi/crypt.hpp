@@ -19,12 +19,6 @@
 #pragma once
 #endif
 
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic push
-// 'var' defined but not used
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
 #if !defined( BOOST_USE_WINDOWS_H )
 namespace boost { namespace winapi {
 typedef ULONG_PTR_ HCRYPTPROV_;
@@ -190,9 +184,5 @@ BOOST_FORCEINLINE BOOL_ CryptReleaseContext(HCRYPTPROV_ hProv, DWORD_ dwFlags)
 
 }
 }
-
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic pop
-#endif
 
 #endif // BOOST_WINAPI_CRYPT_HPP_INCLUDED_

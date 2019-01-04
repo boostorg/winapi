@@ -18,12 +18,6 @@
 #pragma once
 #endif
 
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic push
-// 'var' defined but not used
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -155,9 +149,5 @@ BOOST_FORCEINLINE DWORD_ format_message(
 
 }
 }
-
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic pop
-#endif
 
 #endif // BOOST_WINAPI_ERROR_HANDLING_HPP_INCLUDED_

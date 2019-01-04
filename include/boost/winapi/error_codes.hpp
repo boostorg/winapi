@@ -14,12 +14,6 @@
 #pragma once
 #endif
 
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic push
-// 'var' defined but not used
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
 namespace boost {
 namespace winapi {
 
@@ -3180,9 +3174,5 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ STORE_ERROR_LICENSE_REVOKED_ = 15864;
 
 } // namespace winapi
 } // namespace boost
-
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic pop
-#endif
 
 #endif // BOOST_WINAPI_ERROR_CODES_HPP_INCLUDED_

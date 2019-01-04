@@ -16,12 +16,6 @@
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic push
-// 'var' defined but not used
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 typedef boost::winapi::VOID_
@@ -146,10 +140,6 @@ BOOST_FORCEINLINE HANDLE_ create_anonymous_waitable_timer(PSECURITY_ATTRIBUTES_ 
 
 }
 }
-
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic pop
-#endif
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_WINAPI_WAITABLE_TIMER_HPP_INCLUDED_

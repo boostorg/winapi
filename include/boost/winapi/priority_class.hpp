@@ -17,13 +17,7 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic push
-// 'var' defined but not used
-#pragma GCC diagnostic ignored "-Wunused-variable"
-#endif
-
-#if !defined(BOOST_USE_WINDOWS_H)
+#if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
@@ -35,7 +29,7 @@ SetPriorityClass(
     boost::winapi::DWORD_ dwPriorityClass);
 
 } // extern "C"
-#endif // !defined(BOOST_WINDOWS_H)
+#endif //defined BOOST_WINDOWS_H
 
 namespace boost {
 namespace winapi {
@@ -54,7 +48,7 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ PROCESS_MODE_BACKGROUND_BEGIN_    = PROCESS_MODE
 BOOST_CONSTEXPR_OR_CONST DWORD_ PROCESS_MODE_BACKGROUND_END_      = PROCESS_MODE_BACKGROUND_END;
 #endif
 
-#else // defined(BOOST_USE_WINDOWS_H)
+#else // defined( BOOST_USE_WINDOWS_H )
 
 BOOST_CONSTEXPR_OR_CONST DWORD_ NORMAL_PRIORITY_CLASS_            = 0x20;
 BOOST_CONSTEXPR_OR_CONST DWORD_ IDLE_PRIORITY_CLASS_              = 0x40;
@@ -68,17 +62,13 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ PROCESS_MODE_BACKGROUND_BEGIN_    = 0x100000;
 BOOST_CONSTEXPR_OR_CONST DWORD_ PROCESS_MODE_BACKGROUND_END_      = 0x200000;
 #endif
 
-#endif // defined(BOOST_USE_WINDOWS_H)
+#endif // defined( BOOST_USE_WINDOWS_H )
 
 using ::GetPriorityClass;
 using ::SetPriorityClass;
 
 }
 }
-
-#if defined(BOOST_GCC) && BOOST_GCC >= 40600
-#pragma GCC diagnostic pop
-#endif
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
