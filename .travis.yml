@@ -60,6 +60,7 @@ matrix:
       env: COMMENT="c++03 gcc-4.8" TOOLSET=gcc COMPILER=g++ CXXSTD=c++03
 
 install:
+  - GIT_FETCH_JOBS=8
   - export SELF=`basename $TRAVIS_BUILD_DIR`
   - cd ..
   - git clone -b $TRAVIS_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
@@ -69,11 +70,11 @@ install:
   - git submodule init tools/boost_install
   - git submodule init libs/headers
   - git submodule init libs/config
-  - git submodule update --jobs 4
+  - git submodule update --jobs $GIT_FETCH_JOBS
   - cp -r $TRAVIS_BUILD_DIR/* libs/$SELF
   - export BOOST_ROOT="`pwd`"
-  - export PATH="`pwd`":$PATH 
-  - python tools/boostdep/depinst/depinst.py $SELF
+  - export PATH="`pwd`":$PATH
+  - python tools/boostdep/depinst/depinst.py --git_args "--jobs $GIT_FETCH_JOBS" $SELF
   - ./bootstrap.sh
   - ./b2 headers
 
@@ -110,4 +111,3 @@ after_success:
 notifications:
   email:
     false
-

@@ -159,6 +159,7 @@ environment:
 
 install:
   - set SELF=winapi
+  - set GIT_FETCH_JOBS=8
   - cd ..
   - git clone -b %APPVEYOR_REPO_BRANCH% --depth 1 https://github.com/boostorg/boost.git boost-root
   - cd boost-root
@@ -167,9 +168,9 @@ install:
   - git submodule init tools/boost_install
   - git submodule init libs/headers
   - git submodule init libs/config
-  - git submodule update --jobs 4
+  - git submodule update --jobs %GIT_FETCH_JOBS%
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\%SELF%
-  - python tools/boostdep/depinst/depinst.py %SELF%
+  - python tools/boostdep/depinst/depinst.py --git_args "--jobs %GIT_FETCH_JOBS%" %SELF%
   - cmd /c bootstrap
   - b2 headers
 
