@@ -171,6 +171,8 @@ install:
   - git submodule update --jobs %GIT_FETCH_JOBS%
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\%SELF%
   - python tools/boostdep/depinst/depinst.py --git_args "--jobs %GIT_FETCH_JOBS%" %SELF%
+  - set "CXX="
+  - set "CXXFLAGS="
   - cmd /c bootstrap
   - b2 headers
 
