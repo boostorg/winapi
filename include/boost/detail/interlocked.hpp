@@ -70,7 +70,7 @@
 # define BOOST_INTERLOCKED_EXCHANGE _InterlockedExchange
 # define BOOST_INTERLOCKED_EXCHANGE_ADD _InterlockedExchangeAdd
 
-# if defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64)
+# if defined(_M_IX86) || defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64) || defined(_M_ARM) || defined(_M_ARM64)
 
 #  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
 #  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer
