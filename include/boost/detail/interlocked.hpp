@@ -70,7 +70,7 @@
 # define BOOST_INTERLOCKED_EXCHANGE _InterlockedExchange
 # define BOOST_INTERLOCKED_EXCHANGE_ADD _InterlockedExchangeAdd
 
-# if defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64)
+# if defined(_M_IA64) || defined(_M_AMD64) || defined(__x86_64__) || defined(__x86_64) || defined(_M_ARM64)
 
 #  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
 #  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer
@@ -137,8 +137,6 @@ extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedCompareExcha
 extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedExchange( long volatile *, long );
 extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedExchangeAdd( long volatile *, long );
 
-# undef BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL
-
 # if defined( BOOST_MSVC ) && BOOST_MSVC >= 1310
 #  pragma intrinsic( _InterlockedIncrement )
 #  pragma intrinsic( _InterlockedDecrement )
@@ -147,10 +145,15 @@ extern "C" long BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedExchangeAdd(
 #  pragma intrinsic( _InterlockedExchangeAdd )
 # endif
 
-# if defined(_M_IA64) || defined(_M_AMD64)
+# if defined(_M_IA64) || defined(_M_AMD64) || defined(_M_ARM64)
 
-extern "C" void* __cdecl _InterlockedCompareExchangePointer( void* volatile *, void*, void* );
-extern "C" void* __cdecl _InterlockedExchangePointer( void* volatile *, void* );
+extern "C" void* BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedCompareExchangePointer( void* volatile *, void*, void* );
+extern "C" void* BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL _InterlockedExchangePointer( void* volatile *, void* );
+
+#  if defined( BOOST_MSVC ) && BOOST_MSVC >= 1310
+#   pragma intrinsic( _InterlockedCompareExchangePointer )
+#   pragma intrinsic( _InterlockedExchangePointer )
+#  endif
 
 #  define BOOST_INTERLOCKED_COMPARE_EXCHANGE_POINTER _InterlockedCompareExchangePointer
 #  define BOOST_INTERLOCKED_EXCHANGE_POINTER _InterlockedExchangePointer
@@ -163,6 +166,8 @@ extern "C" void* __cdecl _InterlockedExchangePointer( void* volatile *, void* );
     ((void*)BOOST_INTERLOCKED_EXCHANGE((long volatile*)(dest),(long)(exchange)))
 
 # endif
+
+# undef BOOST_INTERLOCKED_CLRCALL_PURE_OR_CDECL
 
 # define BOOST_INTERLOCKED_INCREMENT _InterlockedIncrement
 # define BOOST_INTERLOCKED_DECREMENT _InterlockedDecrement
