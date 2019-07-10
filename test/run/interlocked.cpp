@@ -14,11 +14,12 @@
 
 #include <boost/detail/interlocked.hpp>
 #include <windows.h> // include to test there are no conflicts with Windows SDK
+#include <boost/cstdint.hpp>
 #include <boost/core/lightweight_test.hpp>
 
 void test_int32()
 {
-    long n = 0, r = 0;
+    boost::int32_t n = 0, r = 0;
 
     r = BOOST_INTERLOCKED_INCREMENT(&n);
     BOOST_TEST_EQ(n, 1);
