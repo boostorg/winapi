@@ -59,8 +59,9 @@
 template< typename Windows_SDK_Signature, typename BoostWinAPI_Signature >
 inline void test_equal_signatures(Windows_SDK_Signature*, BoostWinAPI_Signature*, const char* test_name, const char* file, int line)
 {
-    if (!boost::core::is_same< Windows_SDK_Signature, BoostWinAPI_Signature >::value)
-        boost::detail::test_failed_impl(test_name, file, line, BOOST_CURRENT_FUNCTION); // pass BOOST_CURRENT_FUNCTION here to include signature types in the error message
+    // pass BOOST_CURRENT_FUNCTION here to include signature types in the error message
+    boost::detail::test_impl(test_name, file, line, BOOST_CURRENT_FUNCTION,
+        boost::core::is_same< Windows_SDK_Signature, BoostWinAPI_Signature >::value);
 }
 
 #if defined(BOOST_MSVC)
