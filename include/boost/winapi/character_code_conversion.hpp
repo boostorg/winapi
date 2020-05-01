@@ -17,7 +17,7 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
-BOOST_SYMBOL_IMPORT int BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT_EXCEPT_WM int BOOST_WINAPI_WINAPI_CC
 MultiByteToWideChar(
     boost::winapi::UINT_ CodePage,
     boost::winapi::DWORD_ dwFlags,
@@ -26,7 +26,7 @@ MultiByteToWideChar(
     boost::winapi::LPWSTR_ lpWideCharStr,
     int cchWideChar);
 
-BOOST_SYMBOL_IMPORT int BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT_EXCEPT_WM int BOOST_WINAPI_WINAPI_CC
 WideCharToMultiByte(
     boost::winapi::UINT_ CodePage,
     boost::winapi::DWORD_ dwFlags,

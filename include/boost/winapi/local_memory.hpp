@@ -23,18 +23,32 @@ typedef HANDLE_ HLOCAL_;
 }}
 
 extern "C" {
-BOOST_SYMBOL_IMPORT boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC
+
+#if defined (_WIN32_WCE )
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC
+LocalAlloc(
+    boost::winapi::UINT_ uFlags,
+    boost::winapi::UINT_ uBytes);
+
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC
+LocalReAlloc(
+    boost::winapi::HLOCAL_ hMem,
+    boost::winapi::UINT_ uBytes,
+    boost::winapi::UINT_ uFlags);
+#else
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC
 LocalAlloc(
     boost::winapi::UINT_ uFlags,
     boost::winapi::SIZE_T_ uBytes);
 
-BOOST_SYMBOL_IMPORT boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC
 LocalReAlloc(
     boost::winapi::HLOCAL_ hMem,
     boost::winapi::SIZE_T_ uBytes,
     boost::winapi::UINT_ uFlags);
+#endif
 
-BOOST_SYMBOL_IMPORT boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC LocalFree(boost::winapi::HLOCAL_ hMem);
+BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::HLOCAL_ BOOST_WINAPI_WINAPI_CC LocalFree(boost::winapi::HLOCAL_ hMem);
 } // extern "C"
 #endif
 

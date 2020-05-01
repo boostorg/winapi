@@ -33,24 +33,24 @@ typedef boost::winapi::BOOL_
     boost::winapi::PVOID_ Parameter,
     boost::winapi::PVOID_ *Context);
 
-BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 InitOnceInitialize(::_RTL_RUN_ONCE* InitOnce);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 InitOnceExecuteOnce(
     ::_RTL_RUN_ONCE* InitOnce,
     ::PINIT_ONCE_FN InitFn,
     boost::winapi::PVOID_ Parameter,
     boost::winapi::LPVOID_ *Context);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 InitOnceBeginInitialize(
     ::_RTL_RUN_ONCE* lpInitOnce,
     boost::winapi::DWORD_ dwFlags,
     boost::winapi::PBOOL_ fPending,
     boost::winapi::LPVOID_ *lpContext);
 
-BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
 InitOnceComplete(
     ::_RTL_RUN_ONCE* lpInitOnce,
     boost::winapi::DWORD_ dwFlags,

@@ -50,7 +50,7 @@ extern "C" {
 
 struct API_VERSION;
 
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 UnDecorateSymbolName(
     boost::winapi::LPCSTR_ DecoratedName,
     boost::winapi::LPSTR_ UnDecoratedName,
@@ -58,7 +58,7 @@ UnDecorateSymbolName(
     boost::winapi::DWORD_ Flags);
 
 #if defined( BOOST_WINAPI_DETAIL_HAS_UNDECORATESYMBOLNAMEW )
-BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
 UnDecorateSymbolNameW(
     boost::winapi::LPCWSTR_ DecoratedName,
     boost::winapi::LPWSTR_ UnDecoratedName,
@@ -66,7 +66,7 @@ UnDecorateSymbolNameW(
     boost::winapi::DWORD_ Flags);
 #endif
 
-BOOST_SYMBOL_IMPORT API_VERSION* BOOST_WINAPI_WINAPI_CC
+BOOST_WINAPI_IMPORT API_VERSION* BOOST_WINAPI_WINAPI_CC
 ImagehlpApiVersion(BOOST_WINAPI_DETAIL_VOID);
 
 } // extern "C"
