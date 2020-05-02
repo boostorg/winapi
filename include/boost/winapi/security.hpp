@@ -17,6 +17,8 @@
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 struct _ACL;
@@ -75,6 +77,8 @@ BOOST_FORCEINLINE BOOL_ SetSecurityDescriptorDacl(PSECURITY_DESCRIPTOR_ pSecurit
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_WINAPI_SECURITY_HPP_INCLUDED_

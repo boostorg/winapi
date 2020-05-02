@@ -10,6 +10,7 @@
 #define BOOST_WINAPI_HEAP_MEMORY_HPP_INCLUDED_
 
 #include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -79,5 +80,7 @@ using ::HeapDestroy;
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_HEAP_MEMORY_HPP_INCLUDED_

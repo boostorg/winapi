@@ -19,6 +19,8 @@
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 BOOST_WINAPI_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
@@ -37,6 +39,8 @@ using ::Sleep;
 using ::SwitchToThread;
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_WINAPI_THREAD_HPP_INCLUDED_

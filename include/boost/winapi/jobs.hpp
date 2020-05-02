@@ -18,6 +18,7 @@
 
 #include <boost/winapi/basic_types.hpp>
 #include <boost/winapi/access_rights.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
@@ -141,6 +142,8 @@ using ::TerminateJobObject;
 
 } // namespace winapi
 } // namespace boost
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
 #endif // BOOST_WINAPI_JOBS_HPP_INCLUDED_

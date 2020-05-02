@@ -11,6 +11,7 @@
 
 #include <boost/winapi/basic_types.hpp>
 #include <boost/winapi/get_system_directory.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -99,5 +100,7 @@ BOOST_FORCEINLINE BOOL_ remove_directory(LPCWSTR_ pPathName)
 
 } // namespace winapi
 } // namespace boost
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_DIRECTORY_MANAGEMENT_HPP_INCLUDED_

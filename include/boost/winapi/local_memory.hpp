@@ -17,6 +17,8 @@
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 namespace boost { namespace winapi {
 typedef HANDLE_ HLOCAL_;
@@ -62,6 +64,8 @@ using ::LocalReAlloc;
 using ::LocalFree;
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 #endif // BOOST_WINAPI_LOCAL_MEMORY_HPP_INCLUDED_

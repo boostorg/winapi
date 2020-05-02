@@ -16,6 +16,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
@@ -54,6 +56,8 @@ BOOST_FORCEINLINE UINT_ get_system_directory(LPWSTR_ lpBuffer,  UINT_ uSize)
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP
 

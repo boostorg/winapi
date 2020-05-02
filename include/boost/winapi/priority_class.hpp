@@ -17,6 +17,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
@@ -69,6 +71,8 @@ using ::SetPriorityClass;
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 

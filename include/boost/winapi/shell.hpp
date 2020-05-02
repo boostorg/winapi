@@ -20,6 +20,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
@@ -146,6 +148,8 @@ BOOST_FORCEINLINE DWORD_PTR_ sh_get_file_info(LPCWSTR_ pszPath, DWORD_ dwFileAtt
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP
 #endif // BOOST_WINAPI_SHELL_HPP_INCLUDED_

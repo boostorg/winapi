@@ -14,6 +14,7 @@
 #include <boost/winapi/access_rights.hpp>
 #include <boost/winapi/get_current_process.hpp>
 #include <boost/winapi/get_current_process_id.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -519,5 +520,7 @@ BOOST_FORCEINLINE BOOL_ create_process(
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PROCESS_HPP_INCLUDED_

@@ -11,6 +11,7 @@
 #define BOOST_WINAPI_WAIT_HPP_INCLUDED_
 
 #include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -109,5 +110,7 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ max_non_infinite_wait = (DWORD_)0xFFFFFFFE;
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_WAIT_HPP_INCLUDED_

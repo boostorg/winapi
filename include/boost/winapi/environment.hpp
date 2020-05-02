@@ -16,6 +16,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if defined(GetEnvironmentStrings)
 // Unlike most of the WinAPI, GetEnvironmentStrings is a real function and GetEnvironmentStringsA is a macro.
 // In UNICODE builds, GetEnvironmentStrings is also defined as a macro that redirects to GetEnvironmentStringsW,
@@ -136,6 +138,8 @@ BOOST_FORCEINLINE BOOL_ set_environment_variable(LPCWSTR_ name, LPCWSTR_ value)
 #endif
 #undef BOOST_WINAPI_DETAIL_GET_ENVIRONMENT_STRINGS_UNDEFINED
 #endif // defined(BOOST_WINAPI_DETAIL_GET_ENVIRONMENT_STRINGS_UNDEFINED)
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 

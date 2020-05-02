@@ -14,6 +14,7 @@
 // This header is not always included as part of windows.h
 #include <wincrypt.h>
 #endif
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -184,5 +185,7 @@ BOOST_FORCEINLINE BOOL_ CryptReleaseContext(HCRYPTPROV_ hProv, DWORD_ dwFlags)
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_CRYPT_HPP_INCLUDED_

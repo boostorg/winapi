@@ -16,6 +16,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 BOOST_WINAPI_DETAIL_DECLARE_HANDLE(HWND);
@@ -95,6 +97,8 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ SW_OTHERUNZOOM_      = 4;
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP
 

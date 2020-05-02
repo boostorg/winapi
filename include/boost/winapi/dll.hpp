@@ -19,6 +19,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 namespace boost { namespace winapi {
@@ -233,6 +235,8 @@ namespace winapi {
 using ::FreeLibrary;
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 #endif // BOOST_WINAPI_DLL_HPP_INCLUDED_

@@ -19,6 +19,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_DESKTOP && !defined( BOOST_NO_ANSI_APIS )
 extern "C" {
 BOOST_WINAPI_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC CreateNamedPipeA(
@@ -312,6 +314,8 @@ BOOST_FORCEINLINE BOOL_ get_named_pipe_client_computer_name(HANDLE_ Pipe, LPWSTR
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
 

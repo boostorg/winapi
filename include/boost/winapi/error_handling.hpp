@@ -13,6 +13,7 @@
 #include <stdarg.h>
 #include <boost/winapi/basic_types.hpp>
 #include <boost/winapi/get_last_error.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -149,5 +150,7 @@ BOOST_FORCEINLINE DWORD_ format_message(
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_ERROR_HANDLING_HPP_INCLUDED_

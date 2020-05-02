@@ -16,6 +16,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP
 
+#include <boost/winapi/detail/header.hpp>
+
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
@@ -53,6 +55,8 @@ BOOST_CONSTEXPR_OR_CONST DWORD_ HANDLE_FLAG_PROTECT_FROM_CLOSE_ = 0x2;
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_PARTITION_DESKTOP
 

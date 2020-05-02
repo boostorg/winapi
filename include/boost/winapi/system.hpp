@@ -11,15 +11,10 @@
 #define BOOST_WINAPI_SYSTEM_HPP_INCLUDED_
 
 #include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
-#endif
-
-#if defined(BOOST_MSVC)
-#pragma warning(push)
-// nonstandard extension used : nameless struct/union
-#pragma warning(disable: 4201)
 #endif
 
 #if !defined( BOOST_USE_WINDOWS_H )
@@ -80,8 +75,6 @@ BOOST_FORCEINLINE VOID_ GetNativeSystemInfo(LPSYSTEM_INFO_ lpSystemInfo)
 }
 }
 
-#if defined(BOOST_MSVC)
-#pragma warning(pop)
-#endif
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_SYSTEM_HPP_INCLUDED_

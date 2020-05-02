@@ -17,6 +17,7 @@
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
 
 #include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
@@ -124,6 +125,8 @@ BOOST_CONSTEXPR_OR_CONST ULONG_ wt_transfer_impersonation = WT_TRANSFER_IMPERSON
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN2K
 #endif // BOOST_WINAPI_THREAD_POOL_HPP_INCLUDED_

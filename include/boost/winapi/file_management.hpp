@@ -15,6 +15,7 @@
 #include <boost/winapi/limits.hpp>
 #include <boost/winapi/time.hpp>
 #include <boost/winapi/overlapped.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -590,5 +591,7 @@ using ::SetFilePointer;
 
 }
 }
+
+#include <boost/winapi/detail/footer.hpp>
 
 #endif // BOOST_WINAPI_FILE_MANAGEMENT_HPP_INCLUDED_
