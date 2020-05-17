@@ -1,7 +1,7 @@
 /*
  * Copyright 2010 Vicente J. Botet Escriba
  * Copyright 2014 Renato Tegon Forti, Antony Polukhin
- * Copyright 2015 Andrey Semashev
+ * Copyright 2015, 2020 Andrey Semashev
  * Copyright 2015 Antony Polukhin
  *
  * Distributed under the Boost Software License, Version 1.0.
@@ -12,6 +12,8 @@
 #define BOOST_WINAPI_DLL_HPP_INCLUDED_
 
 #include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/get_proc_address.hpp>
+#include <boost/winapi/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -19,21 +21,8 @@
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 
-#include <boost/winapi/detail/header.hpp>
-
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-namespace boost { namespace winapi {
-#ifdef _WIN64
-typedef INT_PTR_ (BOOST_WINAPI_WINAPI_CC *FARPROC_)();
-typedef INT_PTR_ (BOOST_WINAPI_WINAPI_CC *NEARPROC_)();
-typedef INT_PTR_ (BOOST_WINAPI_WINAPI_CC *PROC_)();
-#else
-typedef int (BOOST_WINAPI_WINAPI_CC *FARPROC_)();
-typedef int (BOOST_WINAPI_WINAPI_CC *NEARPROC_)();
-typedef int (BOOST_WINAPI_WINAPI_CC *PROC_)();
-#endif // _WIN64
-}} // namespace boost::winapi
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_WINAPI_IMPORT boost::winapi::HMODULE_ BOOST_WINAPI_WINAPI_CC
@@ -77,18 +66,6 @@ GetModuleFileNameW(
     boost::winapi::DWORD_ nSize
 );
 
-#if !defined( UNDER_CE )
-BOOST_WINAPI_IMPORT boost::winapi::FARPROC_ BOOST_WINAPI_WINAPI_CC
-GetProcAddress(boost::winapi::HMODULE_ hModule, boost::winapi::LPCSTR_ lpProcName);
-#else
-// On Windows CE there are two functions: GetProcAddressA (since Windows CE 3.0) and GetProcAddressW.
-// GetProcAddress is a macro that is _always_ defined to GetProcAddressW.
-BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::FARPROC_ BOOST_WINAPI_WINAPI_CC
-GetProcAddressA(boost::winapi::HMODULE_ hModule, boost::winapi::LPCSTR_ lpProcName);
-BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::FARPROC_ BOOST_WINAPI_WINAPI_CC
-GetProcAddressW(boost::winapi::HMODULE_ hModule, boost::winapi::LPCWSTR_ lpProcName);
-#endif
-
 struct _MEMORY_BASIC_INFORMATION;
 
 #if !defined( BOOST_WINAPI_IS_MINGW )
@@ -123,10 +100,6 @@ typedef struct BOOST_MAY_ALIAS MEMORY_BASIC_INFORMATION_ {
 } *PMEMORY_BASIC_INFORMATION_;
 
 #if defined( BOOST_USE_WINDOWS_H )
-typedef ::FARPROC FARPROC_;
-typedef ::NEARPROC NEARPROC_;
-typedef ::PROC PROC_;
-
 BOOST_CONSTEXPR_OR_CONST DWORD_ DONT_RESOLVE_DLL_REFERENCES_           = DONT_RESOLVE_DLL_REFERENCES;
 BOOST_CONSTEXPR_OR_CONST DWORD_ LOAD_WITH_ALTERED_SEARCH_PATH_         = LOAD_WITH_ALTERED_SEARCH_PATH;
 #else // defined( BOOST_USE_WINDOWS_H )
@@ -147,23 +120,6 @@ using ::LoadLibraryW;
 using ::LoadLibraryExW;
 using ::GetModuleHandleW;
 using ::GetModuleFileNameW;
-
-#if !defined( UNDER_CE )
-// For backward compatibility, don't use directly. Use get_proc_address instead.
-using ::GetProcAddress;
-#else
-using ::GetProcAddressA;
-using ::GetProcAddressW;
-#endif
-
-BOOST_FORCEINLINE FARPROC_ get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName)
-{
-#if !defined( UNDER_CE )
-    return ::GetProcAddress(hModule, lpProcName);
-#else
-    return ::GetProcAddressA(hModule, lpProcName);
-#endif
-}
 
 BOOST_FORCEINLINE SIZE_T_ VirtualQuery(LPCVOID_ lpAddress, MEMORY_BASIC_INFORMATION_* lpBuffer, SIZE_T_ dwLength)
 {
@@ -236,7 +192,8 @@ using ::FreeLibrary;
 }
 }
 
+#endif // BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
+
 #include <boost/winapi/detail/footer.hpp>
 
-#endif // BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 #endif // BOOST_WINAPI_DLL_HPP_INCLUDED_
