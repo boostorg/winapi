@@ -93,6 +93,9 @@ environment:
     - COMMENT: Visual Studio 2017
       TOOLSET: msvc-14.1
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: Visual Studio 2017 (clang-cl)
+      TOOLSET: clang-win
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - COMMENT: Cygwin
       TOOLSET: gcc
       B2_ADDRESS_MODEL: address-model=32 # 32-bit Cygwin only supports 32 bits
