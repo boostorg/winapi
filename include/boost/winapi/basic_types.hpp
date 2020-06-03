@@ -17,7 +17,7 @@
 
 #if defined(BOOST_USE_WINDOWS_H)
 # include <windows.h>
-#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) ||  defined(__CYGWIN__)
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
 # ifdef UNDER_CE
 #  ifndef WINAPI
 #   ifndef _WIN32_WCE_EMULATION
