@@ -66,13 +66,18 @@ typedef struct BOOST_MAY_ALIAS _SECURITY_DESCRIPTOR {
     PACL_ Dacl;
 } SECURITY_DESCRIPTOR_, *PISECURITY_DESCRIPTOR_;
 
-typedef ::PSECURITY_DESCRIPTOR PSECURITY_DESCRIPTOR_;
+// To abstract away the different ::PSECURITY_DESCRIPTOR on MinGW, we use PVOID_ universally here
+// and cast the pointers to ::PSECURITY_DESCRIPTOR in wrapper functions.
+typedef PVOID_ PSECURITY_DESCRIPTOR_;
 
-using ::InitializeSecurityDescriptor;
+BOOST_FORCEINLINE BOOL_ InitializeSecurityDescriptor(PSECURITY_DESCRIPTOR_ pSecurityDescriptor, DWORD_ dwRevision)
+{
+    return ::InitializeSecurityDescriptor(reinterpret_cast< ::PSECURITY_DESCRIPTOR >(pSecurityDescriptor), dwRevision);
+}
 
 BOOST_FORCEINLINE BOOL_ SetSecurityDescriptorDacl(PSECURITY_DESCRIPTOR_ pSecurityDescriptor, BOOL_ bDaclPresent, PACL_ pDacl, BOOL_ bDaclDefaulted)
 {
-    return ::SetSecurityDescriptorDacl(pSecurityDescriptor, bDaclPresent, reinterpret_cast< ::_ACL* >(pDacl), bDaclDefaulted);
+    return ::SetSecurityDescriptorDacl(reinterpret_cast< ::PSECURITY_DESCRIPTOR >(pSecurityDescriptor), bDaclPresent, reinterpret_cast< ::_ACL* >(pDacl), bDaclDefaulted);
 }
 
 }
