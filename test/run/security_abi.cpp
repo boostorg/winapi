@@ -27,8 +27,6 @@ int main()
     BOOST_WINAPI_TEST_STRUCT(ACL, (AclRevision)(Sbz1)(AclSize)(AceCount)(Sbz2));
     BOOST_WINAPI_TEST_STRUCT(SECURITY_DESCRIPTOR, (Revision)(Sbz1)(Control)(Owner)(Group)(Sacl)(Dacl));
 
-    BOOST_WINAPI_TEST_FUNCTION_SIGNATURE(InitializeSecurityDescriptor);
-
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
     return boost::report_errors();
