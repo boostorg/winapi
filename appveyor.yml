@@ -32,21 +32,21 @@ environment:
   matrix:
   # test UWP Windows SDK 10
     - COMMENT: UWP _WIN32_WINNT=0x0A00 (WIN10) DESKTOP
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: UWP _WIN32_WINNT=0x0A00 (WIN10) SYSTEM
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_SYSTEM"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: UWP _WIN32_WINNT=0x0A00 (WIN10) PHONE
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: UWP _WIN32_WINNT=0x0A00 (WIN10) APP
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_PC_APP"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
   # test UWP Windows SDK 8.1 (Visual Studio 2013)
     - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8) DESKTOP
       TOOLSET: msvc-12.0
@@ -93,6 +93,9 @@ environment:
     - COMMENT: Visual Studio 2017
       TOOLSET: msvc-14.1
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - COMMENT: Visual Studio 2019
+      TOOLSET: msvc-14.2
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
     - COMMENT: Visual Studio 2017 (clang-cl)
       TOOLSET: clang-win
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -128,41 +131,41 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
   # test platform targets
     - COMMENT: _WIN32_WINNT=0x0400 (NT4)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0400"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0500 (2K)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0500"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0501 (XP)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0501"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0502 (WS03)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0502"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0600 (VISTA/WS08)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0600"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0601 (WIN7)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0601"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0602 (WIN8)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0602"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0603 (WIN8.1)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0603"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     - COMMENT: _WIN32_WINNT=0x0A00 (WIN10)
-      TOOLSET: msvc-14.2
+      TOOLSET: msvc-14.3
       DEFINES: define="_WIN32_WINNT=0x0A00"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
 
 install:
   - set SELF=winapi
