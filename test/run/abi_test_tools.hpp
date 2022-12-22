@@ -18,11 +18,11 @@
 #include <boost/winapi/config.hpp>
 #include <boost/config.hpp>
 #include <boost/current_function.hpp>
-#include <boost/core/is_same.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/lightweight_test_trait.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
+#include <boost/type_traits/is_same.hpp>
 #include <cstddef> // offsetof
 
 //! The macro produces Boost.WinAPI equivalent for a Windows SDK constant or type name
@@ -35,7 +35,7 @@
 
 //! The macro tests that the given type is the same in Boost.WinAPI and Windows SDK
 #define BOOST_WINAPI_TEST_TYPE_SAME(name)\
-    BOOST_TEST_TRAIT_TRUE((boost::core::is_same< name, BOOST_WINAPI_NAME(name ## _) >))
+    BOOST_TEST_TRAIT_TRUE((boost::is_same< name, BOOST_WINAPI_NAME(name ## _) >))
 
 //! The macro tests that the given type has the same size in Boost.WinAPI and Windows SDK
 #define BOOST_WINAPI_TEST_TYPE_SIZE(name)\
@@ -61,7 +61,7 @@ inline void test_equal_signatures(Windows_SDK_Signature*, BoostWinAPI_Signature*
 {
     // pass BOOST_CURRENT_FUNCTION here to include signature types in the error message
     boost::detail::test_impl(test_name, file, line, BOOST_CURRENT_FUNCTION,
-        boost::core::is_same< Windows_SDK_Signature, BoostWinAPI_Signature >::value);
+        boost::is_same< Windows_SDK_Signature, BoostWinAPI_Signature >::value);
 }
 
 #if defined(BOOST_MSVC)
