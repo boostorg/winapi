@@ -48,15 +48,15 @@ environment:
       DEFINES: define="_WIN32_WINNT=0x0A00" define="WINAPI_FAMILY=WINAPI_FAMILY_PC_APP"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
   # test UWP Windows SDK 8.1 (Visual Studio 2013)
-    - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8) DESKTOP
+    - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8.1) DESKTOP
       TOOLSET: msvc-12.0
       DEFINES: define="_WIN32_WINNT=0x0603" define="WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8) PHONE
+    - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8.1) PHONE
       TOOLSET: msvc-12.0
       DEFINES: define="_WIN32_WINNT=0x0603" define="WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8) APP
+    - COMMENT: UWP _WIN32_WINNT=0x0603 (WIN8.1) APP
       TOOLSET: msvc-12.0
       DEFINES: define="_WIN32_WINNT=0x0603" define="WINAPI_FAMILY=WINAPI_FAMILY_PC_APP"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
@@ -102,11 +102,13 @@ environment:
     - COMMENT: Cygwin
       TOOLSET: gcc
       B2_ADDRESS_MODEL: address-model=32 # 32-bit Cygwin only supports 32 bits
+      DEFINES: define="_WIN32_WINNT=0x0603" define="WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP" # Appveyor installation of Cygwin is outdated and does not support Windows 10 APIs
       ADDPATH: C:\cygwin\bin
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     - COMMENT: Cygwin 64
       TOOLSET: gcc
       B2_ADDRESS_MODEL: address-model=64 # Appveyor installation of 64-bit Cygwin only supports 64 bits
+      DEFINES: define="_WIN32_WINNT=0x0603" define="WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP" # Appveyor installation of Cygwin is outdated and does not support Windows 10 APIs
       ADDPATH: C:\cygwin64\bin
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
     - COMMENT: MinGW
