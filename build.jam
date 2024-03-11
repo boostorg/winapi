@@ -1,0 +1,21 @@
+# Copyright René Ferdinand Rivera Morell 2023
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import project ;
+
+project /boost/winapi
+    : common-requirements
+        <source>/boost/config//boost_config
+        <source>/boost/predef//boost_predef
+        <include>include
+    ;
+
+explicit
+    [ alias boost_winapi ]
+    [ alias all : boost_winapi test ]
+    ;
+
+call-if : boost-library winapi
+    ;

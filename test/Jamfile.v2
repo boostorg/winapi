@@ -24,6 +24,11 @@ project.pop-current ;
 project
     : requirements
 
+        <source>/boost/config//boost_config
+        <source>/boost/core//boost_core
+        <source>/boost/preprocessor//boost_preprocessor
+        <source>/boost/type_traits//boost_type_traits
+
         # Disable warnings about using 'insecure' standard C functions
         <toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
         <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
@@ -73,8 +78,7 @@ rule test_all
 {
     local all_rules ;
     local file ;
-    local headers_path = [ path.make $(BOOST_ROOT)/libs/winapi/include/boost/winapi ] ;
-    for file in [ path.glob-tree $(headers_path) : *.hpp : detail ]
+    for file in [ path.glob-tree ../include/boost/winapi : *.hpp : detail ]
     {
         local rel_file = [ path.relative-to [ path.parent $(headers_path) ] $(file) ] ;
         # Note: The test name starts with '~' in order to group these tests in the test report table, preferably at the end.
@@ -91,7 +95,7 @@ rule test_all
         all_rules += [ compile compile/windows_h_post.cpp : <conditional>@filter-target-os <define>"BOOST_WINAPI_TEST_HEADER=$(rel_file)" <dependency>$(file) : $(post_winh_test_name) ] ;
     }
 
-    headers_path = [ path.make $(BOOST_ROOT)/libs/winapi/include/boost/detail ] ;
+    headers_path = [ path.make ../include/boost/detail ] ;
     for file in [ path.glob $(headers_path) : *.hpp : detail ]
     {
         local rel_file = [ path.relative-to $(headers_path) $(file) ] ;
