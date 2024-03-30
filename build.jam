@@ -7,8 +7,8 @@ import project ;
 
 project /boost/winapi
     : common-requirements
-        <source>/boost/config//boost_config
-        <source>/boost/predef//boost_predef
+        <library>/boost/config//boost_config
+        <library>/boost/predef//boost_predef
         <include>include
     ;
 
