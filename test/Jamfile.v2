@@ -15,10 +15,10 @@ lib advapi32 ;
 lib bcrypt ;
 lib user32 ;
 
-local here = [ modules.binding $(__name__) ] ;
+path-constant here : . ;
 
 project.push-current [ project.current ] ;
-project.load [ path.join [ path.make $(here:D) ] config/has-bcrypt ] ;
+project.load [ path.join [ path.make $(here) ] config/has-bcrypt ] ;
 project.pop-current ;
 
 project
@@ -78,7 +78,8 @@ rule test_all
 {
     local all_rules ;
     local file ;
-    for file in [ path.glob-tree ../include/boost/winapi : *.hpp : detail ]
+    local headers_path = ../include/boost/winapi ;
+    for file in [ path.glob-tree $(headers_path) : *.hpp : detail ]
     {
         local rel_file = [ path.relative-to [ path.parent $(headers_path) ] $(file) ] ;
         # Note: The test name starts with '~' in order to group these tests in the test report table, preferably at the end.
@@ -95,7 +96,7 @@ rule test_all
         all_rules += [ compile compile/windows_h_post.cpp : <conditional>@filter-target-os <define>"BOOST_WINAPI_TEST_HEADER=$(rel_file)" <dependency>$(file) : $(post_winh_test_name) ] ;
     }
 
-    headers_path = [ path.make ../include/boost/detail ] ;
+    headers_path = ../include/boost/detail ;
     for file in [ path.glob $(headers_path) : *.hpp : detail ]
     {
         local rel_file = [ path.relative-to $(headers_path) $(file) ] ;
