@@ -73,7 +73,7 @@ BOOST_FORCEINLINE FARPROC_ get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName
 }
 
 template< typename FuncPtr >
-BOOST_FORCEINLINE Signature get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName)
+BOOST_FORCEINLINE FuncPtr get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName)
 {
 #if defined(BOOST_GCC) && BOOST_GCC >= 80000
 #pragma GCC diagnostic push
