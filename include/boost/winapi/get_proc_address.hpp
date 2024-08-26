@@ -63,18 +63,23 @@ using ::GetProcAddressA;
 using ::GetProcAddressW;
 #endif
 
-template<typename Signature = FARPROC_>
+BOOST_FORCEINLINE FARPROC_ get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName)
+{
+#if !defined(UNDER_CE)
+    return ::GetProcAddress(hModule, lpProcName);
+#else
+    return ::GetProcAddressA(hModule, lpProcName);
+#endif
+}
+
+template<typename Signature>
 BOOST_FORCEINLINE Signature get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName)
 {
 #if defined(BOOST_GCC) && BOOST_GCC >= 80000
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-function-type"
 #endif
-#if !defined(UNDER_CE)
-    return (Signature) ::GetProcAddress(hModule, lpProcName);
-#else
-    return (Signature) ::GetProcAddressA(hModule, lpProcName);
-#endif
+    return reinterpret_cast<Signature>(get_proc_address(hModule, lpProcName));
 #if defined(BOOST_GCC) && BOOST_GCC >= 80000
 #pragma GCC diagnostic pop
 #endif
