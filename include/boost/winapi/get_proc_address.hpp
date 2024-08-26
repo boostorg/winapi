@@ -72,14 +72,14 @@ BOOST_FORCEINLINE FARPROC_ get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName
 #endif
 }
 
-template<typename Signature>
+template< typename FuncPtr >
 BOOST_FORCEINLINE Signature get_proc_address(HMODULE_ hModule, LPCSTR_ lpProcName)
 {
 #if defined(BOOST_GCC) && BOOST_GCC >= 80000
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wcast-function-type"
 #endif
-    return reinterpret_cast<Signature>(get_proc_address(hModule, lpProcName));
+    return reinterpret_cast< FuncPtr >(get_proc_address(hModule, lpProcName));
 #if defined(BOOST_GCC) && BOOST_GCC >= 80000
 #pragma GCC diagnostic pop
 #endif
