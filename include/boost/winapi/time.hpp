@@ -25,6 +25,11 @@ struct _SYSTEMTIME;
 BOOST_WINAPI_IMPORT_EXCEPT_WM boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 GetSystemTime(::_SYSTEMTIME* lpSystemTime);
 
+#ifdef BOOST_HAS_GETSYSTEMTIMEPRECISEASFILETIME  // Windows CE does not define GetSystemTimePreciseAsFileTime
+BOOST_WINAPI_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+GetSystemTimePreciseAsFileTime(::_FILETIME* lpSystemTimeAsFileTime);
+#endif
+
 #ifdef BOOST_HAS_GETSYSTEMTIMEASFILETIME  // Windows CE does not define GetSystemTimeAsFileTime
 BOOST_WINAPI_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
 GetSystemTimeAsFileTime(::_FILETIME* lpSystemTimeAsFileTime);
@@ -119,6 +124,13 @@ BOOST_FORCEINLINE BOOL_ LocalFileTimeToFileTime(const FILETIME_* lpLocalFileTime
     return ::LocalFileTimeToFileTime(reinterpret_cast< const ::_FILETIME* >(lpLocalFileTime), reinterpret_cast< ::_FILETIME* >(lpFileTime));
 }
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+
+#if defined (BOOST_HAS_GETSYSTEMTIMEPRECISEASFILETIME)
+BOOST_FORCEINLINE VOID_ GetSystemTimePreciseAsFileTime(LPFILETIME_ lpSystemTimeAsFileTime)
+{
+    ::GetSystemTimePreciseAsFileTime(reinterpret_cast< ::_FILETIME* >(lpSystemTimeAsFileTime));
+}
+#endif
 
 #if defined( BOOST_HAS_GETSYSTEMTIMEASFILETIME )
 BOOST_FORCEINLINE VOID_ GetSystemTimeAsFileTime(LPFILETIME_ lpSystemTimeAsFileTime)
